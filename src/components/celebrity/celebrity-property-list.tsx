@@ -1,10 +1,10 @@
 'use client'
 
 import Link from 'next/link'
-import { MapPin, Calendar, ExternalLink, ShieldCheck, Newspaper, HelpCircle } from 'lucide-react'
+import { MapPin, Calendar, ExternalLink, ShieldCheck, Newspaper, HelpCircle, TrendingUp } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { formatPrice, formatArea, formatDate } from '@/lib/utils'
+import { formatPrice, formatArea, formatDate, getNaverComplexUrl, getNaverSearchUrl } from '@/lib/utils'
 import { PROPERTY_TYPE_LABELS } from '@/types'
 import type { Property, VerificationStatus } from '@/types'
 
@@ -94,17 +94,28 @@ export function CelebrityPropertyList({ items, totalAssetValue }: CelebrityPrope
                           {formatPrice(item.acquisition_price || prop.latest_transaction_price!)}원
                         </p>
                       )}
-                      {item.source_url && (
+                      <div className="flex items-center gap-2 mt-1 justify-end">
                         <a
-                          href={item.source_url}
+                          href={getNaverComplexUrl(prop.name) ?? getNaverSearchUrl(prop.name)}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-[10px] text-blue-500 flex items-center gap-0.5 mt-1 justify-end"
+                          className="text-[10px] text-emerald-600 flex items-center gap-0.5"
                           onClick={(e) => e.stopPropagation()}
                         >
-                          출처 <ExternalLink className="h-2.5 w-2.5" />
+                          시세 <TrendingUp className="h-2.5 w-2.5" />
                         </a>
-                      )}
+                        {item.source_url && (
+                          <a
+                            href={item.source_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[10px] text-blue-500 flex items-center gap-0.5"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            출처 <ExternalLink className="h-2.5 w-2.5" />
+                          </a>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </CardContent>

@@ -73,7 +73,7 @@ export default function RankingsPage() {
           setCelebrities((data || []) as RankingCelebrity[])
         }
       } catch {
-        setCelebrities(getDemoRankings())
+        setCelebrities(getDemoRankings(activeTab))
         setNeighborhoods(getDemoNeighborhoods())
       } finally {
         setLoading(false)
@@ -163,7 +163,7 @@ export default function RankingsPage() {
   )
 }
 
-function getDemoRankings(): RankingCelebrity[] {
+function getDemoRankings(tab: RankingTab): RankingCelebrity[] {
   const countMap = new Map<string, number>()
   const totalMap = new Map<string, number>()
 
@@ -172,15 +172,21 @@ function getDemoRankings(): RankingCelebrity[] {
     totalMap.set(cp.celebrityId, (totalMap.get(cp.celebrityId) ?? 0) + (cp.price ?? 0))
   }
 
-  return seedCelebrities
-    .map((c) => ({
-      id: c.id,
-      name: c.name,
-      category: c.category,
-      property_count: countMap.get(c.id) ?? 0,
-      total_asset_value: totalMap.get(c.id) ?? 0,
-      profile_image_url: null,
-    }))
+  const mapped = seedCelebrities.map((c) => ({
+    id: c.id,
+    name: c.name,
+    category: c.category,
+    property_count: countMap.get(c.id) ?? 0,
+    total_asset_value: totalMap.get(c.id) ?? 0,
+    profile_image_url: null,
+  }))
+
+  if (tab === 'top-price') {
+    return mapped.sort((a, b) => b.total_asset_value - a.total_asset_value).slice(0, 20)
+  }
+
+  return mapped
+    .filter((c) => c.property_count >= 2)
     .sort((a, b) => b.property_count - a.property_count)
     .slice(0, 20)
 }

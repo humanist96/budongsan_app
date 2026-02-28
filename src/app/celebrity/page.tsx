@@ -43,7 +43,7 @@ export default function CelebrityListPage() {
       if (error) throw error
       setCelebrities((data || []) as Celebrity[])
     } catch {
-      setCelebrities(getDemoCelebrities())
+      setCelebrities(getDemoCelebrities(selectedCategory, multiOwnerOnly, search))
     } finally {
       setLoading(false)
     }
@@ -112,7 +112,11 @@ export default function CelebrityListPage() {
   )
 }
 
-function getDemoCelebrities(): Celebrity[] {
+function getDemoCelebrities(
+  category: CelebrityCategory | null,
+  multiOwnerOnly: boolean,
+  search: string
+): Celebrity[] {
   const countMap = new Map<string, number>()
   const totalMap = new Map<string, number>()
 
@@ -121,7 +125,15 @@ function getDemoCelebrities(): Celebrity[] {
     totalMap.set(cp.celebrityId, (totalMap.get(cp.celebrityId) ?? 0) + (cp.price ?? 0))
   }
 
+  const searchLower = search.toLowerCase()
+
   return seedCelebrities
+    .filter((c) => {
+      if (category && c.category !== category) return false
+      if (search && !c.name.toLowerCase().includes(searchLower)) return false
+      if (multiOwnerOnly && (countMap.get(c.id) ?? 0) < 2) return false
+      return true
+    })
     .map((c) => ({
       id: c.id,
       name: c.name,

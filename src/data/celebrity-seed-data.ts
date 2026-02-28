@@ -45,7 +45,7 @@ export interface SeedCelebrityProperty {
   sourceUrl: string | null
 }
 
-// ─── Celebrities (50명) ─────────────────────────────────────
+// ─── Celebrities (70명) ─────────────────────────────────────
 
 export const celebrities: SeedCelebrity[] = [
   // ========== 연예인 (30명) ==========
@@ -80,7 +80,7 @@ export const celebrities: SeedCelebrity[] = [
   { id: 'ent-29', name: '이승기', category: 'entertainer', subCategory: '가수/배우', description: '국민 남동생, 성북동 56.35억 (현 시세 111억)', isVerified: false },
   { id: 'ent-30', name: '김태희', category: 'entertainer', subCategory: '배우', description: '톱배우, 비(정지훈)와 부부. 공동 부동산 1,600억+', isVerified: false },
 
-  // ========== 정치인 (10명) ==========
+  // ========== 정치인 (23명) + 고위공무원 (6명) = 29명 ==========
   { id: 'pol-01', name: '정진석', category: 'politician', subCategory: '국회의원', description: '제22대 국회의원, 국민의힘', isVerified: true },
   { id: 'pol-02', name: '이낙연', category: 'politician', subCategory: '전 국무총리', description: '전 국무총리, 더불어민주당', isVerified: true },
   { id: 'pol-03', name: '나경원', category: 'politician', subCategory: '국회의원', description: '전 국회 부의장, 국민의힘', isVerified: true },
@@ -89,8 +89,29 @@ export const celebrities: SeedCelebrity[] = [
   { id: 'pol-06', name: '추미애', category: 'politician', subCategory: '전 장관', description: '전 법무부 장관, 더불어민주당', isVerified: true },
   { id: 'pol-07', name: '한덕수', category: 'politician', subCategory: '전 국무총리', description: '전 국무총리, 경제관료 출신', isVerified: true },
   { id: 'pol-08', name: '김기현', category: 'politician', subCategory: '국회의원', description: '전 국민의힘 대표', isVerified: true },
-  { id: 'pol-09', name: '이재명', category: 'politician', subCategory: '국회의원', description: '더불어민주당 대표, 전 경기도지사', isVerified: true },
+  { id: 'pol-09', name: '이재명', category: 'politician', subCategory: '대통령', description: '제21대 대통령, 전 경기도지사. 분당 양지마을 금호 아파트 29억 매물', isVerified: true },
   { id: 'pol-10', name: '오세훈', category: 'politician', subCategory: '서울시장', description: '서울특별시장', isVerified: true },
+  { id: 'pol-11', name: '고동진', category: 'politician', subCategory: '국회의원', description: '삼성전자 사장 출신, 국민의힘. 한남더힐 72.4억 보유, 총 재산 333억', isVerified: true },
+  { id: 'pol-12', name: '김은혜', category: 'politician', subCategory: '국회의원', description: '국민의힘, 총 재산 274억. 배우자 대치동 빌딩 187.9억', isVerified: true },
+  { id: 'pol-13', name: '한동훈', category: 'politician', subCategory: '전 당대표', description: '전 국민의힘 대표, 전 법무부 장관. 재산 39억', isVerified: true },
+  { id: 'pol-14', name: '조국', category: 'politician', subCategory: '국회의원', description: '조국혁신당 대표, 전 법무부 장관. 방배동 아파트 16.7억, 재산 52억', isVerified: true },
+  { id: 'pol-15', name: '윤석열', category: 'politician', subCategory: '전 대통령', description: '제20대 대통령. 배우자 김건희 서초 아크로비스타 15.7억', isVerified: true },
+  { id: 'pol-16', name: '박정', category: 'politician', subCategory: '국회의원', description: '더불어민주당, 파주시. 상암동 빌딩 402억, 총 재산 360억', isVerified: true },
+  { id: 'pol-17', name: '서명옥', category: 'politician', subCategory: '국회의원', description: '국민의힘, 의사 출신. 압구정 한양아파트 30.9억, 총 재산 255억', isVerified: true },
+  { id: 'pol-18', name: '홍준표', category: 'politician', subCategory: '전 대구시장', description: '전 대구시장, 국민의힘. 잠실 아시아선수촌 1997년 매입 보유, 재산 42.5억', isVerified: true },
+  { id: 'pol-19', name: '김동연', category: 'politician', subCategory: '경기도지사', description: '경기도지사, 전 경제부총리. 배우자 도곡동 아파트 13억, 재산 35억', isVerified: true },
+  { id: 'pol-20', name: '정점식', category: 'politician', subCategory: '국회의원', description: '국민의힘, 통영·고성. 반포동 아파트 보유, 총 재산 99억', isVerified: true },
+  { id: 'pol-21', name: '안철수', category: 'politician', subCategory: '국회의원', description: '국민의힘, 안랩 창업자. 재산 1,368억 (주식 1,231억). 부동산 無 전세 거주', isVerified: true },
+  { id: 'pol-22', name: '박덕흠', category: 'politician', subCategory: '국회의원', description: '국민의힘, 보은·옥천. 토지 240억+건물 70억, 총 재산 535억', isVerified: true },
+  { id: 'pol-23', name: '이준석', category: 'politician', subCategory: '국회의원', description: '개혁신당 대표. 노원구 상계동 아파트 7.3억, 재산 12억', isVerified: true },
+
+  // ========== 고위 공무원 (6명) ==========
+  { id: 'pol-24', name: '최상목', category: 'politician', subCategory: '경제부총리', description: '경제부총리 겸 기획재정부 장관. 배우자 용산 동자동 아파트 13억, 총 재산 44.6억', isVerified: true },
+  { id: 'pol-25', name: '김태효', category: 'politician', subCategory: '국가안보실 1차장', description: '대통령실 국가안보실 1차장. 서초 아크로비스타+여의도·신사동 상가 4채, 총 재산 148억', isVerified: true },
+  { id: 'pol-26', name: '조성명', category: 'politician', subCategory: '강남구청장', description: '강남구청장, 42채 최다주택 보유자. 강남 아파트+고양 오피스텔 38채+속초 오피스텔 등', isVerified: true },
+  { id: 'pol-27', name: '이상경', category: 'politician', subCategory: '전 국토부 1차관', description: '전 국토교통부 1차관. 판교 아파트 2채 56.6억 갭투자 논란으로 사의', isVerified: true },
+  { id: 'pol-28', name: '이형근', category: 'politician', subCategory: '법원행정처', description: '법원행정처 기획조정실장. 서초구 아파트 2채+근린생활시설 등 부동산 338억', isVerified: true },
+  { id: 'pol-29', name: '최지영', category: 'politician', subCategory: '기재부 차관보', description: '기획재정부 국제경제관리관(차관보급). 압구정 현대아파트, 총 재산 494억(비상장주식 445억)', isVerified: true },
 
   // ========== 운동선수 (11명) ==========
   { id: 'ath-01', name: '손흥민', category: 'athlete', subCategory: '축구', description: 'EPL 토트넘, 에테르노 압구정 PH 400억 분양', isVerified: false },
@@ -106,7 +127,7 @@ export const celebrities: SeedCelebrity[] = [
   { id: 'ath-11', name: '이승엽', category: 'athlete', subCategory: '야구', description: '한일 홈런왕, 성수동 빌딩 293억 (현 1,167억)', isVerified: false },
 ]
 
-// ─── Properties (91개) ──────────────────────────────────────
+// ─── Properties (116개) ─────────────────────────────────────
 
 export const properties: SeedProperty[] = [
   // === 한남동 일대 ===
@@ -275,6 +296,71 @@ export const properties: SeedProperty[] = [
 
   // 기성용 관련
   { id: 'prop-093', name: '종각역 빌딩 (관철동)', address: '서울 종로구 관철동', lat: 37.5710, lng: 126.9835, propertyType: 'building', exclusiveArea: null, buildingYear: 2015 },
+
+  // === 신규 정치인 관련 매물 (94~107) ===
+
+  // 고동진 관련 (한남더힐 → prop-004 재활용)
+
+  // 김은혜 배우자 관련
+  { id: 'prop-094', name: '대치동 빌딩 (김은혜)', address: '서울 강남구 대치동', lat: 37.4945, lng: 127.0620, propertyType: 'building', exclusiveArea: null, buildingYear: 2010 },
+
+  // 한동훈 관련
+  { id: 'prop-095', name: '서초동 아파트 (한동훈)', address: '서울 서초구 서초동', lat: 37.4960, lng: 127.0260, propertyType: 'apartment', exclusiveArea: 134.0, buildingYear: 2015 },
+
+  // 조국 관련
+  { id: 'prop-096', name: '방배동 아파트', address: '서울 서초구 방배동', lat: 37.4820, lng: 126.9970, propertyType: 'apartment', exclusiveArea: 134.0, buildingYear: 1981 },
+
+  // 박정 관련
+  { id: 'prop-097', name: '상암동 빌딩 (박정)', address: '서울 마포구 상암동', lat: 37.5770, lng: 126.8900, propertyType: 'building', exclusiveArea: null, buildingYear: 2012 },
+
+  // 서명옥 관련
+  { id: 'prop-098', name: '압구정 한양아파트', address: '서울 강남구 압구정동', lat: 37.5265, lng: 127.0265, propertyType: 'apartment', exclusiveArea: 196.0, buildingYear: 1976 },
+
+  // 홍준표 관련
+  { id: 'prop-099', name: '잠실 아시아선수촌아파트', address: '서울 송파구 잠실동', lat: 37.5170, lng: 127.0780, propertyType: 'apartment', exclusiveArea: 134.0, buildingYear: 1986 },
+
+  // 김동연 관련 (도곡동 → prop-036 도곡렉슬 재활용 가능하나 별도 추가)
+  { id: 'prop-100', name: '도곡동 아파트 (김동연)', address: '서울 강남구 도곡동', lat: 37.4895, lng: 127.0490, propertyType: 'apartment', exclusiveArea: 159.0, buildingYear: 2003 },
+
+  // 정점식 관련
+  { id: 'prop-101', name: '반포동 아파트 (정점식)', address: '서울 서초구 반포동', lat: 37.5058, lng: 126.9880, propertyType: 'apartment', exclusiveArea: 163.0, buildingYear: 2009 },
+
+  // 안철수 관련 (분당 전세 → 서울 매물 아님이지만 프로필 추적용)
+  { id: 'prop-102', name: '분당 알파리움 (전세)', address: '경기도 성남시 분당구 백현동', lat: 37.3820, lng: 127.1140, propertyType: 'apartment', exclusiveArea: 134.0, buildingYear: 2015 },
+
+  // 박덕흠 관련 (서울 빌딩)
+  { id: 'prop-103', name: '보은 단독주택 외 토지', address: '충북 보은군', lat: 36.4890, lng: 127.7290, propertyType: 'house', exclusiveArea: null, buildingYear: 2000 },
+
+  // 이준석 관련
+  { id: 'prop-104', name: '상계동 아파트 (이준석)', address: '서울 노원구 상계동', lat: 37.6560, lng: 127.0680, propertyType: 'apartment', exclusiveArea: 84.0, buildingYear: 1992 },
+
+  // 이재명 분당 자택
+  { id: 'prop-105', name: '분당 양지마을 금호아파트', address: '경기도 성남시 분당구', lat: 37.3750, lng: 127.1200, propertyType: 'apartment', exclusiveArea: 164.0, buildingYear: 1993 },
+
+  // 박영선 연희동 단독주택
+  { id: 'prop-106', name: '연희동 단독주택 (박영선)', address: '서울 서대문구 연희동', lat: 37.5660, lng: 126.9350, propertyType: 'house', exclusiveArea: 230.0, buildingYear: 1990 },
+
+  // === 고위공무원 관련 매물 (107~116) ===
+
+  // 최상목 관련
+  { id: 'prop-107', name: '용산 동자동 아파트', address: '서울 용산구 동자동', lat: 37.5490, lng: 126.9720, propertyType: 'apartment', exclusiveArea: 114.0, buildingYear: 2005 },
+
+  // 김태효 관련 (아크로비스타 → prop-030 재활용)
+  { id: 'prop-108', name: '여의도 종합상가', address: '서울 영등포구 여의도동', lat: 37.5210, lng: 126.9240, propertyType: 'building', exclusiveArea: null, buildingYear: 1980 },
+  { id: 'prop-109', name: '신사동 카로시티 상가', address: '서울 강남구 신사동', lat: 37.5195, lng: 127.0215, propertyType: 'building', exclusiveArea: null, buildingYear: 2015 },
+
+  // 조성명 관련
+  { id: 'prop-110', name: '강남 아파트 (조성명)', address: '서울 강남구 대치동', lat: 37.4955, lng: 127.0610, propertyType: 'apartment', exclusiveArea: 165.0, buildingYear: 2000 },
+  { id: 'prop-111', name: '고양시 오피스텔 38채', address: '경기도 고양시 일산동구', lat: 37.6580, lng: 126.7740, propertyType: 'officetel', exclusiveArea: null, buildingYear: 2010 },
+  { id: 'prop-112', name: '속초 오피스텔', address: '강원도 속초시', lat: 38.2070, lng: 128.5910, propertyType: 'officetel', exclusiveArea: null, buildingYear: 2012 },
+
+  // 이상경 관련
+  { id: 'prop-113', name: '판교 밸리 호반써밋', address: '경기도 성남시 분당구 삼평동', lat: 37.3890, lng: 127.1080, propertyType: 'apartment', exclusiveArea: 135.0, buildingYear: 2020 },
+  { id: 'prop-114', name: '판교 푸르지오그랑블', address: '경기도 성남시 분당구 삼평동', lat: 37.3880, lng: 127.1060, propertyType: 'apartment', exclusiveArea: 115.0, buildingYear: 2019 },
+
+  // 이형근 관련
+  { id: 'prop-115', name: '서초구 아파트 A (이형근)', address: '서울 서초구 서초동', lat: 37.4965, lng: 127.0240, propertyType: 'apartment', exclusiveArea: 165.0, buildingYear: 2010 },
+  { id: 'prop-116', name: '서초구 근린생활시설', address: '서울 서초구 서초동', lat: 37.4955, lng: 127.0250, propertyType: 'building', exclusiveArea: null, buildingYear: 2008 },
 ]
 
 // ─── Celebrity ↔ Property 연결 (검증된 데이터) ──────────────
@@ -430,12 +516,81 @@ export const celebrityProperties: SeedCelebrityProperty[] = [
   { celebrityId: 'pol-08', propertyId: 'prop-062', price: 200000, acquisitionDate: '2020-07', sourceType: 'verified', sourceNote: '재산공개 기준, 서초 아파트', sourceUrl: null },
   { celebrityId: 'pol-08', propertyId: 'prop-053', price: 350000, acquisitionDate: '2005-03', sourceType: 'verified', sourceNote: '재산공개 기준, 압구정 아파트', sourceUrl: null },
 
-  // 이재명 (1채)
+  // 이재명 (2채) — 헬리오시티 + 분당 양지마을 금호 164㎡
   { celebrityId: 'pol-09', propertyId: 'prop-044', price: 180000, acquisitionDate: '2019-04', sourceType: 'verified', sourceNote: '재산공개 기준', sourceUrl: null },
+  { celebrityId: 'pol-09', propertyId: 'prop-105', price: 290000, acquisitionDate: '1998-01', sourceType: 'verified', sourceNote: '분당 양지마을 금호 164㎡, 1998년 3.6억 매입, 2026년 29억 매물 (MBC, 머니투데이 2026)', sourceUrl: 'https://imnews.imbc.com/replay/2026/nwdesk/article/6803833_37004.html' },
 
   // 오세훈 (2채)
   { celebrityId: 'pol-10', propertyId: 'prop-054', price: 300000, acquisitionDate: '2000-06', sourceType: 'verified', sourceNote: '재산공개 기준, 압구정 아파트', sourceUrl: null },
   { celebrityId: 'pol-10', propertyId: 'prop-066', price: 500000, acquisitionDate: '2008-11', sourceType: 'verified', sourceNote: '재산공개 기준, 역삼동 빌딩', sourceUrl: null },
+
+  // 고동진 (1채) — 한남더힐 72.4억
+  { celebrityId: 'pol-11', propertyId: 'prop-004', price: 724000, acquisitionDate: '2020-01', sourceType: 'verified', sourceNote: '한남더힐 240.23㎡ 72.4억, 신규등록 의원 최고 부동산 (세계일보, 시사저널 2024)', sourceUrl: 'https://www.segye.com/newsView/20240828518995' },
+
+  // 김은혜 (1채) — 배우자 대치동 빌딩 187.9억
+  { celebrityId: 'pol-12', propertyId: 'prop-094', price: 1879000, acquisitionDate: '2018-01', sourceType: 'verified', sourceNote: '배우자 명의 대치동 빌딩 187.9억 (경인일보, 여성신문 2024)', sourceUrl: 'https://www.kyeongin.com/article/1706935' },
+
+  // 한동훈 (1채) — 서초구 아파트 ~20억
+  { celebrityId: 'pol-13', propertyId: 'prop-095', price: 200000, acquisitionDate: '2015-01', sourceType: 'verified', sourceNote: '서초동 아파트 보유, 총 재산 39억 (뉴스핌 2024)', sourceUrl: 'https://www.newspim.com/news/view/20240327001124' },
+
+  // 조국 (1채) — 방배동 아파트 16.7억
+  { celebrityId: 'pol-14', propertyId: 'prop-096', price: 167000, acquisitionDate: '2000-01', sourceType: 'verified', sourceNote: '방배동 삼익아파트 16.7억, 재건축 추진 (경향신문, 머니투데이)', sourceUrl: 'https://www.khan.co.kr/article/202408290001001' },
+
+  // 윤석열 (1채) — 배우자 김건희 서초 아크로비스타 15.69억
+  { celebrityId: 'pol-15', propertyId: 'prop-030', price: 156900, acquisitionDate: '2005-01', sourceType: 'verified', sourceNote: '배우자 김건희 명의 아크로비스타 15.69억 (뉴스타파 2025)', sourceUrl: 'https://newstapa.org/article/PCsSH' },
+
+  // 박정 (1채) — 마포구 상암동 빌딩 402억
+  { celebrityId: 'pol-16', propertyId: 'prop-097', price: 4022000, acquisitionDate: '2010-01', sourceType: 'verified', sourceNote: '마포구 상암동 빌딩 공시가 402.2억, 총 재산 360억 (파주타임즈, 헤럴드경제 2025)', sourceUrl: 'https://biz.heraldcorp.com/article/3091991' },
+
+  // 서명옥 (1채) — 압구정 한양아파트 30.9억
+  { celebrityId: 'pol-17', propertyId: 'prop-098', price: 309000, acquisitionDate: '2010-01', sourceType: 'verified', sourceNote: '압구정 한양아파트 30.9억 (한국일보 2025)', sourceUrl: 'https://www.hankookilbo.com/News/Read/A2025032618490002775' },
+
+  // 홍준표 (1채) — 잠실 아시아선수촌 20.5억 (1997년 매입)
+  { celebrityId: 'pol-18', propertyId: 'prop-099', price: 204800, acquisitionDate: '1997-01', sourceType: 'verified', sourceNote: '잠실 아시아선수촌 1997년 매입, 28년 보유, 현 20.48억 (뉴스1, 뉴스민 2025)', sourceUrl: 'https://www.news1.kr/local/daegu-gyeongbuk/5732235' },
+
+  // 김동연 (1채) — 배우자 도곡동 아파트 13억
+  { celebrityId: 'pol-19', propertyId: 'prop-100', price: 130000, acquisitionDate: '2005-01', sourceType: 'verified', sourceNote: '배우자 명의 도곡동 아파트 13억 (전매일보, 뉴스1 2024)', sourceUrl: 'https://www.jeonmae.co.kr/news/articleView.html?idxno=1024828' },
+
+  // 정점식 (1채) — 반포동 아파트
+  { celebrityId: 'pol-20', propertyId: 'prop-101', price: 420000, acquisitionDate: '2012-01', sourceType: 'verified', sourceNote: '반포동 아파트, 부동산 81.2억 중 주택 42억, 총 재산 99억 (경남일보 2025)', sourceUrl: 'https://www.gnnews.co.kr/news/articleView.html?idxno=607296' },
+
+  // 안철수 (1채 전세) — 분당 알파리움 전세 (부동산 소유 無)
+  { celebrityId: 'pol-21', propertyId: 'prop-102', price: 33500, acquisitionDate: '2020-01', sourceType: 'verified', sourceNote: '분당 백현동 알파리움1단지 전세 3.35억, 재산 1,368억이나 부동산 無 (매일일보, 아시아경제 2025)', sourceUrl: 'https://www.m-i.kr/news/articleView.html?idxno=809411' },
+
+  // 박덕흠 (1채) — 충북 토지+건물 310억
+  { celebrityId: 'pol-22', propertyId: 'prop-103', price: 3100000, acquisitionDate: '2000-01', sourceType: 'verified', sourceNote: '토지 240억+건물 70억, 대지 14건·전답 21건·아파트 등 13건 (노컷뉴스, 보은사람들)', sourceUrl: 'https://www.nocutnews.co.kr/news/6315293' },
+
+  // 이준석 (1채) — 노원구 상계동 아파트 7.28억
+  { celebrityId: 'pol-23', propertyId: 'prop-104', price: 72800, acquisitionDate: '2020-01', sourceType: 'verified', sourceNote: '노원구 상계동 아파트 7.28억 (경향신문 2024)', sourceUrl: 'https://www.khan.co.kr/article/202408290001001' },
+
+  // 박영선 추가 (1채) — 연희동 단독주택 14.86억
+  { celebrityId: 'pol-04', propertyId: 'prop-106', price: 148600, acquisitionDate: '2005-01', sourceType: 'verified', sourceNote: '본인 명의 연희동 단독주택 14.86억 (세계일보 2021)', sourceUrl: 'https://www.segye.com/newsView/20210320500416' },
+
+  // ========== 고위 공무원 (재산공개 기반) ==========
+
+  // 최상목 (1채) — 배우자 용산 동자동 아파트 13억, 총 재산 44.6억
+  { celebrityId: 'pol-24', propertyId: 'prop-107', price: 130000, acquisitionDate: '2010-01', sourceType: 'verified', sourceNote: '배우자 명의 용산 동자동 아파트 13억, 총 재산 44.6억 (뉴시스, 한국경제 2024)', sourceUrl: null },
+
+  // 김태효 (3채) — 아크로비스타 19.5억, 여의도 종합상가 15.2억, 신사동 카로시티 12.7억 / 총 148억
+  { celebrityId: 'pol-25', propertyId: 'prop-030', price: 195000, acquisitionDate: '2010-01', sourceType: 'verified', sourceNote: '서초 아크로비스타 19.5억 (재산공개 2024)', sourceUrl: null },
+  { celebrityId: 'pol-25', propertyId: 'prop-108', price: 152000, acquisitionDate: '2005-01', sourceType: 'verified', sourceNote: '여의도 종합상가 15.2억 (재산공개 2024)', sourceUrl: null },
+  { celebrityId: 'pol-25', propertyId: 'prop-109', price: 127000, acquisitionDate: '2015-01', sourceType: 'verified', sourceNote: '신사동 카로시티 상가 12.7억, 총 부동산 148억 (재산공개 2024)', sourceUrl: null },
+
+  // 조성명 (3채 대표) — 42채 최다주택 (강남아파트+고양오피스텔38채+속초오피스텔+배우자 건물)
+  { celebrityId: 'pol-26', propertyId: 'prop-110', price: 200000, acquisitionDate: '2000-01', sourceType: 'verified', sourceNote: '강남 대치동 아파트 (재산공개, 한겨레 2024)', sourceUrl: null },
+  { celebrityId: 'pol-26', propertyId: 'prop-111', price: 760000, acquisitionDate: '2010-01', sourceType: 'verified', sourceNote: '고양시 오피스텔 38채, 약 76억 추정 (한겨레, 서울경제 2024)', sourceUrl: null },
+  { celebrityId: 'pol-26', propertyId: 'prop-112', price: 30000, acquisitionDate: '2012-01', sourceType: 'verified', sourceNote: '속초 오피스텔, 42채 중 1채 (한겨레 2024)', sourceUrl: null },
+
+  // 이상경 (2채) — 판교 호반써밋 34.6억 + 푸르지오그랑블 22억 / 총 56.6억, 갭투자 논란 사의
+  { celebrityId: 'pol-27', propertyId: 'prop-113', price: 346000, acquisitionDate: '2022-01', sourceType: 'verified', sourceNote: '판교밸리호반써밋 34.6억 (한국경제, 뉴스1 2024)', sourceUrl: null },
+  { celebrityId: 'pol-27', propertyId: 'prop-114', price: 220000, acquisitionDate: '2020-01', sourceType: 'verified', sourceNote: '판교푸르지오그랑블 22억, 갭투자 논란으로 사의 (뉴스1, 조선일보 2024)', sourceUrl: null },
+
+  // 이형근 (2채) — 서초구 아파트+근린생활시설, 총 부동산 338억
+  { celebrityId: 'pol-28', propertyId: 'prop-115', price: 300000, acquisitionDate: '2010-01', sourceType: 'verified', sourceNote: '서초구 아파트 약 30억, 총 부동산 338억 (법률신문, 한겨레 2025)', sourceUrl: null },
+  { celebrityId: 'pol-28', propertyId: 'prop-116', price: 30500000, acquisitionDate: '2008-01', sourceType: 'verified', sourceNote: '서초구 근린생활시설 (건물가 약 305억), 총 부동산 338억 (법률신문 2025)', sourceUrl: null },
+
+  // 최지영 (1채) — 압구정 현대아파트 34.4억 (3:7 지분), 총 494억(비상장주식 445억)
+  { celebrityId: 'pol-29', propertyId: 'prop-053', price: 344000, acquisitionDate: '2005-01', sourceType: 'verified', sourceNote: '압구정 현대아파트 34.4억 (3:7 지분), 총 재산 494억 중 비상장주식 445억 (한국경제, 아시아경제 2024)', sourceUrl: null },
 
   // ========== 운동선수 (검증된 보도 기반) ==========
 

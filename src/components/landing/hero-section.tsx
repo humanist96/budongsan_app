@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
-import { MapPin, Gamepad2 } from 'lucide-react'
+import { MapPin, Trophy } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 interface CounterProps {
@@ -59,9 +59,9 @@ function AnimatedCounter({ end, suffix, label }: CounterProps) {
 }
 
 const stats = [
-  { end: 51, suffix: '명', label: '셀럽' },
-  { end: 93, suffix: '건', label: '매물 정보' },
-  { end: 2847, suffix: '억', label: '총 자산가치' },
+  { end: 70, suffix: '명', label: '셀럽' },
+  { end: 116, suffix: '건', label: '매물 정보' },
+  { end: 3900, suffix: '억', label: '총 자산가치' },
 ] as const
 
 export function HeroSection() {
@@ -76,8 +76,8 @@ export function HeroSection() {
         </h1>
 
         <p className="mt-4 md:mt-6 text-lg md:text-xl text-white/90 max-w-2xl mx-auto leading-relaxed">
-          연예인 · 정치인 · 운동선수 <strong>51명</strong>의 부동산{' '}
-          <strong>93건</strong>을 지도에서 탐험하세요
+          연예인 · 정치인 · 운동선수 <strong>70명</strong>의 부동산{' '}
+          <strong>116건</strong>을 지도에서 탐험하세요
         </p>
 
         <div className="mt-10 md:mt-14 grid grid-cols-3 gap-6 md:gap-12 max-w-lg mx-auto">
@@ -101,14 +101,14 @@ export function HeroSection() {
               지도에서 탐험하기
             </Button>
           </Link>
-          <Link href="/quiz">
+          <Link href="/rankings">
             <Button
               size="lg"
               variant="outline"
               className="h-12 px-8 text-base font-bold border-2 border-white text-white hover:bg-white/10 bg-transparent"
             >
-              <Gamepad2 className="h-5 w-5" />
-              가격 맞추기 퀴즈
+              <Trophy className="h-5 w-5" />
+              셀럽 랭킹 보기
             </Button>
           </Link>
         </div>
