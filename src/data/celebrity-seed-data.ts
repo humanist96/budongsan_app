@@ -131,21 +131,15 @@ export const celebrities: SeedCelebrity[] = [
   { id: 'ath-10', name: '황희찬', category: 'athlete', subCategory: '축구', description: 'EPL 울버햄튼 공격수', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/240622_%ED%99%A9%ED%9D%AC%EC%B0%AC_%ED%92%8B%EB%B3%BC_%ED%8E%98%EC%8A%A4%ED%8B%B0%EB%B2%8C.jpg/200px-240622_%ED%99%A9%ED%9D%AC%EC%B0%AC_%ED%92%8B%EB%B3%BC_%ED%8E%98%EC%8A%A4%ED%8B%B0%EB%B2%8C.jpg', isVerified: false },
   { id: 'ath-11', name: '이승엽', category: 'athlete', subCategory: '야구', description: '한일 홈런왕, 성수동 빌딩 293억 (현 1,167억)', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Lee_Seung-Yeop_%EC%9D%B4%EC%8A%B9%EC%97%BD_%EC%9D%BC%EA%B5%AC%EC%83%81_2016.png/200px-Lee_Seung-Yeop_%EC%9D%B4%EC%8A%B9%EC%97%BD_%EC%9D%BC%EA%B5%AC%EC%83%81_2016.png', isVerified: false },
 
-  // ========== 부동산전문가/유튜버 (15명) ==========
+  // ========== 부동산전문가/유튜버 (9명 — 매물 데이터 확인된 인물만) ==========
   { id: 'exp-01', name: '너바나(이정환)', category: 'expert', subCategory: '부동산 유튜버', description: '월급쟁이부자들 대표, 구독 189만. 부동산 ~50채, 순자산 100억+', isVerified: false },
   { id: 'exp-02', name: '부읽남(정태익)', category: 'expert', subCategory: '부동산 유튜버', description: '부동산 읽어주는 남자, 구독 136만. 부동산 30채+, 아파트·빌라·오피스텔 투자', isVerified: false },
   { id: 'exp-03', name: '주언규(신사임당)', category: 'expert', subCategory: '부동산/재테크 유튜버', description: '신사임당 채널 운영, 구독 125만. 마포구 동교동 5층 빌딩 36.5억 매입', isVerified: false },
   { id: 'exp-04', name: '빠숑(김학렬)', category: 'expert', subCategory: '부동산 유튜버', description: '스카이데일리 부동산 전문기자 출신, 구독 40만+. 부동산 투자 분석가', isVerified: false },
   { id: 'exp-05', name: '송희구', category: 'expert', subCategory: '토지 투자 유튜버', description: '토지 투자 전문가, 구독 13만+. 경기도 농지 다수, 총 자산 ~200억', isVerified: false },
-  { id: 'exp-06', name: '슈카(전석재)', category: 'expert', subCategory: '경제/부동산 유튜버', description: '슈카월드 운영, 구독 310만. 경제·부동산 해설 1위 채널', isVerified: false },
-  { id: 'exp-07', name: '집코노미(전형진)', category: 'expert', subCategory: '부동산 유튜버', description: '한국경제 기자 출신, 부동산 데이터 분석. 집코노미 채널 운영', isVerified: false },
   { id: 'exp-08', name: '김작가(김윤경)', category: 'expert', subCategory: '부동산 유튜버', description: '김작가 TV 운영, 구독 65만+. 아파트 투자 전문, 실전 투자 강의', isVerified: false },
   { id: 'exp-09', name: '렘군(이지영)', category: 'expert', subCategory: '부동산 유튜버', description: '부동산 데이터 분석가, 구독 25만+. 아파트 시장 전망·데이터 기반 분석', isVerified: false },
-  { id: 'exp-10', name: '부동산읽어주는지율', category: 'expert', subCategory: '부동산 유튜버', description: '지율쌤, 구독 30만+. 초보자 맞춤 부동산 투자 교육', isVerified: false },
   { id: 'exp-11', name: '잔쟁이(허재원)', category: 'expert', subCategory: '부동산 유튜버', description: '부동산 경매 전문가, 구독 20만+. 경매·공매 실전 투자', isVerified: false },
-  { id: 'exp-12', name: '홍춘옥', category: 'expert', subCategory: '이코노미스트', description: 'EAR리서치 대표, 전 키움증권 이코노미스트. 부동산·경제 분석 전문', isVerified: false },
-  { id: 'exp-13', name: '채상욱', category: 'expert', subCategory: '부동산 애널리스트', description: '전 하나금융투자 건설부동산 애널리스트, 부동산 데이터 분석 전문', isVerified: false },
-  { id: 'exp-14', name: '이광수', category: 'expert', subCategory: '부동산 애널리스트', description: '전 미래에셋증권 부동산 애널리스트, 상업용 부동산 전문', isVerified: false },
   { id: 'exp-15', name: '안유동산(안정균)', category: 'expert', subCategory: '부동산 유튜버', description: '안유동산 채널 운영, 구독 15만+. 재개발·재건축 전문', isVerified: false },
 ]
 
