@@ -15,6 +15,7 @@ interface NeighborResident {
   readonly name: string
   readonly category: CelebrityCategory
   readonly initial: string
+  readonly profileImageUrl: string | null
 }
 
 interface NeighborBuilding {
@@ -92,6 +93,7 @@ function computeNeighborBuildings(): readonly NeighborBuilding[] {
         name: celeb.name,
         category: celeb.category,
         initial: celeb.name.replace(/^BTS\s/, '').charAt(0),
+        profileImageUrl: celeb.profileImageUrl ?? null,
       })
       totalPrice += cp.price ?? 0
     }
@@ -189,9 +191,13 @@ function NeighborCard({
                 }}
               >
                 <div
-                  className={`w-12 h-12 rounded-full ${CATEGORY_BG_COLORS[resident.category]} ring-2 ${CATEGORY_RING_COLORS[resident.category]} ring-offset-2 ring-offset-background flex items-center justify-center text-white font-bold text-sm shadow-md`}
+                  className={`w-12 h-12 rounded-full ${resident.profileImageUrl ? 'bg-muted' : CATEGORY_BG_COLORS[resident.category]} ring-2 ${CATEGORY_RING_COLORS[resident.category]} ring-offset-2 ring-offset-background flex items-center justify-center text-white font-bold text-sm shadow-md overflow-hidden`}
                 >
-                  {resident.initial}
+                  {resident.profileImageUrl ? (
+                    <img src={resident.profileImageUrl} alt={resident.name} className="w-full h-full object-cover" />
+                  ) : (
+                    resident.initial
+                  )}
                 </div>
                 <span className="text-[11px] font-medium text-center leading-tight max-w-[80px] truncate">
                   {resident.name}

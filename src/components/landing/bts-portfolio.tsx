@@ -17,6 +17,7 @@ interface BTSMember {
   readonly stage: string
   readonly totalPrice: number // 만원
   readonly cashPurchase: boolean
+  readonly profileImageUrl: string | null
   readonly properties: readonly BTSProperty[]
 }
 
@@ -28,6 +29,7 @@ const btsMembers: readonly BTSMember[] = [
     stage: '진',
     totalPrice: 2626000,
     cashPurchase: true,
+    profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/BTS_Jin_on_June_12%2C_2024_%283%29.jpg/200px-BTS_Jin_on_June_12%2C_2024_%283%29.jpg',
     properties: [
       { name: '한남더힐 233㎡', price: 449000 },
       { name: '한남더힐 206㎡', price: 427000 },
@@ -39,6 +41,7 @@ const btsMembers: readonly BTSMember[] = [
     stage: '뷔',
     totalPrice: 1420000,
     cashPurchase: true,
+    profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/220624_%EB%B0%A9%ED%83%84%EC%86%8C%EB%85%84%EB%8B%A8_%EB%B7%94%281%29.jpg/200px-220624_%EB%B0%A9%ED%83%84%EC%86%8C%EB%85%84%EB%8B%A8_%EB%B7%94%281%29.jpg',
     properties: [{ name: 'PH129 청담 273㎡', price: 1420000 }],
   },
   {
@@ -46,6 +49,7 @@ const btsMembers: readonly BTSMember[] = [
     stage: '제이홉',
     totalPrice: 1200000,
     cashPurchase: true,
+    profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/J-Hope_at_the_2022_Fact_Music_Awards_on_October_8%2C_2022_%28cropped%29.jpg/200px-J-Hope_at_the_2022_Fact_Music_Awards_on_October_8%2C_2022_%28cropped%29.jpg',
     properties: [{ name: '아페르한강 PH 232㎡', price: 1200000 }],
   },
   {
@@ -53,6 +57,7 @@ const btsMembers: readonly BTSMember[] = [
     stage: '정국',
     totalPrice: 958000,
     cashPurchase: false,
+    profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Jung_Kook_of_BTS%2C_February_12%2C_2026_%281%29.png/200px-Jung_Kook_of_BTS%2C_February_12%2C_2026_%281%29.png',
     properties: [
       { name: '이태원 대저택 633㎡', price: 763000 },
       { name: '트리마제', price: 195000 },
@@ -63,6 +68,7 @@ const btsMembers: readonly BTSMember[] = [
     stage: 'RM',
     totalPrice: 636000,
     cashPurchase: true,
+    profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/RM_at_W_Korea_Love_Your_W%2C_November_2023.jpg/200px-RM_at_W_Korea_Love_Your_W%2C_November_2023.jpg',
     properties: [{ name: '나인원한남 244㎡', price: 636000 }],
   },
   {
@@ -70,6 +76,7 @@ const btsMembers: readonly BTSMember[] = [
     stage: '지민',
     totalPrice: 590000,
     cashPurchase: true,
+    profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Jimin_on_the_way_to_SBS_Radio%2C_31_March_2023_%282%29.jpg/200px-Jimin_on_the_way_to_SBS_Radio%2C_31_March_2023_%282%29.jpg',
     properties: [{ name: '나인원한남 244㎡', price: 590000 }],
   },
   {
@@ -77,6 +84,7 @@ const btsMembers: readonly BTSMember[] = [
     stage: '슈가',
     totalPrice: 340000,
     cashPurchase: false,
+    profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Suga_for_Marie_Claire_Korea%2C_May_2023_issue_07.png/200px-Suga_for_Marie_Claire_Korea%2C_May_2023_issue_07.png',
     properties: [{ name: '한남리버힐 244㎡', price: 340000 }],
   },
 ]
@@ -142,7 +150,12 @@ function MemberRow({
         onClick={() => setIsOpen((prev) => !prev)}
       >
         <div className="flex items-center gap-3 py-3">
-          <div className="w-16 md:w-20 shrink-0 text-right">
+          <div className="w-16 md:w-20 shrink-0 flex items-center justify-end gap-2">
+            {member.profileImageUrl && (
+              <div className="w-8 h-8 rounded-full overflow-hidden ring-1 ring-white/30 shrink-0">
+                <img src={member.profileImageUrl} alt={member.stage} className="w-full h-full object-cover" />
+              </div>
+            )}
             <span className="text-white/90 font-bold text-sm md:text-base">
               {member.stage}
             </span>

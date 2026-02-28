@@ -138,8 +138,12 @@ export default function RankingsPage() {
                   <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center font-bold text-sm text-primary">
                     {i + 1}
                   </div>
-                  <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center font-bold shrink-0">
-                    {celeb.name[0]}
+                  <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center font-bold shrink-0 overflow-hidden">
+                    {celeb.profile_image_url ? (
+                      <img src={celeb.profile_image_url} alt={celeb.name} className="w-full h-full object-cover" />
+                    ) : (
+                      celeb.name[0]
+                    )}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
@@ -178,7 +182,7 @@ function getDemoRankings(tab: RankingTab): RankingCelebrity[] {
     category: c.category,
     property_count: countMap.get(c.id) ?? 0,
     total_asset_value: totalMap.get(c.id) ?? 0,
-    profile_image_url: null,
+    profile_image_url: c.profileImageUrl ?? null,
   }))
 
   if (tab === 'top-price') {

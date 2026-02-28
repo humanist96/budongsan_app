@@ -14,6 +14,7 @@ interface InvestmentLegend {
   readonly currentPrice: number // 만원
   readonly multiplier: number
   readonly story: string
+  readonly profileImageUrl: string | null
 }
 
 // ─── Data ───────────────────────────────────────────────────
@@ -26,6 +27,7 @@ const legends: readonly InvestmentLegend[] = [
     currentPrice: 4500000,
     multiplier: 16,
     story: '경매 낙찰로 시작한 부동산 전설',
+    profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Seo_Jang-Hoon.jpg',
   },
   {
     name: '박찬호',
@@ -34,6 +36,7 @@ const legends: readonly InvestmentLegend[] = [
     currentPrice: 8000000,
     multiplier: 11,
     story: '연 임대수익만 13억',
+    profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Chan_Ho_Park_Yankees.jpg/200px-Chan_Ho_Park_Yankees.jpg',
   },
   {
     name: '유재석',
@@ -42,6 +45,7 @@ const legends: readonly InvestmentLegend[] = [
     currentPrice: 300000,
     multiplier: 7,
     story: '2000년 압구정 4.5억에 매입',
+    profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Yoo_Jae_Suk_going_to_work_at_Happy_Together_on_August_19%2C_2017_%281%29.jpg/200px-Yoo_Jae_Suk_going_to_work_at_Happy_Together_on_August_19%2C_2017_%281%29.jpg',
   },
   {
     name: '김연아',
@@ -50,6 +54,7 @@ const legends: readonly InvestmentLegend[] = [
     currentPrice: 850000,
     multiplier: 4,
     story: '흑석동 마크힐스 2011년 매입',
+    profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/YuNaKimInVancouver.jpg/200px-YuNaKimInVancouver.jpg',
   },
   {
     name: '이승엽',
@@ -58,6 +63,7 @@ const legends: readonly InvestmentLegend[] = [
     currentPrice: 11670000,
     multiplier: 4,
     story: '+874억, 절대수익 최대',
+    profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Lee_Seung-Yeop_%EC%9D%B4%EC%8A%B9%EC%97%BD_%EC%9D%BC%EA%B5%AC%EC%83%81_2016.png/200px-Lee_Seung-Yeop_%EC%9D%B4%EC%8A%B9%EC%97%BD_%EC%9D%BC%EA%B5%AC%EC%83%81_2016.png',
   },
 ]
 
@@ -126,9 +132,16 @@ function LegendCard({
       }}
     >
       <div className="flex items-center justify-between mb-4">
-        <div>
-          <h3 className="font-bold text-lg">{legend.name}</h3>
-          <span className="text-xs text-muted-foreground">{legend.category}</span>
+        <div className="flex items-center gap-3">
+          {legend.profileImageUrl && (
+            <div className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-emerald-200 dark:ring-emerald-700 shrink-0">
+              <img src={legend.profileImageUrl} alt={legend.name} className="w-full h-full object-cover" />
+            </div>
+          )}
+          <div>
+            <h3 className="font-bold text-lg">{legend.name}</h3>
+            <span className="text-xs text-muted-foreground">{legend.category}</span>
+          </div>
         </div>
         <Badge
           className="bg-gradient-to-r from-red-500 to-orange-500 text-white border-0 text-base font-black px-3 py-1 animate-pulse"

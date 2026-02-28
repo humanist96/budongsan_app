@@ -215,7 +215,7 @@ function getSeedCelebrity(id: string): CelebrityDetail | null {
     name: celeb.name,
     category: celeb.category,
     sub_category: celeb.subCategory,
-    profile_image_url: null,
+    profile_image_url: celeb.profileImageUrl ?? null,
     description: celeb.description,
     property_count: links.length,
     total_asset_value: totalValue,

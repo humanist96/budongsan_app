@@ -139,7 +139,7 @@ function getDemoCelebrities(
       name: c.name,
       category: c.category,
       sub_category: c.subCategory,
-      profile_image_url: null,
+      profile_image_url: c.profileImageUrl ?? null,
       description: c.description,
       property_count: countMap.get(c.id) ?? 0,
       total_asset_value: totalMap.get(c.id) ?? 0,
