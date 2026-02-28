@@ -12,7 +12,7 @@ interface MapCelebrityData {
   id: string
   celebrityId: string
   celebrityName: string
-  category: 'entertainer' | 'politician' | 'athlete'
+  category: 'entertainer' | 'politician' | 'athlete' | 'expert'
   propertyId: string
   propertyName: string
   address: string

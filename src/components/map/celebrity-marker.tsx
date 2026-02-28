@@ -19,6 +19,7 @@ const MARKER_COLORS: Record<CelebrityCategory, string> = {
   entertainer: '#ec4899',
   politician: '#3b82f6',
   athlete: '#22c55e',
+  expert: '#f59e0b',
 }
 
 function createMarkerIcon(category: CelebrityCategory, propertyCount: number): L.DivIcon {

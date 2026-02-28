@@ -1,4 +1,4 @@
-export type CelebrityCategory = 'entertainer' | 'politician' | 'athlete'
+export type CelebrityCategory = 'entertainer' | 'politician' | 'athlete' | 'expert'
 
 export type OwnershipType = 'owner' | 'tenant' | 'former_owner'
 
@@ -40,10 +40,12 @@ export const CATEGORY_LABELS: Record<CelebrityCategory, string> = {
   entertainer: '연예인',
   politician: '정치인',
   athlete: '운동선수',
+  expert: '부동산전문가',
 }
 
 export const CATEGORY_COLORS: Record<CelebrityCategory, string> = {
   entertainer: 'bg-pink-500',
   politician: 'bg-blue-500',
   athlete: 'bg-green-500',
+  expert: 'bg-amber-500',
 }

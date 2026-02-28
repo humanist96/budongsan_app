@@ -14,6 +14,7 @@ const badgeVariants = cva(
         entertainer: 'border-transparent bg-pink-500 text-white',
         politician: 'border-transparent bg-blue-500 text-white',
         athlete: 'border-transparent bg-green-500 text-white',
+        expert: 'border-transparent bg-amber-500 text-white',
       },
     },
     defaultVariants: {

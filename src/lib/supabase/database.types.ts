@@ -13,7 +13,7 @@ export interface Database {
         Row: {
           id: string
           name: string
-          category: 'entertainer' | 'politician' | 'athlete'
+          category: 'entertainer' | 'politician' | 'athlete' | 'expert'
           sub_category: string | null
           profile_image_url: string | null
           description: string | null
@@ -26,7 +26,7 @@ export interface Database {
         Insert: {
           id?: string
           name: string
-          category: 'entertainer' | 'politician' | 'athlete'
+          category: 'entertainer' | 'politician' | 'athlete' | 'expert'
           sub_category?: string | null
           profile_image_url?: string | null
           description?: string | null
@@ -39,7 +39,7 @@ export interface Database {
         Update: {
           id?: string
           name?: string
-          category?: 'entertainer' | 'politician' | 'athlete'
+          category?: 'entertainer' | 'politician' | 'athlete' | 'expert'
           sub_category?: string | null
           profile_image_url?: string | null
           description?: string | null
@@ -379,7 +379,7 @@ export interface Database {
         Row: {
           id: string
           name: string
-          category: 'entertainer' | 'politician' | 'athlete'
+          category: 'entertainer' | 'politician' | 'athlete' | 'expert'
           property_count: number
           total_asset_value: number
           profile_image_url: string | null

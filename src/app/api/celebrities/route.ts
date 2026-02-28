@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
     .select('*', { count: 'exact' })
 
   if (category) {
-    query = query.eq('category', category as 'entertainer' | 'politician' | 'athlete')
+    query = query.eq('category', category as 'entertainer' | 'politician' | 'athlete' | 'expert')
   }
 
   if (multiOwnerOnly) {

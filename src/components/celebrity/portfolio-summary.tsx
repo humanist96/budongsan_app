@@ -54,12 +54,14 @@ const CATEGORY_GRADIENTS: Record<CelebrityCategory, string> = {
   entertainer: 'from-pink-500/10 to-rose-500/10 dark:from-pink-500/20 dark:to-rose-500/20',
   politician: 'from-blue-500/10 to-indigo-500/10 dark:from-blue-500/20 dark:to-indigo-500/20',
   athlete: 'from-emerald-500/10 to-teal-500/10 dark:from-emerald-500/20 dark:to-teal-500/20',
+  expert: 'from-amber-500/10 to-orange-500/10 dark:from-amber-500/20 dark:to-orange-500/20',
 }
 
 const CATEGORY_ACCENT: Record<CelebrityCategory, string> = {
   entertainer: 'text-pink-600 dark:text-pink-400',
   politician: 'text-blue-600 dark:text-blue-400',
   athlete: 'text-emerald-600 dark:text-emerald-400',
+  expert: 'text-amber-600 dark:text-amber-400',
 }
 
 interface PortfolioSummaryProps {

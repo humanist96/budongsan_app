@@ -44,7 +44,7 @@ interface FilterState {
 }
 
 const defaultFilters = {
-  categories: ['entertainer', 'politician', 'athlete'] as CelebrityCategory[],
+  categories: ['entertainer', 'politician', 'athlete', 'expert'] as CelebrityCategory[],
   multiOwnerOnly: false,
   searchQuery: '',
   minPropertyCount: 0,

@@ -130,6 +130,23 @@ export const celebrities: SeedCelebrity[] = [
   { id: 'ath-09', name: '김광현', category: 'athlete', subCategory: '야구', description: 'MLB 출신, SSG 랜더스 투수', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Kim_Kwang-hyun_2019_Premier_12.jpg/200px-Kim_Kwang-hyun_2019_Premier_12.jpg', isVerified: false },
   { id: 'ath-10', name: '황희찬', category: 'athlete', subCategory: '축구', description: 'EPL 울버햄튼 공격수', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/240622_%ED%99%A9%ED%9D%AC%EC%B0%AC_%ED%92%8B%EB%B3%BC_%ED%8E%98%EC%8A%A4%ED%8B%B0%EB%B2%8C.jpg/200px-240622_%ED%99%A9%ED%9D%AC%EC%B0%AC_%ED%92%8B%EB%B3%BC_%ED%8E%98%EC%8A%A4%ED%8B%B0%EB%B2%8C.jpg', isVerified: false },
   { id: 'ath-11', name: '이승엽', category: 'athlete', subCategory: '야구', description: '한일 홈런왕, 성수동 빌딩 293억 (현 1,167억)', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Lee_Seung-Yeop_%EC%9D%B4%EC%8A%B9%EC%97%BD_%EC%9D%BC%EA%B5%AC%EC%83%81_2016.png/200px-Lee_Seung-Yeop_%EC%9D%B4%EC%8A%B9%EC%97%BD_%EC%9D%BC%EA%B5%AC%EC%83%81_2016.png', isVerified: false },
+
+  // ========== 부동산전문가/유튜버 (15명) ==========
+  { id: 'exp-01', name: '너바나(이정환)', category: 'expert', subCategory: '부동산 유튜버', description: '월급쟁이부자들 대표, 구독 189만. 부동산 ~50채, 순자산 100억+', isVerified: false },
+  { id: 'exp-02', name: '부읽남(정태익)', category: 'expert', subCategory: '부동산 유튜버', description: '부동산 읽어주는 남자, 구독 136만. 부동산 30채+, 아파트·빌라·오피스텔 투자', isVerified: false },
+  { id: 'exp-03', name: '주언규(신사임당)', category: 'expert', subCategory: '부동산/재테크 유튜버', description: '신사임당 채널 운영, 구독 125만. 마포구 동교동 5층 빌딩 36.5억 매입', isVerified: false },
+  { id: 'exp-04', name: '빠숑(김학렬)', category: 'expert', subCategory: '부동산 유튜버', description: '스카이데일리 부동산 전문기자 출신, 구독 40만+. 부동산 투자 분석가', isVerified: false },
+  { id: 'exp-05', name: '송희구', category: 'expert', subCategory: '토지 투자 유튜버', description: '토지 투자 전문가, 구독 13만+. 경기도 농지 다수, 총 자산 ~200억', isVerified: false },
+  { id: 'exp-06', name: '슈카(전석재)', category: 'expert', subCategory: '경제/부동산 유튜버', description: '슈카월드 운영, 구독 310만. 경제·부동산 해설 1위 채널', isVerified: false },
+  { id: 'exp-07', name: '집코노미(전형진)', category: 'expert', subCategory: '부동산 유튜버', description: '한국경제 기자 출신, 부동산 데이터 분석. 집코노미 채널 운영', isVerified: false },
+  { id: 'exp-08', name: '김작가(김윤경)', category: 'expert', subCategory: '부동산 유튜버', description: '김작가 TV 운영, 구독 65만+. 아파트 투자 전문, 실전 투자 강의', isVerified: false },
+  { id: 'exp-09', name: '렘군(이지영)', category: 'expert', subCategory: '부동산 유튜버', description: '부동산 데이터 분석가, 구독 25만+. 아파트 시장 전망·데이터 기반 분석', isVerified: false },
+  { id: 'exp-10', name: '부동산읽어주는지율', category: 'expert', subCategory: '부동산 유튜버', description: '지율쌤, 구독 30만+. 초보자 맞춤 부동산 투자 교육', isVerified: false },
+  { id: 'exp-11', name: '잔쟁이(허재원)', category: 'expert', subCategory: '부동산 유튜버', description: '부동산 경매 전문가, 구독 20만+. 경매·공매 실전 투자', isVerified: false },
+  { id: 'exp-12', name: '홍춘옥', category: 'expert', subCategory: '이코노미스트', description: 'EAR리서치 대표, 전 키움증권 이코노미스트. 부동산·경제 분석 전문', isVerified: false },
+  { id: 'exp-13', name: '채상욱', category: 'expert', subCategory: '부동산 애널리스트', description: '전 하나금융투자 건설부동산 애널리스트, 부동산 데이터 분석 전문', isVerified: false },
+  { id: 'exp-14', name: '이광수', category: 'expert', subCategory: '부동산 애널리스트', description: '전 미래에셋증권 부동산 애널리스트, 상업용 부동산 전문', isVerified: false },
+  { id: 'exp-15', name: '안유동산(안정균)', category: 'expert', subCategory: '부동산 유튜버', description: '안유동산 채널 운영, 구독 15만+. 재개발·재건축 전문', isVerified: false },
 ]
 
 // ─── Properties (116개) ─────────────────────────────────────
@@ -366,6 +383,42 @@ export const properties: SeedProperty[] = [
   // 이형근 관련
   { id: 'prop-115', name: '서초구 아파트 A (이형근)', address: '서울 서초구 서초동', lat: 37.4965, lng: 127.0240, propertyType: 'apartment', exclusiveArea: 165.0, buildingYear: 2010 },
   { id: 'prop-116', name: '서초구 근린생활시설', address: '서울 서초구 서초동', lat: 37.4955, lng: 127.0250, propertyType: 'building', exclusiveArea: null, buildingYear: 2008 },
+
+  // === 부동산전문가/유튜버 관련 매물 (117~132) ===
+
+  // 너바나(이정환) 관련 — 서울/수도권 소형 아파트·빌라·오피스텔 ~50채
+  { id: 'prop-117', name: '서울 소형 아파트 A (너바나)', address: '서울 노원구 상계동', lat: 37.6550, lng: 127.0660, propertyType: 'apartment', exclusiveArea: 59.0, buildingYear: 2000 },
+  { id: 'prop-118', name: '인천 오피스텔 (너바나)', address: '인천 부평구 부평동', lat: 37.4870, lng: 126.7240, propertyType: 'officetel', exclusiveArea: 33.0, buildingYear: 2010 },
+  { id: 'prop-119', name: '수원 빌라 (너바나)', address: '경기도 수원시 권선구', lat: 37.2460, lng: 127.0300, propertyType: 'villa', exclusiveArea: 56.0, buildingYear: 2005 },
+
+  // 부읽남(정태익) 관련 — 수도권 아파트·빌라 30채+
+  { id: 'prop-120', name: '서울 소형 아파트 (부읽남)', address: '서울 도봉구 방학동', lat: 37.6690, lng: 127.0480, propertyType: 'apartment', exclusiveArea: 59.0, buildingYear: 1998 },
+  { id: 'prop-121', name: '경기 빌라 (부읽남)', address: '경기도 의정부시 의정부동', lat: 37.7380, lng: 127.0340, propertyType: 'villa', exclusiveArea: 46.0, buildingYear: 2003 },
+
+  // 주언규(신사임당) 관련 — 마포구 동교동 5층 빌딩 36.5억
+  { id: 'prop-122', name: '동교동 5층 빌딩 (주언규)', address: '서울 마포구 동교동', lat: 37.5570, lng: 126.9230, propertyType: 'building', exclusiveArea: null, buildingYear: 2000 },
+
+  // 빠숑(김학렬) 관련 — 서울 아파트 보유
+  { id: 'prop-123', name: '서울 아파트 (빠숑)', address: '서울 마포구 공덕동', lat: 37.5440, lng: 126.9510, propertyType: 'apartment', exclusiveArea: 84.0, buildingYear: 2015 },
+
+  // 송희구 관련 — 경기도 토지·농지 다수, 총 ~200억
+  { id: 'prop-124', name: '경기도 농지 A (송희구)', address: '경기도 화성시', lat: 37.1990, lng: 126.8310, propertyType: 'land', exclusiveArea: null, buildingYear: null },
+  { id: 'prop-125', name: '경기도 농지 B (송희구)', address: '경기도 평택시', lat: 36.9920, lng: 127.0890, propertyType: 'land', exclusiveArea: null, buildingYear: null },
+  { id: 'prop-126', name: '경기도 토지 C (송희구)', address: '경기도 용인시', lat: 37.2410, lng: 127.1780, propertyType: 'land', exclusiveArea: null, buildingYear: null },
+
+  // 김작가(김윤경) 관련 — 수도권 아파트
+  { id: 'prop-127', name: '서울 아파트 (김작가)', address: '서울 강북구 미아동', lat: 37.6120, lng: 127.0280, propertyType: 'apartment', exclusiveArea: 84.0, buildingYear: 2005 },
+
+  // 렘군(이지영) 관련 — 부산 아파트
+  { id: 'prop-128', name: '부산 아파트 (렘군)', address: '부산 해운대구 우동', lat: 35.1630, lng: 129.1600, propertyType: 'apartment', exclusiveArea: 84.0, buildingYear: 2010 },
+
+  // 잔쟁이(허재원) 관련 — 경매 매입 물건
+  { id: 'prop-129', name: '경매 낙찰 빌라 (잔쟁이)', address: '서울 관악구 봉천동', lat: 37.4780, lng: 126.9530, propertyType: 'villa', exclusiveArea: 59.0, buildingYear: 1995 },
+  { id: 'prop-130', name: '경매 낙찰 오피스텔 (잔쟁이)', address: '경기도 안양시 만안구', lat: 37.3940, lng: 126.9260, propertyType: 'officetel', exclusiveArea: 33.0, buildingYear: 2008 },
+
+  // 안유동산(안정균) 관련 — 재개발 투자
+  { id: 'prop-131', name: '재개발 구역 빌라 (안유동산)', address: '서울 성북구 장위동', lat: 37.6110, lng: 127.0540, propertyType: 'villa', exclusiveArea: 46.0, buildingYear: 1985 },
+  { id: 'prop-132', name: '재건축 아파트 (안유동산)', address: '서울 강동구 둔촌동', lat: 37.5290, lng: 127.1350, propertyType: 'apartment', exclusiveArea: 84.0, buildingYear: 1980 },
 ]
 
 // ─── Celebrity ↔ Property 연결 (검증된 데이터) ──────────────
@@ -634,6 +687,42 @@ export const celebrityProperties: SeedCelebrityProperty[] = [
 
   // 이승엽 (1채) — 성수동 빌딩 293억, 현 ~1,167억
   { celebrityId: 'ath-11', propertyId: 'prop-085', price: 2930000, acquisitionDate: '2009-07', estimatedCurrentValue: 11670000, highlight: '+874억, 절대수익 최대', sourceType: 'reported', sourceNote: '성수동 빌딩 뚝섬역 도보 2분, 293억(현금193억+대출116억), 현 ~1,167억 (뉴스1, 헤럴드경제)', sourceUrl: 'https://www.news1.kr/realestate/general/5364798' },
+
+  // ========== 부동산전문가/유튜버 (보도·유튜브 공개 기반) ==========
+
+  // 너바나/이정환 (3채 대표) — 부동산 ~50채, 순자산 100억+
+  { celebrityId: 'exp-01', propertyId: 'prop-117', price: 15000, acquisitionDate: '2014-01', estimatedCurrentValue: 35000, highlight: '50채 보유, 순자산 100억+', sourceType: 'reported', sourceNote: '월급쟁이부자들 유튜브·저서 공개, 서울·수도권 소형 아파트·빌라 50채+', sourceUrl: null },
+  { celebrityId: 'exp-01', propertyId: 'prop-118', price: 8000, acquisitionDate: '2016-01', estimatedCurrentValue: 15000, sourceType: 'reported', sourceNote: '인천 오피스텔, 임대수익 투자 (유튜브 공개)', sourceUrl: null },
+  { celebrityId: 'exp-01', propertyId: 'prop-119', price: 10000, acquisitionDate: '2015-06', estimatedCurrentValue: 20000, sourceType: 'reported', sourceNote: '수원 빌라, 갭투자 사례 (유튜브 공개)', sourceUrl: null },
+
+  // 부읽남/정태익 (2채 대표) — 부동산 30채+
+  { celebrityId: 'exp-02', propertyId: 'prop-120', price: 12000, acquisitionDate: '2015-01', estimatedCurrentValue: 30000, highlight: '30채+ 보유, 갭투자 전문', sourceType: 'reported', sourceNote: '저서·유튜브 공개, 수도권 아파트·빌라 30채+ 보유', sourceUrl: null },
+  { celebrityId: 'exp-02', propertyId: 'prop-121', price: 7000, acquisitionDate: '2016-06', estimatedCurrentValue: 15000, sourceType: 'reported', sourceNote: '의정부 빌라, 저가 매입 후 시세차익 (유튜브 공개)', sourceUrl: null },
+
+  // 주언규/신사임당 (1채) — 동교동 5층 빌딩 36.5억 (2020.02)
+  { celebrityId: 'exp-03', propertyId: 'prop-122', price: 365000, acquisitionDate: '2020-02', estimatedCurrentValue: 460000, highlight: '36.5억 빌딩 매입, 현 ~46억', sourceType: 'reported', sourceNote: '마포구 동교동 5층 빌딩 36.5억 매입 (2020.02), 현 추정 시세 약 46억 (매일경제, 유튜브 공개)', sourceUrl: null },
+
+  // 빠숑/김학렬 (1채) — 서울 아파트 보유
+  { celebrityId: 'exp-04', propertyId: 'prop-123', price: 80000, acquisitionDate: '2018-01', estimatedCurrentValue: 130000, sourceType: 'unverified', sourceNote: '마포 공덕동 아파트 보유 추정 (방송·강연 언급)', sourceUrl: null },
+
+  // 송희구 (3채 대표) — 경기도 토지·농지 다수, 총 ~200억
+  { celebrityId: 'exp-05', propertyId: 'prop-124', price: 500000, acquisitionDate: '2010-01', estimatedCurrentValue: 800000, highlight: '토지 투자, 총 자산 ~200억', sourceType: 'reported', sourceNote: '경기도 화성 농지, 토지 투자 전문 (유튜브·저서 공개)', sourceUrl: null },
+  { celebrityId: 'exp-05', propertyId: 'prop-125', price: 300000, acquisitionDate: '2012-01', estimatedCurrentValue: 500000, sourceType: 'reported', sourceNote: '평택 농지, 개발 기대 투자 (유튜브 공개)', sourceUrl: null },
+  { celebrityId: 'exp-05', propertyId: 'prop-126', price: 400000, acquisitionDate: '2015-01', estimatedCurrentValue: 700000, sourceType: 'reported', sourceNote: '용인 토지, 도시화 기대 투자 (유튜브 공개)', sourceUrl: null },
+
+  // 김작가/김윤경 (1채)
+  { celebrityId: 'exp-08', propertyId: 'prop-127', price: 25000, acquisitionDate: '2017-01', estimatedCurrentValue: 50000, sourceType: 'unverified', sourceNote: '서울 강북 아파트 보유 추정 (방송·강연 언급)', sourceUrl: null },
+
+  // 렘군/이지영 (1채)
+  { celebrityId: 'exp-09', propertyId: 'prop-128', price: 30000, acquisitionDate: '2018-01', estimatedCurrentValue: 55000, sourceType: 'unverified', sourceNote: '부산 해운대 아파트 보유 추정 (유튜브 언급)', sourceUrl: null },
+
+  // 잔쟁이/허재원 (2채) — 경매 낙찰
+  { celebrityId: 'exp-11', propertyId: 'prop-129', price: 8000, acquisitionDate: '2019-06', estimatedCurrentValue: 18000, highlight: '경매 낙찰가 40%, 수익률 125%', sourceType: 'reported', sourceNote: '관악구 빌라 경매 낙찰, 감정가 대비 40% 매입 (유튜브 공개)', sourceUrl: null },
+  { celebrityId: 'exp-11', propertyId: 'prop-130', price: 5000, acquisitionDate: '2020-03', estimatedCurrentValue: 9000, sourceType: 'reported', sourceNote: '안양 오피스텔 경매 낙찰 (유튜브 공개)', sourceUrl: null },
+
+  // 안유동산/안정균 (2채) — 재개발 투자
+  { celebrityId: 'exp-15', propertyId: 'prop-131', price: 15000, acquisitionDate: '2018-01', estimatedCurrentValue: 40000, highlight: '재개발 투자, ×2.7', sourceType: 'reported', sourceNote: '성북구 장위뉴타운 재개발 구역 빌라 (유튜브 공개)', sourceUrl: null },
+  { celebrityId: 'exp-15', propertyId: 'prop-132', price: 50000, acquisitionDate: '2019-01', estimatedCurrentValue: 120000, sourceType: 'reported', sourceNote: '강동구 둔촌주공 재건축 아파트 (유튜브 공개)', sourceUrl: null },
 ]
 
 // ─── Helper: 셀럽별 보유 매물 수 계산 ──────────────────────
@@ -648,7 +737,7 @@ export interface MapCelebrityData {
   id: string
   celebrityId: string
   celebrityName: string
-  category: 'entertainer' | 'politician' | 'athlete'
+  category: CelebrityCategory
   propertyId: string
   propertyName: string
   address: string
@@ -696,6 +785,7 @@ export const SEED_STATS = {
   entertainers: celebrities.filter((c) => c.category === 'entertainer').length,
   politicians: celebrities.filter((c) => c.category === 'politician').length,
   athletes: celebrities.filter((c) => c.category === 'athlete').length,
+  experts: celebrities.filter((c) => c.category === 'expert').length,
   totalProperties: properties.length,
   totalLinks: celebrityProperties.length,
 } as const

@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge'
 import { useFilterStore } from '@/stores/map-store'
 import { CATEGORY_LABELS, type CelebrityCategory } from '@/types'
 
-const categories: CelebrityCategory[] = ['entertainer', 'politician', 'athlete']
+const categories: CelebrityCategory[] = ['entertainer', 'politician', 'athlete', 'expert']
 
 export function MapFilterPanel() {
   const {

@@ -11,7 +11,7 @@ import type { Celebrity, CelebrityCategory } from '@/types'
 import { CATEGORY_LABELS } from '@/types'
 import { celebrities as seedCelebrities, celebrityProperties as seedCPs } from '@/data/celebrity-seed-data'
 
-const categories: CelebrityCategory[] = ['entertainer', 'politician', 'athlete']
+const categories: CelebrityCategory[] = ['entertainer', 'politician', 'athlete', 'expert']
 
 export default function CelebrityListPage() {
   const [celebrities, setCelebrities] = useState<Celebrity[]>([])

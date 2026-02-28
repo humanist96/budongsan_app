@@ -21,6 +21,7 @@ const CATEGORY_CHART_COLORS: Record<CelebrityCategory, { stroke: string; fill: s
   entertainer: { stroke: '#ec4899', fill: 'url(#grad-entertainer)' },
   politician: { stroke: '#3b82f6', fill: 'url(#grad-politician)' },
   athlete: { stroke: '#10b981', fill: 'url(#grad-athlete)' },
+  expert: { stroke: '#f59e0b', fill: 'url(#grad-expert)' },
 }
 
 // ─── Main Component ─────────────────────────────────────────
@@ -86,6 +87,10 @@ export function PortfolioValueChart({
               <linearGradient id="grad-athlete" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#10b981" stopOpacity={0.3} />
                 <stop offset="95%" stopColor="#10b981" stopOpacity={0.05} />
+              </linearGradient>
+              <linearGradient id="grad-expert" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.3} />
+                <stop offset="95%" stopColor="#f59e0b" stopOpacity={0.05} />
               </linearGradient>
             </defs>
 

@@ -32,12 +32,14 @@ const CATEGORY_RING_COLORS: Record<CelebrityCategory, string> = {
   entertainer: 'ring-pink-400',
   politician: 'ring-blue-400',
   athlete: 'ring-green-400',
+  expert: 'ring-amber-400',
 }
 
 const CATEGORY_BG_COLORS: Record<CelebrityCategory, string> = {
   entertainer: 'bg-pink-500',
   politician: 'bg-blue-500',
   athlete: 'bg-green-500',
+  expert: 'bg-amber-500',
 }
 
 const CHEMISTRY_GRADIENTS: readonly string[] = [

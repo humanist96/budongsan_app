@@ -22,12 +22,14 @@ const CATEGORY_BUY_COLOR: Record<CelebrityCategory, string> = {
   entertainer: 'bg-pink-500',
   politician: 'bg-blue-500',
   athlete: 'bg-emerald-500',
+  expert: 'bg-amber-500',
 }
 
 const CATEGORY_LINE_COLOR: Record<CelebrityCategory, string> = {
   entertainer: 'bg-pink-200 dark:bg-pink-800',
   politician: 'bg-blue-200 dark:bg-blue-800',
   athlete: 'bg-emerald-200 dark:bg-emerald-800',
+  expert: 'bg-amber-200 dark:bg-amber-800',
 }
 
 // ─── Timeline Node ──────────────────────────────────────────
