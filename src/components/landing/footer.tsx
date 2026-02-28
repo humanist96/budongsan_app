@@ -23,7 +23,7 @@ export function Footer() {
         </div>
 
         <div className="mt-8 pt-6 border-t text-center text-xs text-muted-foreground">
-          &copy; 2024 셀럽하우스맵. All rights reserved.
+          &copy; 2026 셀럽하우스맵 · 정케빈. All rights reserved.
         </div>
       </div>
     </footer>
