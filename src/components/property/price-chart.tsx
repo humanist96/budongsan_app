@@ -8,17 +8,26 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  ReferenceDot,
+  Label,
 } from 'recharts'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { formatPrice } from '@/lib/utils'
 import type { Transaction } from '@/types'
 
+export interface AcquisitionMarker {
+  readonly celebrityName: string
+  readonly date: string // 'YYYY-MM'
+  readonly price: number | null
+}
+
 interface PriceChartProps {
   transactions: Transaction[]
   propertyName: string
+  acquisitionMarkers?: AcquisitionMarker[]
 }
 
-export function PriceChart({ transactions, propertyName }: PriceChartProps) {
+export function PriceChart({ transactions, propertyName, acquisitionMarkers = [] }: PriceChartProps) {
   if (transactions.length === 0) {
     return (
       <Card>
@@ -39,6 +48,20 @@ export function PriceChart({ transactions, propertyName }: PriceChartProps) {
     price: t.transaction_amount,
     floor: t.floor,
   }))
+
+  // Match acquisition markers to the closest chart data point
+  const markerDots = acquisitionMarkers
+    .filter((m) => m.price)
+    .map((marker) => {
+      const markerDate = marker.date.replace('-', '.')
+      // Find closest date in chart data
+      const exactMatch = chartData.find((d) => d.date === markerDate)
+      if (exactMatch) {
+        return { x: exactMatch.date, y: exactMatch.price, label: `${marker.celebrityName} 매입 ${formatPrice(marker.price!)}원` }
+      }
+      // If no exact match, place on the chart using marker price
+      return { x: markerDate, y: marker.price!, label: `${marker.celebrityName} 매입 ${formatPrice(marker.price!)}원` }
+    })
 
   return (
     <Card>
@@ -76,6 +99,24 @@ export function PriceChart({ transactions, propertyName }: PriceChartProps) {
               dot={{ fill: 'var(--chart-1)', r: 4 }}
               activeDot={{ r: 6 }}
             />
+            {markerDots.map((dot) => (
+              <ReferenceDot
+                key={dot.label}
+                x={dot.x}
+                y={dot.y}
+                r={7}
+                fill="#f59e0b"
+                stroke="white"
+                strokeWidth={2}
+              >
+                <Label
+                  value={dot.label}
+                  position="top"
+                  offset={10}
+                  style={{ fontSize: 10, fill: 'var(--foreground)' }}
+                />
+              </ReferenceDot>
+            ))}
           </LineChart>
         </ResponsiveContainer>
       </CardContent>

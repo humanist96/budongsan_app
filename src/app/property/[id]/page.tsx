@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 import { PriceChart } from '@/components/property/price-chart'
+import type { AcquisitionMarker } from '@/components/property/price-chart'
 import { TransactionHistory } from '@/components/property/transaction-history'
 import { createClient } from '@/lib/supabase/client'
 import { formatPrice, formatArea, formatPyeong, formatNumber } from '@/lib/utils'
@@ -28,6 +29,7 @@ import {
 } from '@/data/celebrity-seed-data'
 import { transactions as seedTransactions } from '@/data/transaction-seed-data'
 import { PriceLinks } from '@/components/property/price-links'
+import { getPropertyAcquisitionEvents } from '@/data/timeline-helpers'
 
 interface PropertyDetail extends Property {
   celebrity_properties: Array<{
@@ -233,7 +235,11 @@ export default function PropertyDetailPage({ params }: { params: Promise<{ id: s
 
       <div className="space-y-6">
         <PriceLinks propertyName={property.name} address={property.address} />
-        <PriceChart transactions={property.transactions} propertyName={property.name} />
+        <PriceChart
+          transactions={property.transactions}
+          propertyName={property.name}
+          acquisitionMarkers={getPropertyAcquisitionEvents(id) as AcquisitionMarker[]}
+        />
         <TransactionHistory transactions={property.transactions} />
       </div>
     </div>

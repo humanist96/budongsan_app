@@ -1,13 +1,17 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { ArrowLeft, Building2, TrendingUp, ShieldCheck } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import { MultiOwnerBadge } from '@/components/celebrity/multi-owner-badge'
 import { CelebrityPropertyList } from '@/components/celebrity/celebrity-property-list'
+import { PortfolioSummary } from '@/components/celebrity/portfolio-summary'
+import { CelebrityTimeline } from '@/components/celebrity/celebrity-timeline'
+import { PortfolioValueChart } from '@/components/celebrity/portfolio-value-chart'
 import { createClient } from '@/lib/supabase/client'
 import { formatPrice } from '@/lib/utils'
 import type { CelebrityCategory } from '@/types'
@@ -17,6 +21,11 @@ import {
   properties as seedProperties,
   celebrityProperties as seedCPs,
 } from '@/data/celebrity-seed-data'
+import {
+  getTimelineEvents,
+  getPortfolioDataPoints,
+  getCelebrityROI,
+} from '@/data/timeline-helpers'
 
 interface CelebrityDetail {
   id: string
@@ -99,6 +108,10 @@ export function CelebrityDetailClient({ id }: CelebrityDetailClientProps) {
 
     fetchData()
   }, [id])
+
+  const timelineEvents = useMemo(() => getTimelineEvents(id), [id])
+  const portfolioData = useMemo(() => getPortfolioDataPoints(id), [id])
+  const roi = useMemo(() => getCelebrityROI(id), [id])
 
   if (loading) {
     return (
@@ -194,10 +207,38 @@ export function CelebrityDetailClient({ id }: CelebrityDetailClientProps) {
         </CardContent>
       </Card>
 
-      <CelebrityPropertyList
-        items={celebrity.celebrity_properties as never[]}
-        totalAssetValue={celebrity.total_asset_value}
-      />
+      <Tabs defaultValue="portfolio">
+        <TabsList>
+          <TabsTrigger value="portfolio">포트폴리오</TabsTrigger>
+          <TabsTrigger value="timeline">타임라인</TabsTrigger>
+          <TabsTrigger value="properties">보유 부동산</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="portfolio">
+          <div className="space-y-4">
+            <PortfolioSummary roi={roi} category={celebrity.category} />
+            <PortfolioValueChart
+              dataPoints={portfolioData}
+              category={celebrity.category}
+            />
+          </div>
+        </TabsContent>
+
+        <TabsContent value="timeline">
+          <CelebrityTimeline
+            events={timelineEvents}
+            category={celebrity.category}
+            currentPortfolioValue={roi.currentValue}
+          />
+        </TabsContent>
+
+        <TabsContent value="properties">
+          <CelebrityPropertyList
+            items={celebrity.celebrity_properties as never[]}
+            totalAssetValue={celebrity.total_asset_value}
+          />
+        </TabsContent>
+      </Tabs>
     </div>
   )
 }
