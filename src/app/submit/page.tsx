@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
+import { addSubmission } from '@/lib/submissions-store'
 
 type SubmitState = 'idle' | 'submitting' | 'success' | 'error'
 
@@ -18,7 +19,7 @@ export default function SubmitPage() {
   const [state, setState] = useState<SubmitState>('idle')
   const [errorMessage, setErrorMessage] = useState('')
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
     if (!celebrityName.trim() || !propertyAddress.trim()) {
@@ -31,31 +32,20 @@ export default function SubmitPage() {
     setErrorMessage('')
 
     try {
-      const res = await fetch('/api/submissions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          celebrityName: celebrityName.trim(),
-          propertyAddress: propertyAddress.trim(),
-          description: description.trim() || null,
-          sourceUrl: sourceUrl.trim() || null,
-        }),
+      addSubmission({
+        celebrityName: celebrityName.trim(),
+        propertyAddress: propertyAddress.trim(),
+        description: description.trim() || null,
+        sourceUrl: sourceUrl.trim() || null,
       })
 
-      const result = await res.json()
-
-      if (result.success) {
-        setState('success')
-        setCelebrityName('')
-        setPropertyAddress('')
-        setDescription('')
-        setSourceUrl('')
-      } else {
-        setErrorMessage(result.error || '제출에 실패했습니다.')
-        setState('error')
-      }
+      setState('success')
+      setCelebrityName('')
+      setPropertyAddress('')
+      setDescription('')
+      setSourceUrl('')
     } catch {
-      setErrorMessage('네트워크 오류가 발생했습니다.')
+      setErrorMessage('저장에 실패했습니다.')
       setState('error')
     }
   }
