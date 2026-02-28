@@ -11,17 +11,30 @@ import {
   ExternalLink,
   Lock,
   Trash2,
+  Database,
+  HardDrive,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import {
-  getSubmissions,
-  updateSubmissionStatus,
-  deleteSubmission,
-  type Submission,
+  getSubmissions as getLocalSubmissions,
+  updateSubmissionStatus as updateLocal,
+  deleteSubmission as deleteLocal,
 } from '@/lib/submissions-store'
+
+interface Submission {
+  id: string
+  celebrityName: string
+  propertyAddress: string
+  description: string | null
+  sourceUrl: string | null
+  status: 'pending' | 'approved' | 'rejected'
+  createdAt: string
+  reviewedAt: string | null
+  source: 'db' | 'local'
+}
 
 const ADMIN_PIN = '1234'
 
@@ -31,16 +44,57 @@ const STATUS_CONFIG = {
   rejected: { label: '반려', icon: XCircle, variant: 'destructive' as const, color: 'text-red-600' },
 }
 
+function mapDbRow(row: Record<string, unknown>): Submission {
+  return {
+    id: row.id as string,
+    celebrityName: row.celebrity_name as string,
+    propertyAddress: row.property_address as string,
+    description: (row.description as string) ?? null,
+    sourceUrl: (row.source_url as string) ?? null,
+    status: row.status as 'pending' | 'approved' | 'rejected',
+    createdAt: row.created_at as string,
+    reviewedAt: (row.reviewed_at as string) ?? null,
+    source: 'db',
+  }
+}
+
 export default function AdminPage() {
   const [isAuthed, setIsAuthed] = useState(false)
   const [pin, setPin] = useState('')
   const [pinError, setPinError] = useState(false)
   const [submissions, setSubmissions] = useState<Submission[]>([])
+  const [loading, setLoading] = useState(false)
   const [filter, setFilter] = useState<'all' | 'pending' | 'approved' | 'rejected'>('pending')
 
-  const loadSubmissions = useCallback(() => {
-    const data = filter === 'all' ? getSubmissions() : getSubmissions(filter)
-    setSubmissions(data)
+  const loadSubmissions = useCallback(async () => {
+    setLoading(true)
+    const merged: Submission[] = []
+
+    // 1. Try Supabase API
+    try {
+      const url = filter === 'all'
+        ? '/api/submissions'
+        : `/api/submissions?status=${filter}`
+      const res = await fetch(url)
+      const result = await res.json()
+      if (result.success && result.data) {
+        merged.push(...result.data.map(mapDbRow))
+      }
+    } catch {
+      // Supabase unavailable
+    }
+
+    // 2. Merge localStorage submissions
+    const local = filter === 'all' ? getLocalSubmissions() : getLocalSubmissions(filter)
+    for (const s of local) {
+      merged.push({
+        ...s,
+        source: 'local',
+      })
+    }
+
+    setSubmissions(merged)
+    setLoading(false)
   }, [filter])
 
   useEffect(() => {
@@ -57,13 +111,28 @@ export default function AdminPage() {
     }
   }
 
-  const handleAction = (id: string, status: 'approved' | 'rejected') => {
-    updateSubmissionStatus(id, status)
+  const handleAction = async (sub: Submission, status: 'approved' | 'rejected') => {
+    if (sub.source === 'db') {
+      try {
+        await fetch(`/api/submissions/${sub.id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status }),
+        })
+      } catch {
+        // silent
+      }
+    } else {
+      updateLocal(sub.id, status)
+    }
     loadSubmissions()
   }
 
-  const handleDelete = (id: string) => {
-    deleteSubmission(id)
+  const handleDelete = async (sub: Submission) => {
+    if (sub.source === 'local') {
+      deleteLocal(sub.id)
+    }
+    // DB deletion not supported via current API — just reload
     loadSubmissions()
   }
 
@@ -113,7 +182,7 @@ export default function AdminPage() {
           </h1>
         </div>
 
-        <div className="flex gap-2 mb-6">
+        <div className="flex gap-2 mb-6 flex-wrap">
           {(['pending', 'approved', 'rejected', 'all'] as const).map((f) => (
             <Button
               key={f}
@@ -122,16 +191,13 @@ export default function AdminPage() {
               onClick={() => setFilter(f)}
             >
               {f === 'all' ? '전체' : STATUS_CONFIG[f].label}
-              {f !== 'all' && (
-                <span className="ml-1 text-xs opacity-70">
-                  ({(f === filter ? submissions : getSubmissions(f)).length})
-                </span>
-              )}
             </Button>
           ))}
         </div>
 
-        {submissions.length === 0 ? (
+        {loading ? (
+          <div className="text-center py-16 text-muted-foreground">불러오는 중...</div>
+        ) : submissions.length === 0 ? (
           <div className="text-center py-16 text-muted-foreground">
             {filter === 'pending' ? '대기 중인 제보가 없습니다.' : '제보가 없습니다.'}
           </div>
@@ -141,7 +207,7 @@ export default function AdminPage() {
               const config = STATUS_CONFIG[sub.status]
               const StatusIcon = config.icon
               return (
-                <Card key={sub.id}>
+                <Card key={`${sub.source}-${sub.id}`}>
                   <CardContent className="p-5">
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1 min-w-0 space-y-2">
@@ -151,6 +217,11 @@ export default function AdminPage() {
                             <StatusIcon className={`h-3 w-3 ${config.color}`} />
                             {config.label}
                           </Badge>
+                          {sub.source === 'db' ? (
+                            <span title="Supabase DB"><Database className="h-3.5 w-3.5 text-blue-400" /></span>
+                          ) : (
+                            <span title="로컬 저장"><HardDrive className="h-3.5 w-3.5 text-gray-400" /></span>
+                          )}
                         </div>
 
                         <p className="text-sm text-muted-foreground">{sub.propertyAddress}</p>
@@ -187,7 +258,7 @@ export default function AdminPage() {
                               size="sm"
                               variant="outline"
                               className="gap-1 text-green-600 hover:bg-green-50 dark:hover:bg-green-950/30"
-                              onClick={() => handleAction(sub.id, 'approved')}
+                              onClick={() => handleAction(sub, 'approved')}
                             >
                               <CheckCircle2 className="h-4 w-4" />
                               승인
@@ -196,21 +267,23 @@ export default function AdminPage() {
                               size="sm"
                               variant="outline"
                               className="gap-1 text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30"
-                              onClick={() => handleAction(sub.id, 'rejected')}
+                              onClick={() => handleAction(sub, 'rejected')}
                             >
                               <XCircle className="h-4 w-4" />
                               반려
                             </Button>
                           </>
                         )}
-                        <Button
-                          size="icon"
-                          variant="ghost"
-                          className="text-muted-foreground hover:text-red-500"
-                          onClick={() => handleDelete(sub.id)}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
+                        {sub.source === 'local' && (
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            className="text-muted-foreground hover:text-red-500"
+                            onClick={() => handleDelete(sub)}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        )}
                       </div>
                     </div>
                   </CardContent>
