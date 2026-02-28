@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { useTheme } from './theme-provider'
 
 const navItems = [
-  { href: '/', label: '지도', icon: MapPin },
+  { href: '/map', label: '지도', icon: MapPin },
   { href: '/celebrity', label: '셀럽', icon: MapPin },
   { href: '/rankings', label: '랭킹', icon: Trophy },
   { href: '/quiz', label: '퀴즈', icon: Gamepad2 },

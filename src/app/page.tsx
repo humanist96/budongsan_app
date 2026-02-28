@@ -1,9 +1,19 @@
-import { HomeMap } from './home-map'
+import { HeroSection } from '@/components/landing/hero-section'
+import { FeaturedProperties } from '@/components/landing/featured-properties'
+import { RankingsPreview } from '@/components/landing/rankings-preview'
+import { MiniQuiz } from '@/components/landing/mini-quiz'
+import { MapPreview } from '@/components/landing/map-preview'
+import { Footer } from '@/components/landing/footer'
 
-export default function HomePage() {
+export default function LandingPage() {
   return (
-    <div className="h-[calc(100vh-3.5rem)]">
-      <HomeMap />
+    <div className="flex flex-col">
+      <HeroSection />
+      <FeaturedProperties />
+      <RankingsPreview />
+      <MiniQuiz />
+      <MapPreview />
+      <Footer />
     </div>
   )
 }
