@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useCallback, useMemo } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { Search, Filter, ArrowUpDown } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -10,6 +10,7 @@ import { createClient } from '@/lib/supabase/client'
 import type { Celebrity, CelebrityCategory } from '@/types'
 import { CATEGORY_LABELS } from '@/types'
 import { celebrities as seedCelebrities, celebrityProperties as seedCPs } from '@/data/celebrity-seed-data'
+import { applySeedOverrides } from '@/lib/seed-overrides'
 
 const categories: CelebrityCategory[] = ['entertainer', 'politician', 'athlete', 'expert']
 
@@ -29,6 +30,68 @@ for (const cp of seedCPs) {
   }
 }
 
+interface ApprovedSubmission {
+  id: string
+  celebrity_name: string
+  property_address: string
+  description: string | null
+  status: string
+}
+
+interface SubmissionDetail {
+  category?: CelebrityCategory
+  propertyName?: string
+  transactionPrice?: number
+  estimatedCurrentValue?: number
+  additionalNotes?: string
+}
+
+function parseSubmissionDetail(description: string | null): SubmissionDetail | null {
+  if (!description) return null
+  try {
+    const parsed = JSON.parse(description)
+    if (parsed && typeof parsed === 'object' && parsed.detail) {
+      return parsed.detail as SubmissionDetail
+    }
+  } catch {
+    // plain text
+  }
+  return null
+}
+
+function approvedToCelebrity(sub: ApprovedSubmission): Celebrity {
+  const detail = parseSubmissionDetail(sub.description)
+  const price = detail?.transactionPrice ?? detail?.estimatedCurrentValue ?? 0
+  return {
+    id: `sub-${sub.id}`,
+    name: sub.celebrity_name,
+    category: detail?.category ?? 'entertainer',
+    sub_category: '',
+    profile_image_url: null,
+    description: detail?.additionalNotes
+      ? `${sub.property_address} · ${detail.additionalNotes}`
+      : sub.property_address,
+    property_count: 1,
+    total_asset_value: price * 10000, // 억원 → 만원 단위
+    is_verified: false,
+    created_at: '',
+    updated_at: '',
+  }
+}
+
+async function fetchApprovedSubmissions(): Promise<Celebrity[]> {
+  try {
+    const res = await fetch('/api/submissions?status=approved')
+    const result = await res.json()
+    if (result.success && result.data) {
+      return (result.data as ApprovedSubmission[]).map(approvedToCelebrity)
+    }
+  } catch {
+    // API unavailable
+  }
+  return []
+}
+
 export default function CelebrityListPage() {
   const [celebrities, setCelebrities] = useState<Celebrity[]>([])
   const [loading, setLoading] = useState(true)
@@ -40,28 +103,52 @@ export default function CelebrityListPage() {
   const fetchCelebrities = useCallback(async () => {
     setLoading(true)
     try {
-      const supabase = createClient()
-      let query = supabase.from('celebrities').select('*')
+      // 1. 시드 데이터 (항상 사용)
+      const seedData = getDemoCelebrities(selectedCategory, multiOwnerOnly, search, sortBy)
 
-      if (selectedCategory) {
-        query = query.eq('category', selectedCategory)
+      // 2. Supabase celebrities 테이블 시도
+      let dbData: Celebrity[] = []
+      try {
+        const supabase = createClient()
+        let query = supabase.from('celebrities').select('*')
+        if (selectedCategory) query = query.eq('category', selectedCategory)
+        if (multiOwnerOnly) query = query.gte('property_count', 2)
+        if (search) query = query.ilike('name', `%${search}%`)
+        const orderCol = sortBy === 'name' ? 'name' : sortBy
+        const ascending = sortBy === 'name'
+        const { data, error } = await query.order(orderCol, { ascending }).limit(50)
+        if (!error && data && data.length > 0) {
+          dbData = data as Celebrity[]
+        }
+      } catch {
+        // Supabase unavailable
       }
-      if (multiOwnerOnly) {
-        query = query.gte('property_count', 2)
-      }
-      if (search) {
-        query = query.ilike('name', `%${search}%`)
-      }
 
-      const orderCol = sortBy === 'name' ? 'name' : sortBy
-      const ascending = sortBy === 'name'
+      // 3. 승인된 제보 가져오기
+      const approvedCelebs = await fetchApprovedSubmissions()
 
-      const { data, error } = await query
-        .order(orderCol, { ascending })
-        .limit(50)
+      // 4. 병합: DB > 시드 + 승인된 제보 (이름 중복 제거)
+      const base = dbData.length > 0 ? dbData : seedData
+      const existingNames = new Set(base.map((c) => c.name))
 
-      if (error) throw error
-      setCelebrities((data || []) as Celebrity[])
+      const filtered = approvedCelebs.filter((c) => {
+        if (existingNames.has(c.name)) return false
+        if (selectedCategory && c.category !== selectedCategory) return false
+        if (search && !c.name.toLowerCase().includes(search.toLowerCase())) return false
+        if (multiOwnerOnly && c.property_count < 2) return false
+        return true
+      })
+
+      const merged = [...base, ...filtered]
+
+      // 정렬
+      merged.sort((a, b) => {
+        if (sortBy === 'name') return a.name.localeCompare(b.name, 'ko')
+        if (sortBy === 'total_asset_value') return b.total_asset_value - a.total_asset_value
+        return b.property_count - a.property_count
+      })
+
+      setCelebrities(merged)
     } catch {
       setCelebrities(getDemoCelebrities(selectedCategory, multiOwnerOnly, search, sortBy))
     } finally {
@@ -167,7 +254,7 @@ function getDemoCelebrities(
 
   const searchLower = search.toLowerCase()
 
-  return seedCelebrities
+  const mapped = seedCelebrities
     .filter((c) => {
       if (category && c.category !== category) return false
       if (search && !c.name.toLowerCase().includes(searchLower)) return false
@@ -187,6 +274,8 @@ function getDemoCelebrities(
       created_at: '2024-01-01',
       updated_at: '2024-01-01',
     }))
+
+  return applySeedOverrides(mapped)
     .sort((a, b) => {
       if (sortBy === 'name') return a.name.localeCompare(b.name, 'ko')
       if (sortBy === 'total_asset_value') return b.total_asset_value - a.total_asset_value

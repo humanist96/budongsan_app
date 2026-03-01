@@ -58,7 +58,8 @@ export default function RankingsPage() {
             .from('v_neighborhood_density')
             .select('*')
             .limit(20)
-          setNeighborhoods((data || []) as NeighborhoodDensity[])
+          const result = (data || []) as NeighborhoodDensity[]
+          setNeighborhoods(result.length > 0 ? result : getDemoNeighborhoods())
         } else {
           let query = supabase
             .from('celebrities')
@@ -71,7 +72,8 @@ export default function RankingsPage() {
           }
 
           const { data } = await query.limit(20)
-          setCelebrities((data || []) as RankingCelebrity[])
+          const result = (data || []) as RankingCelebrity[]
+          setCelebrities(result.length > 0 ? result : getDemoRankings(activeTab))
         }
       } catch {
         setCelebrities(getDemoRankings(activeTab))

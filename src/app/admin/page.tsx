@@ -17,6 +17,13 @@ import {
   ArrowUpRight,
   ArrowDownRight,
   Home,
+  Pencil,
+  RotateCcw,
+  Search,
+  Users,
+  FileText,
+  X,
+  Save,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -31,6 +38,17 @@ import {
 } from '@/lib/submissions-store'
 import type { SubmissionDetail } from '@/lib/submissions-store'
 import { CATEGORY_LABELS } from '@/types/celebrity'
+import type { CelebrityCategory } from '@/types/celebrity'
+import { celebrities as seedCelebrities } from '@/data/celebrity-seed-data'
+import {
+  getOverrides,
+  editCelebrity,
+  deleteCelebrity as deleteSeedCeleb,
+  restoreCelebrity,
+} from '@/lib/seed-overrides'
+import type { SeedOverrides } from '@/lib/seed-overrides'
+
+/* ─── Types ─── */
 
 interface Submission {
   id: string
@@ -45,7 +63,22 @@ interface Submission {
   detail: SubmissionDetail | null
 }
 
-// PIN is now verified server-side via /api/admin/verify
+interface EditingSubmission {
+  celebrityName: string
+  propertyAddress: string
+  description: string
+  sourceUrl: string
+}
+
+interface EditingCelebrity {
+  name: string
+  description: string
+  category: CelebrityCategory
+}
+
+/* ─── Constants ─── */
+
+type Tab = 'submissions' | 'celebrities'
 
 const STATUS_CONFIG = {
   pending: { label: '대기', icon: Clock, variant: 'secondary' as const, color: 'text-yellow-600' },
@@ -60,6 +93,8 @@ const CATEGORY_BADGE_COLORS: Record<string, string> = {
   expert: 'bg-amber-100 text-amber-700 dark:bg-amber-950/40 dark:text-amber-300',
 }
 
+/* ─── Helpers ─── */
+
 function parseDetail(description: string | null): SubmissionDetail | null {
   if (!description) return null
   try {
@@ -68,7 +103,7 @@ function parseDetail(description: string | null): SubmissionDetail | null {
       return parsed.detail as SubmissionDetail
     }
   } catch {
-    // Not JSON — legacy plain text description
+    // Not JSON
   }
   return null
 }
@@ -81,7 +116,7 @@ function getDisplayDescription(description: string | null): string | null {
       return parsed.text as string
     }
   } catch {
-    // Plain text description — return as-is
+    // Plain text
   }
   return description
 }
@@ -102,48 +137,13 @@ function mapDbRow(row: Record<string, unknown>): Submission {
   }
 }
 
+/* ─── Main Component ─── */
+
 export default function AdminPage() {
   const [isAuthed, setIsAuthed] = useState(false)
   const [pin, setPin] = useState('')
   const [pinError, setPinError] = useState(false)
-  const [submissions, setSubmissions] = useState<Submission[]>([])
-  const [loading, setLoading] = useState(false)
-  const [filter, setFilter] = useState<'all' | 'pending' | 'approved' | 'rejected'>('pending')
-
-  const loadSubmissions = useCallback(async () => {
-    setLoading(true)
-    const merged: Submission[] = []
-
-    // 1. Try Supabase API
-    try {
-      const url = filter === 'all'
-        ? '/api/submissions'
-        : `/api/submissions?status=${filter}`
-      const res = await fetch(url)
-      const result = await res.json()
-      if (result.success && result.data) {
-        merged.push(...result.data.map(mapDbRow))
-      }
-    } catch {
-      // Supabase unavailable
-    }
-
-    // 2. Merge localStorage submissions
-    const local = filter === 'all' ? getLocalSubmissions() : getLocalSubmissions(filter)
-    for (const s of local) {
-      merged.push({
-        ...s,
-        source: 'local',
-      })
-    }
-
-    setSubmissions(merged)
-    setLoading(false)
-  }, [filter])
-
-  useEffect(() => {
-    if (isAuthed) loadSubmissions()
-  }, [isAuthed, filter, loadSubmissions])
+  const [tab, setTab] = useState<Tab>('submissions')
 
   const handlePinSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -163,30 +163,6 @@ export default function AdminPage() {
     } catch {
       setPinError(true)
     }
-  }
-
-  const handleAction = async (sub: Submission, status: 'approved' | 'rejected') => {
-    if (sub.source === 'db') {
-      try {
-        await fetch(`/api/submissions/${sub.id}`, {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ status }),
-        })
-      } catch {
-        // silent
-      }
-    } else {
-      updateLocal(sub.id, status)
-    }
-    loadSubmissions()
-  }
-
-  const handleDelete = async (sub: Submission) => {
-    if (sub.source === 'local') {
-      deleteLocal(sub.id)
-    }
-    loadSubmissions()
   }
 
   if (!isAuthed) {
@@ -231,43 +207,232 @@ export default function AdminPage() {
           </Link>
           <h1 className="flex items-center gap-2 text-xl font-bold">
             <ShieldCheck className="h-5 w-5 text-blue-500" />
-            제보 관리
+            관리자
           </h1>
         </div>
 
-        <div className="flex gap-2 mb-6 flex-wrap">
-          {(['pending', 'approved', 'rejected', 'all'] as const).map((f) => (
-            <Button
-              key={f}
-              variant={filter === f ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setFilter(f)}
-            >
-              {f === 'all' ? '전체' : STATUS_CONFIG[f].label}
-            </Button>
-          ))}
+        {/* Tab buttons */}
+        <div className="flex gap-2 mb-6 border-b pb-3">
+          <Button
+            variant={tab === 'submissions' ? 'default' : 'outline'}
+            size="sm"
+            className="gap-1.5"
+            onClick={() => setTab('submissions')}
+          >
+            <FileText className="h-4 w-4" />
+            제보 관리
+          </Button>
+          <Button
+            variant={tab === 'celebrities' ? 'default' : 'outline'}
+            size="sm"
+            className="gap-1.5"
+            onClick={() => setTab('celebrities')}
+          >
+            <Users className="h-4 w-4" />
+            셀럽 관리
+          </Button>
         </div>
 
-        {loading ? (
-          <div className="text-center py-16 text-muted-foreground">불러오는 중...</div>
-        ) : submissions.length === 0 ? (
-          <div className="text-center py-16 text-muted-foreground">
-            {filter === 'pending' ? '대기 중인 제보가 없습니다.' : '제보가 없습니다.'}
-          </div>
-        ) : (
-          <div className="space-y-4">
-            {submissions.map((sub) => {
-              const config = STATUS_CONFIG[sub.status]
-              const StatusIcon = config.icon
-              const detail = sub.detail
-              const displayDesc = getDisplayDescription(sub.description)
+        {tab === 'submissions' ? <SubmissionsTab /> : <CelebritiesTab />}
+      </div>
+    </div>
+  )
+}
 
-              return (
-                <Card key={`${sub.source}-${sub.id}`}>
-                  <CardContent className="p-5">
+/* ─── Submissions Tab ─── */
+
+function SubmissionsTab() {
+  const [submissions, setSubmissions] = useState<Submission[]>([])
+  const [loading, setLoading] = useState(false)
+  const [filter, setFilter] = useState<'all' | 'pending' | 'approved' | 'rejected'>('pending')
+  const [editingId, setEditingId] = useState<string | null>(null)
+  const [editForm, setEditForm] = useState<EditingSubmission>({
+    celebrityName: '', propertyAddress: '', description: '', sourceUrl: '',
+  })
+
+  const loadSubmissions = useCallback(async () => {
+    setLoading(true)
+    const merged: Submission[] = []
+
+    try {
+      const url = filter === 'all'
+        ? '/api/submissions'
+        : `/api/submissions?status=${filter}`
+      const res = await fetch(url)
+      const result = await res.json()
+      if (result.success && result.data) {
+        merged.push(...result.data.map(mapDbRow))
+      }
+    } catch {
+      // Supabase unavailable
+    }
+
+    const local = filter === 'all' ? getLocalSubmissions() : getLocalSubmissions(filter)
+    for (const s of local) {
+      merged.push({ ...s, source: 'local' })
+    }
+
+    setSubmissions(merged)
+    setLoading(false)
+  }, [filter])
+
+  useEffect(() => {
+    loadSubmissions()
+  }, [loadSubmissions])
+
+  const handleAction = async (sub: Submission, status: 'approved' | 'rejected') => {
+    if (sub.source === 'db') {
+      try {
+        await fetch(`/api/submissions/${sub.id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status }),
+        })
+      } catch {
+        // silent
+      }
+    } else {
+      updateLocal(sub.id, status)
+    }
+    loadSubmissions()
+  }
+
+  const handleDelete = async (sub: Submission) => {
+    if (!window.confirm('이 제보를 삭제하시겠습니까?')) return
+    if (sub.source === 'db') {
+      try {
+        await fetch(`/api/submissions/${sub.id}`, { method: 'DELETE' })
+      } catch {
+        // silent
+      }
+    } else {
+      deleteLocal(sub.id)
+    }
+    loadSubmissions()
+  }
+
+  const startEdit = (sub: Submission) => {
+    setEditingId(sub.id)
+    setEditForm({
+      celebrityName: sub.celebrityName,
+      propertyAddress: sub.propertyAddress,
+      description: getDisplayDescription(sub.description) ?? '',
+      sourceUrl: sub.sourceUrl ?? '',
+    })
+  }
+
+  const cancelEdit = () => {
+    setEditingId(null)
+  }
+
+  const saveEdit = async (sub: Submission) => {
+    if (sub.source === 'db') {
+      try {
+        await fetch(`/api/submissions/${sub.id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            celebrity_name: editForm.celebrityName,
+            property_address: editForm.propertyAddress,
+            description: editForm.description || null,
+            source_url: editForm.sourceUrl || null,
+          }),
+        })
+      } catch {
+        // silent
+      }
+    }
+    // For local submissions, no field-level edit API exists (localStorage)
+    // but DB submissions can be fully edited via the API
+    setEditingId(null)
+    loadSubmissions()
+  }
+
+  return (
+    <>
+      <div className="flex gap-2 mb-6 flex-wrap">
+        {(['pending', 'approved', 'rejected', 'all'] as const).map((f) => (
+          <Button
+            key={f}
+            variant={filter === f ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => setFilter(f)}
+          >
+            {f === 'all' ? '전체' : STATUS_CONFIG[f].label}
+          </Button>
+        ))}
+      </div>
+
+      {loading ? (
+        <div className="text-center py-16 text-muted-foreground">불러오는 중...</div>
+      ) : submissions.length === 0 ? (
+        <div className="text-center py-16 text-muted-foreground">
+          {filter === 'pending' ? '대기 중인 제보가 없습니다.' : '제보가 없습니다.'}
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {submissions.map((sub) => {
+            const config = STATUS_CONFIG[sub.status]
+            const StatusIcon = config.icon
+            const detail = sub.detail
+            const displayDesc = getDisplayDescription(sub.description)
+            const isEditing = editingId === sub.id
+
+            return (
+              <Card key={`${sub.source}-${sub.id}`}>
+                <CardContent className="p-5">
+                  {isEditing ? (
+                    /* ── Inline Edit Form ── */
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+                        <Pencil className="h-3.5 w-3.5" />
+                        제보 수정
+                      </div>
+                      <div className="grid gap-3 sm:grid-cols-2">
+                        <div>
+                          <label className="text-xs text-muted-foreground">셀럽 이름</label>
+                          <Input
+                            value={editForm.celebrityName}
+                            onChange={(e) => setEditForm({ ...editForm, celebrityName: e.target.value })}
+                          />
+                        </div>
+                        <div>
+                          <label className="text-xs text-muted-foreground">주소</label>
+                          <Input
+                            value={editForm.propertyAddress}
+                            onChange={(e) => setEditForm({ ...editForm, propertyAddress: e.target.value })}
+                          />
+                        </div>
+                        <div>
+                          <label className="text-xs text-muted-foreground">비고</label>
+                          <Input
+                            value={editForm.description}
+                            onChange={(e) => setEditForm({ ...editForm, description: e.target.value })}
+                          />
+                        </div>
+                        <div>
+                          <label className="text-xs text-muted-foreground">출처 URL</label>
+                          <Input
+                            value={editForm.sourceUrl}
+                            onChange={(e) => setEditForm({ ...editForm, sourceUrl: e.target.value })}
+                          />
+                        </div>
+                      </div>
+                      <div className="flex gap-2 justify-end">
+                        <Button size="sm" variant="ghost" className="gap-1" onClick={cancelEdit}>
+                          <X className="h-3.5 w-3.5" />
+                          취소
+                        </Button>
+                        <Button size="sm" className="gap-1" onClick={() => saveEdit(sub)}>
+                          <Save className="h-3.5 w-3.5" />
+                          저장
+                        </Button>
+                      </div>
+                    </div>
+                  ) : (
+                    /* ── Normal Display ── */
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1 min-w-0 space-y-3">
-                        {/* 헤더: 이름 + 상태 + 소스 */}
                         <div className="flex items-center gap-2 flex-wrap">
                           <span className="font-bold text-lg">{sub.celebrityName}</span>
                           {detail && (
@@ -286,7 +451,6 @@ export default function AdminPage() {
                           )}
                         </div>
 
-                        {/* 매물 정보 */}
                         <div className="flex items-center gap-2 text-sm">
                           <Building2 className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
                           {detail?.propertyName && (
@@ -301,7 +465,6 @@ export default function AdminPage() {
                           )}
                         </div>
 
-                        {/* 거래 정보 */}
                         {detail && (
                           <div className="flex items-center gap-3 flex-wrap text-sm">
                             <span className={`inline-flex items-center gap-1 font-medium ${
@@ -332,7 +495,6 @@ export default function AdminPage() {
                           </div>
                         )}
 
-                        {/* 비고 / description */}
                         {detail?.additionalNotes && (
                           <p className="text-sm bg-muted/50 rounded-md p-3">{detail.additionalNotes}</p>
                         )}
@@ -340,7 +502,6 @@ export default function AdminPage() {
                           <p className="text-sm bg-muted/50 rounded-md p-3">{displayDesc}</p>
                         )}
 
-                        {/* 메타 정보 */}
                         <div className="flex items-center gap-4 text-xs text-muted-foreground">
                           <span>{new Date(sub.createdAt).toLocaleDateString('ko-KR')}</span>
                           {sub.sourceUrl && (
@@ -355,14 +516,12 @@ export default function AdminPage() {
                             </a>
                           )}
                           {sub.reviewedAt && (
-                            <span>
-                              처리: {new Date(sub.reviewedAt).toLocaleDateString('ko-KR')}
-                            </span>
+                            <span>처리: {new Date(sub.reviewedAt).toLocaleDateString('ko-KR')}</span>
                           )}
                         </div>
                       </div>
 
-                      <div className="flex gap-2 shrink-0">
+                      <div className="flex gap-2 shrink-0 flex-wrap">
                         {sub.status === 'pending' && (
                           <>
                             <Button
@@ -385,25 +544,287 @@ export default function AdminPage() {
                             </Button>
                           </>
                         )}
-                        {sub.source === 'local' && (
-                          <Button
-                            size="icon"
-                            variant="ghost"
-                            className="text-muted-foreground hover:text-red-500"
-                            onClick={() => handleDelete(sub)}
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        )}
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          className="text-muted-foreground hover:text-blue-500"
+                          title="편집"
+                          onClick={() => startEdit(sub)}
+                        >
+                          <Pencil className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          className="text-muted-foreground hover:text-red-500"
+                          title="삭제"
+                          onClick={() => handleDelete(sub)}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
-              )
-            })}
-          </div>
+                  )}
+                </CardContent>
+              </Card>
+            )
+          })}
+        </div>
+      )}
+    </>
+  )
+}
+
+/* ─── Celebrities Tab ─── */
+
+function CelebritiesTab() {
+  const [search, setSearch] = useState('')
+  const [overrides, setOverrides] = useState<SeedOverrides>({})
+  const [editingId, setEditingId] = useState<string | null>(null)
+  const [editForm, setEditForm] = useState<EditingCelebrity>({
+    name: '', description: '', category: 'entertainer',
+  })
+  const [showDeleted, setShowDeleted] = useState(false)
+
+  useEffect(() => {
+    setOverrides(getOverrides())
+  }, [])
+
+  const refreshOverrides = () => {
+    setOverrides(getOverrides())
+  }
+
+  const searchLower = search.toLowerCase()
+
+  const activeCelebs = seedCelebrities.filter((c) => {
+    const override = overrides[c.id]
+    if (override?.deleted) return false
+    const name = override?.name ?? c.name
+    if (search && !name.toLowerCase().includes(searchLower)) return false
+    return true
+  })
+
+  const deletedCelebs = seedCelebrities.filter((c) => overrides[c.id]?.deleted)
+
+  const startCelebEdit = (celeb: typeof seedCelebrities[number]) => {
+    const override = overrides[celeb.id]
+    setEditingId(celeb.id)
+    setEditForm({
+      name: override?.name ?? celeb.name,
+      description: override?.description ?? celeb.description,
+      category: (override?.category ?? celeb.category) as CelebrityCategory,
+    })
+  }
+
+  const cancelCelebEdit = () => {
+    setEditingId(null)
+  }
+
+  const saveCelebEdit = (id: string) => {
+    const original = seedCelebrities.find((c) => c.id === id)
+    if (!original) return
+
+    const changes: Record<string, string> = {}
+    if (editForm.name !== original.name) changes.name = editForm.name
+    if (editForm.description !== original.description) changes.description = editForm.description
+    if (editForm.category !== original.category) changes.category = editForm.category
+
+    if (Object.keys(changes).length > 0) {
+      editCelebrity(id, changes as { name?: string; description?: string; category?: CelebrityCategory })
+    }
+
+    setEditingId(null)
+    refreshOverrides()
+  }
+
+  const handleDeleteCeleb = (id: string, name: string) => {
+    if (!window.confirm(`"${name}" 셀럽을 목록에서 숨기시겠습니까?`)) return
+    deleteSeedCeleb(id)
+    refreshOverrides()
+  }
+
+  const handleRestore = (id: string) => {
+    restoreCelebrity(id)
+    refreshOverrides()
+  }
+
+  return (
+    <>
+      <div className="flex items-center gap-3 mb-6">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="셀럽 이름 검색..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="pl-9"
+          />
+        </div>
+        {deletedCelebs.length > 0 && (
+          <Button
+            variant={showDeleted ? 'default' : 'outline'}
+            size="sm"
+            className="gap-1 shrink-0"
+            onClick={() => setShowDeleted(!showDeleted)}
+          >
+            <RotateCcw className="h-3.5 w-3.5" />
+            삭제됨 ({deletedCelebs.length})
+          </Button>
         )}
       </div>
-    </div>
+
+      <p className="text-xs text-muted-foreground mb-4">
+        시드 데이터 {activeCelebs.length}명 표시 중
+        {Object.keys(overrides).length > 0 && (
+          <> · 오버라이드 {Object.keys(overrides).length}건</>
+        )}
+      </p>
+
+      {/* Deleted celebrities restore list */}
+      {showDeleted && deletedCelebs.length > 0 && (
+        <div className="mb-6 space-y-2">
+          <h3 className="text-sm font-medium text-muted-foreground mb-2">삭제된 셀럽</h3>
+          {deletedCelebs.map((c) => (
+            <div
+              key={c.id}
+              className="flex items-center justify-between p-3 rounded-lg bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900"
+            >
+              <div className="flex items-center gap-2">
+                <span className="font-medium text-red-700 dark:text-red-300 line-through">
+                  {c.name}
+                </span>
+                <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${CATEGORY_BADGE_COLORS[c.category] ?? ''}`}>
+                  {CATEGORY_LABELS[c.category as CelebrityCategory] ?? c.category}
+                </span>
+              </div>
+              <Button
+                size="sm"
+                variant="outline"
+                className="gap-1 text-green-600 hover:bg-green-50 dark:hover:bg-green-950/30"
+                onClick={() => handleRestore(c.id)}
+              >
+                <RotateCcw className="h-3.5 w-3.5" />
+                복원
+              </Button>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Active celebrities list */}
+      <div className="space-y-3">
+        {activeCelebs.map((celeb) => {
+          const override = overrides[celeb.id]
+          const displayName = override?.name ?? celeb.name
+          const displayDesc = override?.description ?? celeb.description
+          const displayCategory = (override?.category ?? celeb.category) as CelebrityCategory
+          const isEditing = editingId === celeb.id
+          const isModified = override && !override.deleted
+
+          return (
+            <Card key={celeb.id} className={isModified ? 'border-amber-300 dark:border-amber-700' : ''}>
+              <CardContent className="p-4">
+                {isEditing ? (
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+                      <Pencil className="h-3.5 w-3.5" />
+                      셀럽 수정
+                    </div>
+                    <div className="grid gap-3 sm:grid-cols-3">
+                      <div>
+                        <label className="text-xs text-muted-foreground">이름</label>
+                        <Input
+                          value={editForm.name}
+                          onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
+                        />
+                      </div>
+                      <div>
+                        <label className="text-xs text-muted-foreground">카테고리</label>
+                        <select
+                          value={editForm.category}
+                          onChange={(e) => setEditForm({ ...editForm, category: e.target.value as CelebrityCategory })}
+                          className="w-full h-9 rounded-md border border-input bg-background px-3 text-sm"
+                        >
+                          {(Object.entries(CATEGORY_LABELS) as [CelebrityCategory, string][]).map(([val, label]) => (
+                            <option key={val} value={val}>{label}</option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="sm:col-span-3">
+                        <label className="text-xs text-muted-foreground">설명</label>
+                        <Input
+                          value={editForm.description}
+                          onChange={(e) => setEditForm({ ...editForm, description: e.target.value })}
+                        />
+                      </div>
+                    </div>
+                    <div className="flex gap-2 justify-end">
+                      <Button size="sm" variant="ghost" className="gap-1" onClick={cancelCelebEdit}>
+                        <X className="h-3.5 w-3.5" />
+                        취소
+                      </Button>
+                      <Button size="sm" className="gap-1" onClick={() => saveCelebEdit(celeb.id)}>
+                        <Save className="h-3.5 w-3.5" />
+                        저장
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="font-bold">{displayName}</span>
+                        <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${CATEGORY_BADGE_COLORS[displayCategory] ?? ''}`}>
+                          {CATEGORY_LABELS[displayCategory] ?? displayCategory}
+                        </span>
+                        {isModified && (
+                          <Badge variant="outline" className="text-xs text-amber-600 border-amber-300">
+                            수정됨
+                          </Badge>
+                        )}
+                      </div>
+                      <p className="text-sm text-muted-foreground mt-1 truncate">
+                        {displayDesc}
+                      </p>
+                    </div>
+                    <div className="flex gap-1 shrink-0">
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        className="text-muted-foreground hover:text-blue-500"
+                        title="편집"
+                        onClick={() => startCelebEdit(celeb)}
+                      >
+                        <Pencil className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        className="text-muted-foreground hover:text-red-500"
+                        title="삭제"
+                        onClick={() => handleDeleteCeleb(celeb.id, displayName)}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                      {isModified && (
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          className="text-muted-foreground hover:text-green-500"
+                          title="복원"
+                          onClick={() => handleRestore(celeb.id)}
+                        >
+                          <RotateCcw className="h-4 w-4" />
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          )
+        })}
+      </div>
+    </>
   )
 }

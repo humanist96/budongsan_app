@@ -43,7 +43,7 @@ export function CelebrityCard({ celebrity, disposalCount = 0 }: CelebrityCardPro
                 </Badge>
                 {celebrity.property_count >= 2 && (
                   <Badge variant="destructive" className="text-[10px] px-1.5 py-0">
-                    {celebrity.property_count}채
+                    다주택자
                   </Badge>
                 )}
                 {disposalCount > 0 && (
