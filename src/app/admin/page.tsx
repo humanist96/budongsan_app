@@ -299,16 +299,25 @@ function SubmissionsTab() {
 
   const handleDelete = async (sub: Submission) => {
     if (!window.confirm('이 제보를 삭제하시겠습니까?')) return
+
+    // 즉시 UI에서 제거 (낙관적 업데이트)
+    setSubmissions((prev) => prev.filter((s) => !(s.id === sub.id && s.source === sub.source)))
+
     if (sub.source === 'db') {
       try {
-        await fetch(`/api/submissions/${sub.id}`, { method: 'DELETE' })
+        const res = await fetch(`/api/submissions/${sub.id}`, { method: 'DELETE' })
+        const result = await res.json()
+        if (!result.success) {
+          alert('DB 삭제 실패: ' + (result.error ?? '알 수 없는 오류'))
+          loadSubmissions() // 실패 시 원복
+        }
       } catch {
-        // silent
+        alert('서버 연결 실패')
+        loadSubmissions()
       }
     } else {
       deleteLocal(sub.id)
     }
-    loadSubmissions()
   }
 
   const startEdit = (sub: Submission) => {
@@ -640,12 +649,17 @@ function CelebritiesTab() {
   const handleDeleteCeleb = (id: string, name: string) => {
     if (!window.confirm(`"${name}" 셀럽을 목록에서 숨기시겠습니까?`)) return
     deleteSeedCeleb(id)
-    refreshOverrides()
+    // 즉시 UI 반영
+    setOverrides((prev) => ({ ...prev, [id]: { ...prev[id], deleted: true } }))
   }
 
   const handleRestore = (id: string) => {
     restoreCelebrity(id)
-    refreshOverrides()
+    // 즉시 UI 반영
+    setOverrides((prev) => {
+      const { [id]: _removed, ...rest } = prev
+      return rest
+    })
   }
 
   return (
