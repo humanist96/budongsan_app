@@ -59,9 +59,9 @@ function AnimatedCounter({ end, suffix, label }: CounterProps) {
 }
 
 const stats = [
-  { end: 70, suffix: '명', label: '셀럽' },
-  { end: 116, suffix: '건', label: '매물 정보' },
-  { end: 3900, suffix: '억', label: '총 자산가치' },
+  { end: 107, suffix: '명', label: '셀럽' },
+  { end: 165, suffix: '건', label: '매물 정보' },
+  { end: 18600, suffix: '억', label: '총 자산가치' },
 ] as const
 
 export function HeroSection() {
@@ -76,8 +76,8 @@ export function HeroSection() {
         </h1>
 
         <p className="mt-4 md:mt-6 text-lg md:text-xl text-white/90 max-w-2xl mx-auto leading-relaxed">
-          연예인 · 정치인 · 운동선수 <strong>70명</strong>의 부동산{' '}
-          <strong>116건</strong>을 지도에서 탐험하세요
+          연예인 · 정치인 · 운동선수 · 전문가 <strong>107명</strong>의 부동산{' '}
+          <strong>165건</strong>을 지도에서 탐험하세요
         </p>
 
         <div className="mt-10 md:mt-14 grid grid-cols-3 gap-6 md:gap-12 max-w-lg mx-auto">
