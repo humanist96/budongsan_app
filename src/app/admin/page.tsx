@@ -13,6 +13,10 @@ import {
   Trash2,
   Database,
   HardDrive,
+  Building2,
+  ArrowUpRight,
+  ArrowDownRight,
+  Home,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -22,7 +26,11 @@ import {
   getSubmissions as getLocalSubmissions,
   updateSubmissionStatus as updateLocal,
   deleteSubmission as deleteLocal,
+  PROPERTY_TYPE_LABELS,
+  TRANSACTION_TYPE_LABELS,
 } from '@/lib/submissions-store'
+import type { SubmissionDetail } from '@/lib/submissions-store'
+import { CATEGORY_LABELS } from '@/types/celebrity'
 
 interface Submission {
   id: string
@@ -34,6 +42,7 @@ interface Submission {
   createdAt: string
   reviewedAt: string | null
   source: 'db' | 'local'
+  detail: SubmissionDetail | null
 }
 
 const ADMIN_PIN = '1234'
@@ -44,17 +53,52 @@ const STATUS_CONFIG = {
   rejected: { label: '반려', icon: XCircle, variant: 'destructive' as const, color: 'text-red-600' },
 }
 
+const CATEGORY_BADGE_COLORS: Record<string, string> = {
+  entertainer: 'bg-pink-100 text-pink-700 dark:bg-pink-950/40 dark:text-pink-300',
+  politician: 'bg-blue-100 text-blue-700 dark:bg-blue-950/40 dark:text-blue-300',
+  athlete: 'bg-green-100 text-green-700 dark:bg-green-950/40 dark:text-green-300',
+  expert: 'bg-amber-100 text-amber-700 dark:bg-amber-950/40 dark:text-amber-300',
+}
+
+function parseDetail(description: string | null): SubmissionDetail | null {
+  if (!description) return null
+  try {
+    const parsed = JSON.parse(description)
+    if (parsed && typeof parsed === 'object' && parsed.detail) {
+      return parsed.detail as SubmissionDetail
+    }
+  } catch {
+    // Not JSON — legacy plain text description
+  }
+  return null
+}
+
+function getDisplayDescription(description: string | null): string | null {
+  if (!description) return null
+  try {
+    const parsed = JSON.parse(description)
+    if (parsed && typeof parsed === 'object' && parsed.text) {
+      return parsed.text as string
+    }
+  } catch {
+    // Plain text description — return as-is
+  }
+  return description
+}
+
 function mapDbRow(row: Record<string, unknown>): Submission {
+  const rawDescription = (row.description as string) ?? null
   return {
     id: row.id as string,
     celebrityName: row.celebrity_name as string,
     propertyAddress: row.property_address as string,
-    description: (row.description as string) ?? null,
+    description: rawDescription,
     sourceUrl: (row.source_url as string) ?? null,
     status: row.status as 'pending' | 'approved' | 'rejected',
     createdAt: row.created_at as string,
     reviewedAt: (row.reviewed_at as string) ?? null,
     source: 'db',
+    detail: parseDetail(rawDescription),
   }
 }
 
@@ -132,7 +176,6 @@ export default function AdminPage() {
     if (sub.source === 'local') {
       deleteLocal(sub.id)
     }
-    // DB deletion not supported via current API — just reload
     loadSubmissions()
   }
 
@@ -206,13 +249,22 @@ export default function AdminPage() {
             {submissions.map((sub) => {
               const config = STATUS_CONFIG[sub.status]
               const StatusIcon = config.icon
+              const detail = sub.detail
+              const displayDesc = getDisplayDescription(sub.description)
+
               return (
                 <Card key={`${sub.source}-${sub.id}`}>
                   <CardContent className="p-5">
                     <div className="flex items-start justify-between gap-4">
-                      <div className="flex-1 min-w-0 space-y-2">
+                      <div className="flex-1 min-w-0 space-y-3">
+                        {/* 헤더: 이름 + 상태 + 소스 */}
                         <div className="flex items-center gap-2 flex-wrap">
                           <span className="font-bold text-lg">{sub.celebrityName}</span>
+                          {detail && (
+                            <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${CATEGORY_BADGE_COLORS[detail.category] ?? 'bg-gray-100 text-gray-700'}`}>
+                              {CATEGORY_LABELS[detail.category] ?? detail.category}
+                            </span>
+                          )}
                           <Badge variant={config.variant} className="gap-1">
                             <StatusIcon className={`h-3 w-3 ${config.color}`} />
                             {config.label}
@@ -224,12 +276,61 @@ export default function AdminPage() {
                           )}
                         </div>
 
-                        <p className="text-sm text-muted-foreground">{sub.propertyAddress}</p>
+                        {/* 매물 정보 */}
+                        <div className="flex items-center gap-2 text-sm">
+                          <Building2 className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+                          {detail?.propertyName && (
+                            <span className="font-medium">{detail.propertyName}</span>
+                          )}
+                          <span className="text-muted-foreground">{sub.propertyAddress}</span>
+                          {detail && (
+                            <Badge variant="outline" className="text-xs gap-1">
+                              <Home className="h-3 w-3" />
+                              {PROPERTY_TYPE_LABELS[detail.propertyType] ?? detail.propertyType}
+                            </Badge>
+                          )}
+                        </div>
 
-                        {sub.description && (
-                          <p className="text-sm bg-muted/50 rounded-md p-3">{sub.description}</p>
+                        {/* 거래 정보 */}
+                        {detail && (
+                          <div className="flex items-center gap-3 flex-wrap text-sm">
+                            <span className={`inline-flex items-center gap-1 font-medium ${
+                              detail.transactionType === 'buy'
+                                ? 'text-green-600'
+                                : detail.transactionType === 'sell'
+                                  ? 'text-red-600'
+                                  : 'text-purple-600'
+                            }`}>
+                              {detail.transactionType === 'buy' ? (
+                                <ArrowDownRight className="h-3.5 w-3.5" />
+                              ) : detail.transactionType === 'sell' ? (
+                                <ArrowUpRight className="h-3.5 w-3.5" />
+                              ) : null}
+                              {TRANSACTION_TYPE_LABELS[detail.transactionType] ?? detail.transactionType}
+                            </span>
+                            {detail.transactionDate && (
+                              <span className="text-muted-foreground">{detail.transactionDate}</span>
+                            )}
+                            {detail.transactionPrice != null && (
+                              <span className="font-semibold">{detail.transactionPrice}억원</span>
+                            )}
+                            {detail.estimatedCurrentValue != null && (
+                              <span className="text-muted-foreground">
+                                현재 추정 ~{detail.estimatedCurrentValue}억원
+                              </span>
+                            )}
+                          </div>
                         )}
 
+                        {/* 비고 / description */}
+                        {detail?.additionalNotes && (
+                          <p className="text-sm bg-muted/50 rounded-md p-3">{detail.additionalNotes}</p>
+                        )}
+                        {!detail && displayDesc && (
+                          <p className="text-sm bg-muted/50 rounded-md p-3">{displayDesc}</p>
+                        )}
+
+                        {/* 메타 정보 */}
                         <div className="flex items-center gap-4 text-xs text-muted-foreground">
                           <span>{new Date(sub.createdAt).toLocaleDateString('ko-KR')}</span>
                           {sub.sourceUrl && (

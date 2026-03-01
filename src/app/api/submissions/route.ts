@@ -4,7 +4,7 @@ import { createServerSupabaseClient } from '@/lib/supabase/server'
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { celebrityName, propertyAddress, description, sourceUrl } = body
+    const { celebrityName, propertyAddress, description, sourceUrl, detail } = body
 
     if (!celebrityName || !propertyAddress) {
       return NextResponse.json(
@@ -13,13 +13,18 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // detail이 있으면 JSON으로 description에 병합 저장
+    const storedDescription = detail
+      ? JSON.stringify({ text: description, detail })
+      : description || null
+
     const supabase = await createServerSupabaseClient()
     const { data, error } = await supabase
       .from('user_submissions')
       .insert({
         celebrity_name: celebrityName,
         property_address: propertyAddress,
-        description: description || null,
+        description: storedDescription,
         source_url: sourceUrl || null,
         status: 'pending',
       })
