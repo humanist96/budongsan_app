@@ -545,22 +545,22 @@ function SubmissionsTab() {
                           </>
                         )}
                         <Button
-                          size="icon"
-                          variant="ghost"
-                          className="text-muted-foreground hover:text-blue-500"
-                          title="편집"
+                          size="sm"
+                          variant="outline"
+                          className="gap-1 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/30"
                           onClick={() => startEdit(sub)}
                         >
-                          <Pencil className="h-4 w-4" />
+                          <Pencil className="h-3.5 w-3.5" />
+                          편집
                         </Button>
                         <Button
-                          size="icon"
-                          variant="ghost"
-                          className="text-muted-foreground hover:text-red-500"
-                          title="삭제"
+                          size="sm"
+                          variant="outline"
+                          className="gap-1 text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30"
                           onClick={() => handleDelete(sub)}
                         >
-                          <Trash2 className="h-4 w-4" />
+                          <Trash2 className="h-3.5 w-3.5" />
+                          삭제
                         </Button>
                       </div>
                     </div>
@@ -787,34 +787,34 @@ function CelebritiesTab() {
                         {displayDesc}
                       </p>
                     </div>
-                    <div className="flex gap-1 shrink-0">
+                    <div className="flex gap-1.5 shrink-0">
                       <Button
-                        size="icon"
-                        variant="ghost"
-                        className="text-muted-foreground hover:text-blue-500"
-                        title="편집"
+                        size="sm"
+                        variant="outline"
+                        className="gap-1 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/30"
                         onClick={() => startCelebEdit(celeb)}
                       >
-                        <Pencil className="h-4 w-4" />
+                        <Pencil className="h-3.5 w-3.5" />
+                        편집
                       </Button>
                       <Button
-                        size="icon"
-                        variant="ghost"
-                        className="text-muted-foreground hover:text-red-500"
-                        title="삭제"
+                        size="sm"
+                        variant="outline"
+                        className="gap-1 text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30"
                         onClick={() => handleDeleteCeleb(celeb.id, displayName)}
                       >
-                        <Trash2 className="h-4 w-4" />
+                        <Trash2 className="h-3.5 w-3.5" />
+                        삭제
                       </Button>
                       {isModified && (
                         <Button
-                          size="icon"
-                          variant="ghost"
-                          className="text-muted-foreground hover:text-green-500"
-                          title="복원"
+                          size="sm"
+                          variant="outline"
+                          className="gap-1 text-green-600 hover:bg-green-50 dark:hover:bg-green-950/30"
                           onClick={() => handleRestore(celeb.id)}
                         >
-                          <RotateCcw className="h-4 w-4" />
+                          <RotateCcw className="h-3.5 w-3.5" />
+                          복원
                         </Button>
                       )}
                     </div>
