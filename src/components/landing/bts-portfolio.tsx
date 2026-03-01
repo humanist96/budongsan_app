@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Image from 'next/image'
 import { Music, ChevronDown, Banknote } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { formatPrice } from '@/lib/utils/format'
@@ -153,7 +154,7 @@ function MemberRow({
           <div className="w-16 md:w-20 shrink-0 flex items-center justify-end gap-2">
             {member.profileImageUrl && (
               <div className="w-8 h-8 rounded-full overflow-hidden ring-1 ring-white/30 shrink-0">
-                <img src={member.profileImageUrl} alt={member.stage} className="w-full h-full object-cover" />
+                <Image src={member.profileImageUrl} alt={member.stage} width={32} height={32} className="w-full h-full object-cover" unoptimized />
               </div>
             )}
             <span className="text-white/90 font-bold text-sm md:text-base">

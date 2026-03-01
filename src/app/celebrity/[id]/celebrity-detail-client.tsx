@@ -3,11 +3,13 @@
 import { useEffect, useMemo, useState } from 'react'
 import { ArrowLeft, Building2, TrendingUp, ShieldCheck } from 'lucide-react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import { MultiOwnerBadge } from '@/components/celebrity/multi-owner-badge'
+import { ShareButton } from '@/components/social/share-button'
 import { CelebrityPropertyList } from '@/components/celebrity/celebrity-property-list'
 import { PortfolioSummary } from '@/components/celebrity/portfolio-summary'
 import { CelebrityTimeline } from '@/components/celebrity/celebrity-timeline'
@@ -112,6 +114,10 @@ export function CelebrityDetailClient({ id }: CelebrityDetailClientProps) {
   const timelineEvents = useMemo(() => getTimelineEvents(id), [id])
   const portfolioData = useMemo(() => getPortfolioDataPoints(id), [id])
   const roi = useMemo(() => getCelebrityROI(id), [id])
+  const disposalCount = useMemo(
+    () => seedCPs.filter((cp) => cp.celebrityId === id && cp.disposalDate).length,
+    [id]
+  )
 
   if (loading) {
     return (
@@ -139,22 +145,28 @@ export function CelebrityDetailClient({ id }: CelebrityDetailClientProps) {
 
   return (
     <div className="container mx-auto px-4 py-6 max-w-3xl">
-      <Link href="/celebrity">
-        <Button variant="ghost" size="sm" className="gap-1 mb-4">
-          <ArrowLeft className="h-4 w-4" />
-          목록으로
-        </Button>
-      </Link>
+      <div className="flex items-center justify-between mb-4">
+        <Link href="/celebrity">
+          <Button variant="ghost" size="sm" className="gap-1">
+            <ArrowLeft className="h-4 w-4" />
+            목록으로
+          </Button>
+        </Link>
+        <ShareButton title={`${celebrity.name} 부동산 포트폴리오 - 셀럽하우스맵`} />
+      </div>
 
       <Card className="mb-6">
         <CardContent className="p-6">
           <div className="flex items-start gap-4">
             <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center text-2xl font-bold shrink-0">
               {celebrity.profile_image_url ? (
-                <img
+                <Image
                   src={celebrity.profile_image_url}
                   alt={celebrity.name}
+                  width={64}
+                  height={64}
                   className="w-full h-full rounded-full object-cover"
+                  unoptimized
                 />
               ) : (
                 celebrity.name[0]
@@ -171,6 +183,11 @@ export function CelebrityDetailClient({ id }: CelebrityDetailClientProps) {
                   <Badge variant="outline">{celebrity.sub_category}</Badge>
                 )}
                 <MultiOwnerBadge count={celebrity.property_count} />
+                {disposalCount > 0 && (
+                  <Badge variant="outline" className="text-orange-600 border-orange-300 text-[10px]">
+                    매각 {disposalCount}건
+                  </Badge>
+                )}
                 {celebrity.is_verified && (
                   <ShieldCheck className="h-4 w-4 text-blue-500" />
                 )}

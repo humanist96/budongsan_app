@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Trophy, Building2, MapPin, TrendingUp } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -140,7 +141,7 @@ export default function RankingsPage() {
                   </div>
                   <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center font-bold shrink-0 overflow-hidden">
                     {celeb.profile_image_url ? (
-                      <img src={celeb.profile_image_url} alt={celeb.name} className="w-full h-full object-cover" />
+                      <Image src={celeb.profile_image_url} alt={celeb.name} width={40} height={40} className="w-full h-full object-cover" unoptimized />
                     ) : (
                       celeb.name[0]
                     )}

@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useState, useCallback } from 'react'
-import { Search, Filter } from 'lucide-react'
+import { useEffect, useState, useCallback, useMemo } from 'react'
+import { Search, Filter, ArrowUpDown } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -13,12 +13,29 @@ import { celebrities as seedCelebrities, celebrityProperties as seedCPs } from '
 
 const categories: CelebrityCategory[] = ['entertainer', 'politician', 'athlete', 'expert']
 
+type SortOption = 'property_count' | 'total_asset_value' | 'name'
+
+const SORT_LABELS: Record<SortOption, string> = {
+  property_count: '보유 건수순',
+  total_asset_value: '자산가치순',
+  name: '이름순',
+}
+
+// Compute disposal counts from seed data
+const disposalCountMap = new Map<string, number>()
+for (const cp of seedCPs) {
+  if (cp.disposalDate) {
+    disposalCountMap.set(cp.celebrityId, (disposalCountMap.get(cp.celebrityId) ?? 0) + 1)
+  }
+}
+
 export default function CelebrityListPage() {
   const [celebrities, setCelebrities] = useState<Celebrity[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
   const [selectedCategory, setSelectedCategory] = useState<CelebrityCategory | null>(null)
   const [multiOwnerOnly, setMultiOwnerOnly] = useState(false)
+  const [sortBy, setSortBy] = useState<SortOption>('property_count')
 
   const fetchCelebrities = useCallback(async () => {
     setLoading(true)
@@ -36,18 +53,21 @@ export default function CelebrityListPage() {
         query = query.ilike('name', `%${search}%`)
       }
 
+      const orderCol = sortBy === 'name' ? 'name' : sortBy
+      const ascending = sortBy === 'name'
+
       const { data, error } = await query
-        .order('property_count', { ascending: false })
+        .order(orderCol, { ascending })
         .limit(50)
 
       if (error) throw error
       setCelebrities((data || []) as Celebrity[])
     } catch {
-      setCelebrities(getDemoCelebrities(selectedCategory, multiOwnerOnly, search))
+      setCelebrities(getDemoCelebrities(selectedCategory, multiOwnerOnly, search, sortBy))
     } finally {
       setLoading(false)
     }
-  }, [selectedCategory, multiOwnerOnly, search])
+  }, [selectedCategory, multiOwnerOnly, search, sortBy])
 
   useEffect(() => {
     fetchCelebrities()
@@ -89,6 +109,21 @@ export default function CelebrityListPage() {
             다주택자만
           </Button>
         </div>
+
+        <div className="flex items-center gap-2">
+          <ArrowUpDown className="h-4 w-4 text-muted-foreground" />
+          {(['property_count', 'total_asset_value', 'name'] as const).map((opt) => (
+            <Button
+              key={opt}
+              variant={sortBy === opt ? 'default' : 'outline'}
+              size="sm"
+              onClick={() => setSortBy(opt)}
+              className="text-xs h-6"
+            >
+              {SORT_LABELS[opt]}
+            </Button>
+          ))}
+        </div>
       </div>
 
       {loading ? (
@@ -104,7 +139,11 @@ export default function CelebrityListPage() {
       ) : (
         <div className="space-y-3">
           {celebrities.map((celeb) => (
-            <CelebrityCard key={celeb.id} celebrity={celeb} />
+            <CelebrityCard
+              key={celeb.id}
+              celebrity={celeb}
+              disposalCount={disposalCountMap.get(celeb.id) ?? 0}
+            />
           ))}
         </div>
       )}
@@ -115,7 +154,8 @@ export default function CelebrityListPage() {
 function getDemoCelebrities(
   category: CelebrityCategory | null,
   multiOwnerOnly: boolean,
-  search: string
+  search: string,
+  sortBy: SortOption = 'property_count'
 ): Celebrity[] {
   const countMap = new Map<string, number>()
   const totalMap = new Map<string, number>()
@@ -147,5 +187,9 @@ function getDemoCelebrities(
       created_at: '2024-01-01',
       updated_at: '2024-01-01',
     }))
-    .sort((a, b) => b.property_count - a.property_count)
+    .sort((a, b) => {
+      if (sortBy === 'name') return a.name.localeCompare(b.name, 'ko')
+      if (sortBy === 'total_asset_value') return b.total_asset_value - a.total_asset_value
+      return b.property_count - a.property_count
+    })
 }

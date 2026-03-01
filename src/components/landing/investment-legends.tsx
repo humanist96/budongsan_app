@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Image from 'next/image'
 import { TrendingUp, ArrowRight, Flame } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { formatPrice } from '@/lib/utils/format'
@@ -135,7 +136,7 @@ function LegendCard({
         <div className="flex items-center gap-3">
           {legend.profileImageUrl && (
             <div className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-emerald-200 dark:ring-emerald-700 shrink-0">
-              <img src={legend.profileImageUrl} alt={legend.name} className="w-full h-full object-cover" />
+              <Image src={legend.profileImageUrl} alt={legend.name} width={40} height={40} className="w-full h-full object-cover" unoptimized />
             </div>
           )}
           <div>

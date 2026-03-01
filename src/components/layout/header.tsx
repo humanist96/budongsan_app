@@ -1,20 +1,22 @@
 'use client'
 
 import Link from 'next/link'
-import { MapPin, Trophy, Menu, X, Sun, Moon, Send } from 'lucide-react'
+import { MapPin, Users, Trophy, Menu, X, Sun, Moon, Send, Search } from 'lucide-react'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { useTheme } from './theme-provider'
+import { GlobalSearch } from './global-search'
 
 const navItems = [
   { href: '/map', label: '지도', icon: MapPin },
-  { href: '/celebrity', label: '셀럽', icon: MapPin },
+  { href: '/celebrity', label: '셀럽', icon: Users },
   { href: '/rankings', label: '랭킹', icon: Trophy },
   { href: '/submit', label: '제보', icon: Send },
 ]
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
   const { theme, setTheme } = useTheme()
 
   const toggleTheme = () => {
@@ -44,7 +46,16 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2 ml-auto">
-          <Button variant="ghost" size="icon" onClick={toggleTheme}>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setSearchOpen(true)}
+            aria-label="검색"
+          >
+            <Search className="h-4 w-4" />
+          </Button>
+
+          <Button variant="ghost" size="icon" onClick={toggleTheme} aria-label="테마 변경">
             {theme === 'dark' ? (
               <Sun className="h-4 w-4" />
             ) : (
@@ -57,6 +68,7 @@ export function Header() {
             size="icon"
             className="md:hidden"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="메뉴"
           >
             {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </Button>
@@ -81,6 +93,8 @@ export function Header() {
           </nav>
         </div>
       )}
+
+      <GlobalSearch open={searchOpen} onOpenChange={setSearchOpen} />
     </header>
   )
 }

@@ -38,7 +38,7 @@ export function HomeMap() {
             celebrity_id,
             property_id,
             acquisition_price,
-            celebrities!inner(id, name, category, property_count),
+            celebrities!inner(id, name, category, property_count, profile_image_url),
             properties!inner(id, name, address, latitude, longitude, latest_transaction_price)
           `)
           .eq('ownership_type', 'owner')
@@ -56,6 +56,7 @@ export function HomeMap() {
               celebrityId: celeb.id as string,
               celebrityName: celeb.name as string,
               category: celeb.category as MapCelebrityData['category'],
+              profileImageUrl: (celeb.profile_image_url as string | null) ?? null,
               propertyId: prop.id as string,
               propertyName: prop.name as string,
               address: prop.address as string,

@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Image from 'next/image'
 import { Building2, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { Badge } from '@/components/ui/badge'
@@ -196,7 +197,7 @@ function NeighborCard({
                   className={`w-12 h-12 rounded-full ${resident.profileImageUrl ? 'bg-muted' : CATEGORY_BG_COLORS[resident.category]} ring-2 ${CATEGORY_RING_COLORS[resident.category]} ring-offset-2 ring-offset-background flex items-center justify-center text-white font-bold text-sm shadow-md overflow-hidden`}
                 >
                   {resident.profileImageUrl ? (
-                    <img src={resident.profileImageUrl} alt={resident.name} className="w-full h-full object-cover" />
+                    <Image src={resident.profileImageUrl} alt={resident.name} width={48} height={48} className="w-full h-full object-cover" unoptimized />
                   ) : (
                     resident.initial
                   )}

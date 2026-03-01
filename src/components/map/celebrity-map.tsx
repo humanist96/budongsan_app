@@ -13,6 +13,7 @@ interface MapCelebrityData {
   celebrityId: string
   celebrityName: string
   category: 'entertainer' | 'politician' | 'athlete' | 'expert'
+  profileImageUrl: string | null
   propertyId: string
   propertyName: string
   address: string
@@ -76,6 +77,7 @@ export function CelebrityMap({ data }: CelebrityMapProps) {
             position: { lat: item.lat, lng: item.lng },
             celebrityName: item.celebrityName,
             category: item.category,
+            profileImageUrl: item.profileImageUrl,
             propertyName: item.propertyName,
             propertyCount: item.propertyCount,
             price: item.price,

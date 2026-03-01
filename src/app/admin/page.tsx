@@ -45,7 +45,7 @@ interface Submission {
   detail: SubmissionDetail | null
 }
 
-const ADMIN_PIN = '1234'
+// PIN is now verified server-side via /api/admin/verify
 
 const STATUS_CONFIG = {
   pending: { label: '대기', icon: Clock, variant: 'secondary' as const, color: 'text-yellow-600' },
@@ -145,12 +145,22 @@ export default function AdminPage() {
     if (isAuthed) loadSubmissions()
   }, [isAuthed, filter, loadSubmissions])
 
-  const handlePinSubmit = (e: React.FormEvent) => {
+  const handlePinSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (pin === ADMIN_PIN) {
-      setIsAuthed(true)
-      setPinError(false)
-    } else {
+    try {
+      const res = await fetch('/api/admin/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pin }),
+      })
+      const result = await res.json()
+      if (result.success) {
+        setIsAuthed(true)
+        setPinError(false)
+      } else {
+        setPinError(true)
+      }
+    } catch {
       setPinError(true)
     }
   }

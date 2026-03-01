@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { Building2, TrendingUp } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -10,9 +11,10 @@ import { CATEGORY_LABELS } from '@/types'
 
 interface CelebrityCardProps {
   celebrity: Celebrity
+  disposalCount?: number
 }
 
-export function CelebrityCard({ celebrity }: CelebrityCardProps) {
+export function CelebrityCard({ celebrity, disposalCount = 0 }: CelebrityCardProps) {
   return (
     <Link href={`/celebrity/${celebrity.id}`}>
       <Card className="hover:shadow-md transition-shadow cursor-pointer">
@@ -20,10 +22,13 @@ export function CelebrityCard({ celebrity }: CelebrityCardProps) {
           <div className="flex items-start gap-3">
             <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center text-lg font-bold shrink-0">
               {celebrity.profile_image_url ? (
-                <img
+                <Image
                   src={celebrity.profile_image_url}
                   alt={celebrity.name}
+                  width={48}
+                  height={48}
                   className="w-full h-full rounded-full object-cover"
+                  unoptimized
                 />
               ) : (
                 celebrity.name[0]
@@ -39,6 +44,11 @@ export function CelebrityCard({ celebrity }: CelebrityCardProps) {
                 {celebrity.property_count >= 2 && (
                   <Badge variant="destructive" className="text-[10px] px-1.5 py-0">
                     {celebrity.property_count}채
+                  </Badge>
+                )}
+                {disposalCount > 0 && (
+                  <Badge variant="outline" className="text-[10px] px-1.5 py-0 text-orange-600 border-orange-300">
+                    매각 {disposalCount}건
                   </Badge>
                 )}
               </div>
