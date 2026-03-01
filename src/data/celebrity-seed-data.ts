@@ -50,7 +50,7 @@ export interface SeedCelebrityProperty {
   sourceUrl: string | null
 }
 
-// ─── Celebrities (98명) ────────────────────────────────────
+// ─── Celebrities (83명) ────────────────────────────────────
 
 export const celebrities: SeedCelebrity[] = [
   // ========== 연예인 (56명) ==========
@@ -62,23 +62,14 @@ export const celebrities: SeedCelebrity[] = [
   { id: 'ent-06', name: '아이유(이지은)', category: 'entertainer', subCategory: '가수/배우', description: '국민 여동생, 에테르노 청담 공시가 전국 1위(200.6억)', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/221125_%EC%B2%AD%EB%A3%A1%EC%98%81%ED%99%94%EC%83%81_%EB%A0%88%EB%93%9C%EC%B9%B4%ED%8E%AB_01_%28cropped%29.jpg/200px-221125_%EC%B2%AD%EB%A3%A1%EC%98%81%ED%99%94%EC%83%81_%EB%A0%88%EB%93%9C%EC%B9%B4%ED%8E%AB_01_%28cropped%29.jpg', isVerified: false },
   { id: 'ent-07', name: '현빈', category: 'entertainer', subCategory: '배우', description: '사랑의 불시착 주연, 한류 톱배우', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Hyun_Bin_at_the_2024_Toronto_International_Film_Festival_2_%28cropped%29.jpg/200px-Hyun_Bin_at_the_2024_Toronto_International_Film_Festival_2_%28cropped%29.jpg', isVerified: false },
   { id: 'ent-08', name: '손예진', category: 'entertainer', subCategory: '배우', description: '사랑의 불시착 주연, 현빈 배우자. 신사동 빌딩 보유', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Son_Ye-jin_%EC%86%90%EC%98%88%EC%A7%84_2024_02.jpg/200px-Son_Ye-jin_%EC%86%90%EC%98%88%EC%A7%84_2024_02.jpg', isVerified: false },
-  { id: 'ent-09', name: '송혜교', category: 'entertainer', subCategory: '배우', description: '태양의 후예·더 글로리 주연', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/20230719_Song_Hye-kyo_%28%EC%86%A1%ED%98%9C%EA%B5%90%29.jpg/200px-20230719_Song_Hye-kyo_%28%EC%86%A1%ED%98%9C%EA%B5%90%29.jpg', isVerified: false },
-  { id: 'ent-10', name: '이병헌', category: 'entertainer', subCategory: '배우', description: '한류 톱스타, 할리우드 진출', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Lee_Byung-hun_2025_Toronto_%28cropped%29.jpg/200px-Lee_Byung-hun_2025_Toronto_%28cropped%29.jpg', isVerified: false },
   { id: 'ent-11', name: '비(정지훈)', category: 'entertainer', subCategory: '가수/배우', description: '월드스타, 김태희와 부부. 서초 빌딩 920억 등 총 1,600억원 이상', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/180525_%EC%A0%95%EC%A7%80%ED%9B%88.jpg/200px-180525_%EC%A0%95%EC%A7%80%ED%9B%88.jpg', isVerified: false },
-  { id: 'ent-12', name: '김수현', category: 'entertainer', subCategory: '배우', description: '별에서 온 그대·눈물의 여왕 주연', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Kim_Soo-hyun_in_August_2024_-_2.png/200px-Kim_Soo-hyun_in_August_2024_-_2.png', isVerified: false },
   { id: 'ent-13', name: '서장훈', category: 'entertainer', subCategory: 'MC/전 농구선수', description: '부동산 재테크 레전드. 빌딩 3채 총 약 700억원', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Seo_Jang-Hoon.jpg', isVerified: false },
   { id: 'ent-14', name: 'BTS 진(김석진)', category: 'entertainer', subCategory: '가수', description: 'BTS 맏형, 한남더힐 3채 보유 (175억 PH 포함)', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/BTS_Jin_on_June_12%2C_2024_%283%29.jpg/200px-BTS_Jin_on_June_12%2C_2024_%283%29.jpg', isVerified: false },
   { id: 'ent-15', name: 'BTS RM(김남준)', category: 'entertainer', subCategory: '가수', description: 'BTS 리더, 나인원한남 63.6억 전액 현금 매입', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/RM_at_W_Korea_Love_Your_W%2C_November_2023.jpg/200px-RM_at_W_Korea_Love_Your_W%2C_November_2023.jpg', isVerified: false },
   { id: 'ent-16', name: 'BTS 정국(전정국)', category: 'entertainer', subCategory: '가수', description: 'BTS 메인보컬, 이태원 76억 대저택 신축 중', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Jung_Kook_of_BTS%2C_February_12%2C_2026_%281%29.png/200px-Jung_Kook_of_BTS%2C_February_12%2C_2026_%281%29.png', isVerified: false },
   { id: 'ent-17', name: 'BTS 뷔(김태형)', category: 'entertainer', subCategory: '가수', description: 'BTS 멤버, PH129 청담 142억 전액 현금', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/220624_%EB%B0%A9%ED%83%84%EC%86%8C%EB%85%84%EB%8B%A8_%EB%B7%94%281%29.jpg/200px-220624_%EB%B0%A9%ED%83%84%EC%86%8C%EB%85%84%EB%8B%A8_%EB%B7%94%281%29.jpg', isVerified: false },
   { id: 'ent-18', name: 'BTS 지민(박지민)', category: 'entertainer', subCategory: '가수', description: 'BTS 멤버, 나인원한남 59억 전액 현금', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Jimin_on_the_way_to_SBS_Radio%2C_31_March_2023_%282%29.jpg/200px-Jimin_on_the_way_to_SBS_Radio%2C_31_March_2023_%282%29.jpg', isVerified: false },
-  { id: 'ent-19', name: '블랙핑크 제니', category: 'entertainer', subCategory: '가수', description: '블랙핑크 멤버, 글로벌 패션 아이콘', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Jennie_2026_GDA_1.jpg/200px-Jennie_2026_GDA_1.jpg', isVerified: false },
-  { id: 'ent-20', name: '수지(배수지)', category: 'entertainer', subCategory: '가수/배우', description: '국민 첫사랑, 미스에이 출신', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Bae_Suzy_at_OB_Beer_Hanmac_%27As_Smooth_As_Possible%27_campaign%2C_3_April_2024_04.jpg/200px-Bae_Suzy_at_OB_Beer_Hanmac_%27As_Smooth_As_Possible%27_campaign%2C_3_April_2024_04.jpg', isVerified: false },
   { id: 'ent-21', name: '싸이(박재상)', category: 'entertainer', subCategory: '가수', description: '강남스타일, P NATION 대표. 빌딩 3채 총 약 800억원', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/PSY_EMTV_logo_27_%288198008711%29.jpg/200px-PSY_EMTV_logo_27_%288198008711%29.jpg', isVerified: false },
-  { id: 'ent-22', name: '신동엽', category: 'entertainer', subCategory: 'MC', description: '국민 MC, 부동산 투자 유명', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/180503_%EC%8B%A0%EB%8F%99%EC%97%BD.png/200px-180503_%EC%8B%A0%EB%8F%99%EC%97%BD.png', isVerified: false },
-  { id: 'ent-23', name: '하정우', category: 'entertainer', subCategory: '배우', description: '천만 배우, 암살·신과함께', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/%ED%95%98%EC%A0%95%EC%9A%B0%2C_%EC%98%81%ED%99%94_%27%EC%8B%A0%EA%B3%BC_%ED%95%A8%EA%BB%98%27_%EC%A3%84_%EC%99%80_%EB%B2%8C_20%EC%9D%BC_%EA%B0%9C%EB%B4%89_%2813%29_%28cropped%29.jpg/200px-%ED%95%98%EC%A0%95%EC%9A%B0%2C_%EC%98%81%ED%99%94_%27%EC%8B%A0%EA%B3%BC_%ED%95%A8%EA%BB%98%27_%EC%A3%84_%EC%99%80_%EB%B2%8C_20%EC%9D%BC_%EA%B0%9C%EB%B4%89_%2813%29_%28cropped%29.jpg', isVerified: false },
-  { id: 'ent-24', name: '송중기', category: 'entertainer', subCategory: '배우', description: '태양의 후예·빈센조 주연', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Song_Joong-ki_at_Style_Icon_Asia_2016.jpg/200px-Song_Joong-ki_at_Style_Icon_Asia_2016.jpg', isVerified: false },
-  { id: 'ent-25', name: '이영애', category: 'entertainer', subCategory: '배우', description: '대장금 주연, 한류 퀸', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Lee_Young-ae_at_the_17th_Asian_Film_Awards_in_Hong_Kong_on_March_10%2C_2024.jpg/200px-Lee_Young-ae_at_the_17th_Asian_Film_Awards_in_Hong_Kong_on_March_10%2C_2024.jpg', isVerified: false },
   { id: 'ent-26', name: 'BTS 슈가(민윤기)', category: 'entertainer', subCategory: '가수', description: 'BTS 멤버, 프로듀서. 한남리버힐 34억 보유', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Suga_for_Marie_Claire_Korea%2C_May_2023_issue_07.png/200px-Suga_for_Marie_Claire_Korea%2C_May_2023_issue_07.png', isVerified: false },
   { id: 'ent-27', name: 'BTS 제이홉(정호석)', category: 'entertainer', subCategory: '가수', description: 'BTS 멤버, 아페르한강 PH 120억+100억 (4주택 약 270억)', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/J-Hope_at_the_2022_Fact_Music_Awards_on_October_8%2C_2022_%28cropped%29.jpg/200px-J-Hope_at_the_2022_Fact_Music_Awards_on_October_8%2C_2022_%28cropped%29.jpg', isVerified: false },
   { id: 'ent-28', name: '임영웅', category: 'entertainer', subCategory: '가수', description: '미스터트롯 우승자, 메세나폴리스 PH 51억', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Temp_1662384481565.-511956263.jpg/200px-Temp_1662384481565.-511956263.jpg', isVerified: false },
@@ -148,15 +139,9 @@ export const celebrities: SeedCelebrity[] = [
 
   // ========== 운동선수 (13명) ==========
   { id: 'ath-01', name: '손흥민', category: 'athlete', subCategory: '축구', description: 'EPL 토트넘, 에테르노 압구정 PH 400억 분양', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/BFA_2023_-2_Heung-Min_Son_%28cropped%29.jpg/200px-BFA_2023_-2_Heung-Min_Son_%28cropped%29.jpg', isVerified: false },
-  { id: 'ath-02', name: '류현진', category: 'athlete', subCategory: '야구', description: 'MLB 출신, 한화이글스 투수', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Ryu_Hyun-jin_2025.jpg/200px-Ryu_Hyun-jin_2025.jpg', isVerified: false },
-  { id: 'ath-03', name: '추신수', category: 'athlete', subCategory: '야구', description: 'MLB 레전드, 전 SSG 랜더스', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Choo_Shin-Soo_in_Texas_Rangers.jpg/200px-Choo_Shin-Soo_in_Texas_Rangers.jpg', isVerified: false },
   { id: 'ath-04', name: '김연아', category: 'athlete', subCategory: '피겨스케이팅', description: '피겨 여왕, 올림픽 금메달리스트', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/YuNaKimInVancouver.jpg/200px-YuNaKimInVancouver.jpg', isVerified: false },
-  { id: 'ath-05', name: '박지성', category: 'athlete', subCategory: '축구', description: '전 맨유 미드필더, 한국 축구 레전드', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Ji-Sung_Park_vs_Fulham_%28cropped%29.jpg/200px-Ji-Sung_Park_vs_Fulham_%28cropped%29.jpg', isVerified: false },
   { id: 'ath-06', name: '박찬호', category: 'athlete', subCategory: '야구', description: 'MLB 레전드, 신사동 빌딩 현 시세 약 800억', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Chan_Ho_Park_Yankees.jpg/200px-Chan_Ho_Park_Yankees.jpg', isVerified: false },
   { id: 'ath-07', name: '기성용', category: 'athlete', subCategory: '축구', description: 'EPL 출신, 전 국가대표 미드필더', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/240609_FC_%EC%84%9C%EC%9A%B8_%ED%8C%AC%EC%82%AC%EC%9D%B8%ED%9A%8C_%28%EA%B8%B0%EC%84%B1%EC%9A%A9%29.jpg/200px-240609_FC_%EC%84%9C%EC%9A%B8_%ED%8C%AC%EC%82%AC%EC%9D%B8%ED%9A%8C_%28%EA%B8%B0%EC%84%B1%EC%9A%A9%29.jpg', isVerified: false },
-  { id: 'ath-08', name: '이강인', category: 'athlete', subCategory: '축구', description: 'PSG 미드필더, 차세대 한국 축구 에이스', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Lee_Kang-in_-_2022_%2852551771501%29_%28cropped%29.jpg/200px-Lee_Kang-in_-_2022_%2852551771501%29_%28cropped%29.jpg', isVerified: false },
-  { id: 'ath-09', name: '김광현', category: 'athlete', subCategory: '야구', description: 'MLB 출신, SSG 랜더스 투수', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Kim_Kwang-hyun_2019_Premier_12.jpg/200px-Kim_Kwang-hyun_2019_Premier_12.jpg', isVerified: false },
-  { id: 'ath-10', name: '황희찬', category: 'athlete', subCategory: '축구', description: 'EPL 울버햄튼 공격수', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/240622_%ED%99%A9%ED%9D%AC%EC%B0%AC_%ED%92%8B%EB%B3%BC_%ED%8E%98%EC%8A%A4%ED%8B%B0%EB%B2%8C.jpg/200px-240622_%ED%99%A9%ED%9D%AC%EC%B0%AC_%ED%92%8B%EB%B3%BC_%ED%8E%98%EC%8A%A4%ED%8B%B0%EB%B2%8C.jpg', isVerified: false },
   { id: 'ath-11', name: '이승엽', category: 'athlete', subCategory: '야구', description: '한일 홈런왕, 성수동 빌딩 293억 (현 1,167억)', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Lee_Seung-Yeop_%EC%9D%B4%EC%8A%B9%EC%97%BD_%EC%9D%BC%EA%B5%AC%EC%83%81_2016.png/200px-Lee_Seung-Yeop_%EC%9D%B4%EC%8A%B9%EC%97%BD_%EC%9D%BC%EA%B5%AC%EC%83%81_2016.png', isVerified: false },
 
   // === 추가 운동선수 (2명) ===
@@ -474,22 +459,12 @@ export const celebrityProperties: SeedCelebrityProperty[] = [
   // 손예진 (1채) — 신사동 빌딩 160억
   { celebrityId: 'ent-08', propertyId: 'prop-091', price: 1600000, acquisitionDate: '2020-07', estimatedCurrentValue: 2200000, sourceType: 'reported', sourceNote: '신사동 빌딩 160억 (현금 40억+대출 120억, 이투데이 2020)', sourceUrl: 'https://www.etoday.co.kr/news/view/1922133' },
 
-  // 송혜교 (2채) — 삼성동, 이태원
-  { celebrityId: 'ent-09', propertyId: 'prop-023', price: 200000, acquisitionDate: '2016-02', sourceType: 'reported', sourceNote: '삼성동 래미안라클래시 보유 보도', sourceUrl: null },
-  { celebrityId: 'ent-09', propertyId: 'prop-014', price: 200000, acquisitionDate: '2019-10', sourceType: 'reported', sourceNote: '이태원 고급빌라 보유 보도', sourceUrl: null },
-
-  // 이병헌 (1채) — 이태원 단독주택
-  { celebrityId: 'ent-10', propertyId: 'prop-012', price: 650000, acquisitionDate: '2014-07', sourceType: 'reported', sourceNote: '이태원 단독주택 약 65억원 매입 보도', sourceUrl: null },
-
   // 비(정지훈)&김태희 (2채) — 서초동 빌딩 920억, 압구정 건물 159억 / 총 ~1,600억+
   { celebrityId: 'ent-11', propertyId: 'prop-072', price: 9200000, acquisitionDate: '2021-01', estimatedCurrentValue: 14500000, highlight: '920억 → 1,450억', sourceType: 'reported', sourceNote: '서초동 강남대로변 빌딩 920억, 현 시세 1,400~1,500억 (뉴스1, 한국경제 2024)', sourceUrl: 'https://www.news1.kr/realestate/general/5587873' },
   { celebrityId: 'ent-11', propertyId: 'prop-073', price: 1590000, acquisitionDate: '2024-01', estimatedCurrentValue: 1600000, sourceType: 'reported', sourceNote: '압구정 로데오거리 빌딩 158.99억 (아시아경제, 한국경제 2024)', sourceUrl: 'https://www.asiae.co.kr/article/2024010409074476135' },
 
   // 김태희 (비와 공동 소유로 표시)
   { celebrityId: 'ent-30', propertyId: 'prop-072', price: 9200000, acquisitionDate: '2021-01', sourceType: 'reported', sourceNote: '비(정지훈)와 공동 소유, 서초동 빌딩 920억 (뉴스1)', sourceUrl: 'https://www.news1.kr/realestate/general/5587873' },
-
-  // 김수현 (1채) — 삼성동
-  { celebrityId: 'ent-12', propertyId: 'prop-021', price: 240000, acquisitionDate: '2015-05', sourceType: 'reported', sourceNote: '삼성동 아이파크 매입 보도 (약 24억원)', sourceUrl: null },
 
   // 서장훈 (3채 빌딩) — 서초동/양재역, 흑석동, 서교동/홍대 / 총 ~700억+
   { celebrityId: 'ent-13', propertyId: 'prop-082', price: 281700, acquisitionDate: '2000-01', estimatedCurrentValue: 4500000, highlight: '경매낙찰 28억 → 450억, ×16', sourceType: 'reported', sourceNote: '서초동 양재역 빌딩 28.17억 경매 낙찰, 현 ~450억 (한국경제, 머니투데이 2022)', sourceUrl: 'https://www.hankyung.com/article/2022081207437' },
@@ -514,29 +489,10 @@ export const celebrityProperties: SeedCelebrityProperty[] = [
   // BTS 지민 (1채) — 나인원한남 59억
   { celebrityId: 'ent-18', propertyId: 'prop-007', price: 590000, acquisitionDate: '2021-01', estimatedCurrentValue: 2000000, highlight: '전액 현금 59억', sourceType: 'reported', sourceNote: '나인원한남 244㎡ 59억 분양전환 전액 현금 (위키트리, 이데일리)', sourceUrl: 'https://www.edaily.co.kr/news/read?newsId=01099526629012408' },
 
-  // 블랙핑크 제니 (1채) — 한남동 단독주택
-  { celebrityId: 'ent-19', propertyId: 'prop-010', price: 400000, acquisitionDate: '2022-09', sourceType: 'unverified', sourceNote: '한남동 단독주택 매입 보도 (약 40억원, 미확인)', sourceUrl: null },
-
-  // 수지 (1채) — PH129
-  { celebrityId: 'ent-20', propertyId: 'prop-017', price: 500000, acquisitionDate: '2020-06', sourceType: 'reported', sourceNote: '더펜트하우스 청담 매입 보도 (약 50억원)', sourceUrl: null },
-
   // 싸이 (3채) — 한남동 78.5억, 신사동 80억, 창천동 148.5억 / 총 ~800억+
   { celebrityId: 'ent-21', propertyId: 'prop-060', price: 785000, acquisitionDate: '2012-02', estimatedCurrentValue: 1500000, sourceType: 'reported', sourceNote: '한남동 빌딩 78.5억 공동명의, 현 ~150억 (스카이데일리)', sourceUrl: null },
   { celebrityId: 'ent-21', propertyId: 'prop-078', price: 800000, acquisitionDate: '2017-03', estimatedCurrentValue: 2080000, highlight: '80억 → 208억, ×2.6', sourceType: 'reported', sourceNote: '신사동 빌딩 2필지 합 ~80억, 현 ~208억 (머니투데이, 한국경제)', sourceUrl: 'https://news.mt.co.kr/mtview.php?no=2024011015280178347' },
   { celebrityId: 'ent-21', propertyId: 'prop-077', price: 1485000, acquisitionDate: '2018-01', estimatedCurrentValue: 1860000, sourceType: 'reported', sourceNote: '창천동 신촌역 빌딩 148.5억, 현 ~186억 (이데일리)', sourceUrl: 'https://www.edaily.co.kr/news/read?newsId=01096166625839144' },
-
-  // 신동엽 (2채) — 논현동, 반포
-  { celebrityId: 'ent-22', propertyId: 'prop-033', price: 600000, acquisitionDate: '2010-06', sourceType: 'reported', sourceNote: '논현동 빌딩 매입 보도 (약 60억원)', sourceUrl: null },
-  { celebrityId: 'ent-22', propertyId: 'prop-027', price: 350000, acquisitionDate: '2009-08', sourceType: 'reported', sourceNote: '반포 래미안퍼스티지 보유 보도', sourceUrl: null },
-
-  // 하정우 (1채) — 한남동
-  { celebrityId: 'ent-23', propertyId: 'prop-065', price: 300000, acquisitionDate: '2013-09', sourceType: 'reported', sourceNote: '한남동 아파트 보유 보도 (약 30억원)', sourceUrl: null },
-
-  // 송중기 (1채) — 이태원
-  { celebrityId: 'ent-24', propertyId: 'prop-012', price: 1000000, acquisitionDate: '2020-02', sourceType: 'reported', sourceNote: '이태원 단독주택 약 100억원 매입 보도', sourceUrl: null },
-
-  // 이영애 (1채) — UN빌리지
-  { celebrityId: 'ent-25', propertyId: 'prop-011', price: 300000, acquisitionDate: '2010-04', sourceType: 'reported', sourceNote: 'UN빌리지 단독주택 보유 보도', sourceUrl: null },
 
   // BTS 슈가 (1채) — 한남리버힐 34억
   { celebrityId: 'ent-26', propertyId: 'prop-065', price: 340000, acquisitionDate: '2018-08', sourceType: 'reported', sourceNote: '한남리버힐 244.19㎡ 34억 (위키트리)', sourceUrl: null },
@@ -671,34 +627,14 @@ export const celebrityProperties: SeedCelebrityProperty[] = [
   { celebrityId: 'ath-01', propertyId: 'prop-086', price: 4000000, acquisitionDate: '2024-07', estimatedCurrentValue: 4000000, highlight: '에테르노 PH 400억 분양', sourceType: 'reported', sourceNote: '에테르노 압구정 그랜드 디럭스 PH 약 400억 분양 (한국경제, 파이낸셜뉴스 2024)', sourceUrl: 'https://www.hankyung.com/article/2024070550677' },
   { celebrityId: 'ath-01', propertyId: 'prop-054', price: 220000, acquisitionDate: '2016-03', estimatedCurrentValue: 500000, sourceType: 'reported', sourceNote: '신현대 9,11,12차 155㎡ 22억 (한국경제 2025)', sourceUrl: 'https://www.hankyung.com/article/2025010887496' },
 
-  // 류현진 (2채)
-  { celebrityId: 'ath-02', propertyId: 'prop-035', price: 350000, acquisitionDate: '2014-05', sourceType: 'reported', sourceNote: '도곡동 타워팰리스 매입 보도', sourceUrl: null },
-  { celebrityId: 'ath-02', propertyId: 'prop-028', price: 380000, acquisitionDate: '2023-06', sourceType: 'reported', sourceNote: '반포 래미안원베일리 매입 보도', sourceUrl: null },
-
-  // 추신수 (2채)
-  { celebrityId: 'ath-03', propertyId: 'prop-035', price: 300000, acquisitionDate: '2011-09', sourceType: 'reported', sourceNote: '타워팰리스 보유 보도', sourceUrl: null },
-  { celebrityId: 'ath-03', propertyId: 'prop-026', price: 380000, acquisitionDate: '2016-04', sourceType: 'reported', sourceNote: '반포자이 매입 보도', sourceUrl: null },
-
   // 김연아 (1채) — 마크힐스 흑석동 22억, 현 시세 65~105억
   { celebrityId: 'ath-04', propertyId: 'prop-092', price: 220000, acquisitionDate: '2011-12', estimatedCurrentValue: 8500000, highlight: '22억 → 85억, ×3.9', sourceType: 'reported', sourceNote: '마크힐스 흑석동 고급빌라 22억 매입 (2011), 현 시세 65~105억 (한국경제, 헤럴드경제 2025)', sourceUrl: 'https://biz.heraldcorp.com/view/20250116050064' },
-
-  // 박지성 (1채)
-  { celebrityId: 'ath-05', propertyId: 'prop-065', price: 250000, acquisitionDate: '2012-11', sourceType: 'reported', sourceNote: '한남동 아파트 보유 보도', sourceUrl: null },
 
   // 박찬호 (1채) — 신사동 도산대로 빌딩 65~73억 매입, 현 ~800억
   { celebrityId: 'ath-06', propertyId: 'prop-088', price: 700000, acquisitionDate: '2003-01', estimatedCurrentValue: 8000000, highlight: '연 임대수익 13억', sourceType: 'reported', sourceNote: '신사동 도산대로 빌딩 65~73억(매입+신축), 대지 688㎡ 연면적 5544㎡, 현 ~800억, 연 임대수익 13억 (헤럴드경제, 뉴스1)', sourceUrl: 'https://biz.heraldcorp.com/view/20241210050082' },
 
   // 기성용 (1채) — 종각역 빌딩 209억, 현 ~275억
   { celebrityId: 'ath-07', propertyId: 'prop-093', price: 2090000, acquisitionDate: '2020-11', estimatedCurrentValue: 2750000, sourceType: 'reported', sourceNote: '종로구 관철동 종각역 9층 빌딩 209억 매입, 현 ~275억 (한국경제, 머니투데이 2021)', sourceUrl: 'https://news.mt.co.kr/mtview.php?no=2021011409135096498' },
-
-  // 이강인 (1채)
-  { celebrityId: 'ath-08', propertyId: 'prop-018', price: 350000, acquisitionDate: '2023-10', sourceType: 'reported', sourceNote: '청담자이 매입 보도', sourceUrl: null },
-
-  // 김광현 (1채)
-  { celebrityId: 'ath-09', propertyId: 'prop-043', price: 200000, acquisitionDate: '2021-04', sourceType: 'reported', sourceNote: '잠실리센츠 보유 보도', sourceUrl: null },
-
-  // 황희찬 (1채)
-  { celebrityId: 'ath-10', propertyId: 'prop-038', price: 250000, acquisitionDate: '2022-08', sourceType: 'reported', sourceNote: '성수동 트리마제 매입 보도', sourceUrl: null },
 
   // 이승엽 (1채) — 성수동 빌딩 293억, 현 ~1,167억
   { celebrityId: 'ath-11', propertyId: 'prop-085', price: 2930000, acquisitionDate: '2009-07', estimatedCurrentValue: 11670000, highlight: '+874억, 절대수익 최대', sourceType: 'reported', sourceNote: '성수동 빌딩 뚝섬역 도보 2분, 293억(현금193억+대출116억), 현 ~1,167억 (뉴스1, 헤럴드경제)', sourceUrl: 'https://www.news1.kr/realestate/general/5364798' },
