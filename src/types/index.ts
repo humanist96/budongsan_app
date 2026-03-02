@@ -16,3 +16,13 @@ export type {
 export { PROPERTY_TYPE_LABELS } from './property'
 
 export type { Transaction, TransactionChartData } from './transaction'
+
+export type {
+  DebateSide,
+  PlaybackSpeed,
+  DebatePersona,
+  DebatePhase,
+  DebateTurn,
+  DebateIssue,
+  DebateData,
+} from './debate'
