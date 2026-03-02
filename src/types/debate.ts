@@ -1,6 +1,35 @@
 export type DebateSide = 'bull' | 'bear'
 export type PlaybackSpeed = 0.5 | 1 | 1.5 | 2
 
+export type DebateEmotion =
+  | 'calm'
+  | 'confident'
+  | 'excited'
+  | 'angry'
+  | 'sarcastic'
+  | 'defensive'
+  | 'amused'
+  | 'passionate'
+  | 'shocked'
+  | 'dismissive'
+  | 'pleading'
+
+export type AudienceReaction = '👏' | '😂' | '🤔' | '🔥' | '😮' | '💯'
+
+export const EMOTION_EMOJI: Record<DebateEmotion, Record<DebateSide, string>> = {
+  calm: { bull: '🐂', bear: '🐻' },
+  confident: { bull: '😏', bear: '😏' },
+  excited: { bull: '🔥', bear: '🔥' },
+  angry: { bull: '😤', bear: '😤' },
+  sarcastic: { bull: '🤨', bear: '🤨' },
+  defensive: { bull: '😅', bear: '😅' },
+  amused: { bull: '😂', bear: '😂' },
+  passionate: { bull: '💪', bear: '💪' },
+  shocked: { bull: '😱', bear: '😱' },
+  dismissive: { bull: '🙄', bear: '🙄' },
+  pleading: { bull: '🙏', bear: '🙏' },
+}
+
 export interface DebatePersona {
   readonly id: DebateSide
   readonly name: string
@@ -24,6 +53,12 @@ export interface DebateTurn {
   readonly speakerId: DebateSide
   readonly content: string
   readonly phaseId: number
+  readonly emotion: DebateEmotion
+  readonly intensity: number
+  readonly isHighlight?: boolean
+  readonly highlightQuote?: string
+  readonly audienceReaction?: AudienceReaction
+  readonly interjectionSlot?: boolean
 }
 
 export interface DebateIssue {
