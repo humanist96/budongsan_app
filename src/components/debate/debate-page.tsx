@@ -106,6 +106,7 @@ export function DebatePage({ data, slug }: DebatePageProps) {
         <DebatePhaseIndicator
           phases={data.phases}
           currentTurnNumber={50}
+          intensity={10}
         />
         <DebateVotePanel checkpoint="final" data={data} slug={slug} />
         <DebateSummary data={data} />
@@ -125,6 +126,7 @@ export function DebatePage({ data, slug }: DebatePageProps) {
       <DebatePhaseIndicator
         phases={data.phases}
         currentTurnNumber={currentTurn.turnNumber}
+        intensity={currentTurn.intensity}
       />
 
       <div
@@ -169,6 +171,11 @@ export function DebatePage({ data, slug }: DebatePageProps) {
                   persona={persona}
                   isActive={isActive}
                   isRevealed={isRevealed}
+                  emotion={turn.emotion}
+                  intensity={turn.intensity}
+                  isHighlight={turn.isHighlight}
+                  highlightQuote={turn.highlightQuote}
+                  audienceReaction={turn.audienceReaction}
                 />
                 {showMidVote && (
                   <DebateVotePanel
