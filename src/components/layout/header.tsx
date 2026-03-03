@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { MapPin, Users, Trophy, Menu, X, Sun, Moon, Send, Search, Swords } from 'lucide-react'
+import { MapPin, Users, Trophy, Menu, X, Sun, Moon, Send, Search, Swords, Brain, Zap } from 'lucide-react'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { useTheme } from './theme-provider'
@@ -12,6 +12,8 @@ const navItems = [
   { href: '/celebrity', label: '셀럽', icon: Users },
   { href: '/rankings', label: '랭킹', icon: Trophy },
   { href: '/debate', label: '토론', icon: Swords },
+  { href: '/mbti', label: 'MBTI', icon: Brain },
+  { href: '/battle', label: '배틀', icon: Zap },
   { href: '/submit', label: '제보', icon: Send },
 ]
 
