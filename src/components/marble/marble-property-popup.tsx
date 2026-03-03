@@ -6,11 +6,12 @@ import type { PlayerState } from './use-marble-game'
 interface MarblePropertyPopupProps {
   readonly mode: 'buy' | 'build'
   readonly player: PlayerState
-  readonly onConfirm: () => void
+  readonly onBuy: () => void
+  readonly onBuild: (buildingIndex: number) => void
   readonly onCancel: () => void
 }
 
-export function MarblePropertyPopup({ mode, player, onConfirm, onCancel }: MarblePropertyPopupProps) {
+export function MarblePropertyPopup({ mode, player, onBuy, onBuild, onCancel }: MarblePropertyPopupProps) {
   const space = BOARD_SPACES[player.position]
   const dKey = space.districtKey
   if (!dKey) return null
@@ -18,18 +19,16 @@ export function MarblePropertyPopup({ mode, player, onConfirm, onCancel }: Marbl
   const district = DISTRICTS[dKey]
   if (!district) return null
 
-  const currentBuildings = player.properties[dKey] ?? 0
+  const builtIndices = player.properties[dKey] ?? []
   const maxBuildings = getMaxBuildings(dKey)
   const isBuy = mode === 'buy'
 
-  const cost = isBuy
+  const buyCost = isBuy
     ? player.nextBuyHalf ? Math.round(district.price / 2) : district.price
-    : district.buildCost
+    : 0
 
-  const canAfford = player.money >= cost
-  const nextBuildingName = !isBuy && district.buildings[currentBuildings]
-    ? district.buildings[currentBuildings]
-    : null
+  const canAffordBuy = player.money >= buyCost
+  const canAffordBuild = player.money >= district.buildCost
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
@@ -62,86 +61,133 @@ export function MarblePropertyPopup({ mode, player, onConfirm, onCancel }: Marbl
                   서장훈식 경매 효과! 반값 매수!
                 </div>
               )}
+
+              {/* 임대료 정보 */}
+              <div className="bg-muted/30 rounded-lg p-3 space-y-1">
+                <div className="text-[11px] font-medium text-muted-foreground">임대료 정보</div>
+                <div className="grid grid-cols-2 gap-1 text-xs">
+                  <span>기본:</span>
+                  <span className="text-right font-medium">{getRent(dKey, 0)}억</span>
+                  {district.buildings.map((b, i) => (
+                    <div key={b.name} className="contents">
+                      <span className="truncate">
+                        +{b.name}:
+                      </span>
+                      <span className="text-right font-medium">{getRent(dKey, i + 1)}억</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* 비용 */}
+              <div className="flex items-center justify-between text-sm border-t pt-3">
+                <span className="text-muted-foreground">매수 비용</span>
+                <span className="font-bold text-lg">
+                  {buyCost}억
+                  {player.nextBuyHalf && (
+                    <span className="text-xs text-muted-foreground line-through ml-1">
+                      {district.price}억
+                    </span>
+                  )}
+                </span>
+              </div>
+              <div className="flex items-center justify-between text-xs text-muted-foreground">
+                <span>보유 현금</span>
+                <span className={canAffordBuy ? 'text-green-500' : 'text-red-500'}>
+                  {player.money}억
+                </span>
+              </div>
+
+              {/* Actions */}
+              <div className="flex gap-2 pt-2">
+                <button
+                  onClick={onCancel}
+                  className="flex-1 py-2.5 rounded-xl text-sm font-medium text-muted-foreground bg-muted/50 hover:bg-muted transition-colors"
+                >
+                  포기
+                </button>
+                <button
+                  onClick={onBuy}
+                  disabled={!canAffordBuy}
+                  className={`flex-1 py-2.5 rounded-xl text-sm font-bold transition-colors ${
+                    canAffordBuy
+                      ? 'bg-primary text-primary-foreground hover:opacity-90'
+                      : 'bg-muted text-muted-foreground cursor-not-allowed'
+                  }`}
+                >
+                  매수!
+                </button>
+              </div>
             </>
           ) : (
             <>
               <div className="text-sm text-muted-foreground">
-                건물을 건설하시겠습니까?
+                건설할 셀럽 부동산을 선택하세요
               </div>
-              {nextBuildingName && (
-                <div className="bg-muted/50 rounded-lg p-3 text-sm">
-                  <div className="font-bold">{nextBuildingName.name}</div>
-                  {nextBuildingName.celeb && (
-                    <div className="text-xs text-muted-foreground">
-                      소유 셀럽: {nextBuildingName.celeb}
-                    </div>
-                  )}
-                </div>
-              )}
               <div className="text-[11px] text-muted-foreground">
-                건물 {currentBuildings}/{maxBuildings}
+                건물 {builtIndices.length}/{maxBuildings} · 건설비 {district.buildCost}억
               </div>
+
+              {/* 건물 선택 리스트 */}
+              <div className="space-y-2">
+                {district.buildings.map((b, i) => {
+                  const isBuilt = builtIndices.includes(i)
+                  const canBuild = !isBuilt && canAffordBuild
+                  return (
+                    <button
+                      key={i}
+                      onClick={() => canBuild && onBuild(i)}
+                      disabled={!canBuild}
+                      className={`w-full text-left rounded-xl p-3 border-2 transition-all ${
+                        isBuilt
+                          ? 'border-green-500/40 bg-green-500/10 cursor-default'
+                          : canBuild
+                            ? 'border-primary/30 bg-card hover:border-primary/60 hover:bg-primary/5 active:scale-[0.98]'
+                            : 'border-border bg-muted/30 cursor-not-allowed opacity-60'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <span className="text-lg">
+                            {isBuilt ? '✅' : '🏗️'}
+                          </span>
+                          <div>
+                            <div className="text-sm font-bold">{b.name}</div>
+                            {b.celeb && (
+                              <div className="text-[11px] text-muted-foreground">
+                                {b.celeb}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        <div className="text-right text-xs">
+                          {isBuilt ? (
+                            <span className="text-green-500 font-medium">건설 완료</span>
+                          ) : (
+                            <span className="text-muted-foreground">임대료 {getRent(dKey, builtIndices.length + 1)}억</span>
+                          )}
+                        </div>
+                      </div>
+                    </button>
+                  )
+                })}
+              </div>
+
+              <div className="flex items-center justify-between text-xs text-muted-foreground pt-1">
+                <span>보유 현금</span>
+                <span className={canAffordBuild ? 'text-green-500' : 'text-red-500'}>
+                  {player.money}억
+                </span>
+              </div>
+
+              <button
+                onClick={onCancel}
+                className="w-full py-2.5 rounded-xl text-sm font-medium text-muted-foreground bg-muted/50 hover:bg-muted transition-colors"
+              >
+                건설 안 함
+              </button>
             </>
           )}
-
-          {/* 임대료 정보 */}
-          <div className="bg-muted/30 rounded-lg p-3 space-y-1">
-            <div className="text-[11px] font-medium text-muted-foreground">임대료 정보</div>
-            <div className="grid grid-cols-2 gap-1 text-xs">
-              <span>기본:</span>
-              <span className="text-right font-medium">{getRent(dKey, 0)}억</span>
-              {district.buildings.map((b, i) => (
-                <div key={b.name} className="contents">
-                  <span className="truncate">
-                    {b.name}{b.celeb ? `(${b.celeb})` : ''}:
-                  </span>
-                  <span className="text-right font-medium">{getRent(dKey, i + 1)}억</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* 비용 */}
-          <div className="flex items-center justify-between text-sm border-t pt-3">
-            <span className="text-muted-foreground">{isBuy ? '매수 비용' : '건설 비용'}</span>
-            <span className="font-bold text-lg">
-              {cost}억
-              {isBuy && player.nextBuyHalf && (
-                <span className="text-xs text-muted-foreground line-through ml-1">
-                  {district.price}억
-                </span>
-              )}
-            </span>
-          </div>
-          <div className="flex items-center justify-between text-xs text-muted-foreground">
-            <span>보유 현금</span>
-            <span className={canAfford ? 'text-green-500' : 'text-red-500'}>
-              {player.money}억
-            </span>
-          </div>
-        </div>
-
-        {/* Actions */}
-        <div className="flex border-t">
-          <button
-            onClick={onCancel}
-            className="flex-1 py-3 text-sm font-medium text-muted-foreground hover:bg-muted/50 transition-colors"
-          >
-            포기
-          </button>
-          <button
-            onClick={onConfirm}
-            disabled={!canAfford}
-            className={`
-              flex-1 py-3 text-sm font-bold border-l transition-colors
-              ${canAfford
-                ? 'text-primary hover:bg-primary/10'
-                : 'text-muted-foreground cursor-not-allowed'
-              }
-            `}
-          >
-            {isBuy ? '매수!' : '건설!'}
-          </button>
         </div>
       </div>
     </div>

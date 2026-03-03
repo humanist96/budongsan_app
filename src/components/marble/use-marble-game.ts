@@ -19,7 +19,7 @@ export interface PlayerState {
   readonly name: string
   readonly money: number
   readonly position: number
-  readonly properties: Record<string, number>  // districtKey → buildingCount (0 = land only)
+  readonly properties: Record<string, readonly number[]>  // districtKey → 건설된 건물 인덱스 배열 ([] = 땅만 보유)
   readonly islandTurnsLeft: number
   readonly nextBuyHalf: boolean
   readonly bankrupt: boolean
@@ -59,6 +59,7 @@ export interface GameState {
   readonly goldenKeyIndex: number
   readonly winner: 'player' | 'computer' | null
   readonly lotteryResult: number | null
+  readonly moveCount: number  // 'moving' useEffect 재트리거용
 }
 
 // --- Actions ---
@@ -68,7 +69,7 @@ export type GameAction =
   | { type: 'ROLL_DICE' }
   | { type: 'FINISH_MOVE' }
   | { type: 'BUY_PROPERTY'; buy: boolean }
-  | { type: 'BUILD'; build: boolean }
+  | { type: 'BUILD'; build: boolean; buildingIndex?: number }
   | { type: 'DISMISS_GOLDEN_KEY' }
   | { type: 'ESCAPE_ISLAND'; pay: boolean }
   | { type: 'DISMISS_EVENT' }
@@ -130,15 +131,15 @@ function countProperties(p: PlayerState): number {
 }
 
 function countBuildings(p: PlayerState): number {
-  return Object.values(p.properties).reduce((sum, count) => sum + count, 0)
+  return Object.values(p.properties).reduce((sum, indices) => sum + indices.length, 0)
 }
 
 function totalAssets(p: PlayerState): number {
   let assets = p.money
-  for (const [districtKey, buildingCount] of Object.entries(p.properties)) {
+  for (const [districtKey, builtIndices] of Object.entries(p.properties)) {
     const d = DISTRICTS[districtKey]
     if (d) {
-      assets += d.price + d.buildCost * buildingCount
+      assets += d.price + d.buildCost * builtIndices.length
     }
   }
   return assets
@@ -177,6 +178,7 @@ function createInitialState(): GameState {
     goldenKeyIndex: 0,
     winner: null,
     lotteryResult: null,
+    moveCount: 0,
   }
 }
 
@@ -227,6 +229,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
         dice: [d1, d2] as const,
         isDouble: isDouble,
         turnPhase: 'moving',
+        moveCount: state.moveCount + 1,
         logs,
       }
     }
@@ -253,11 +256,11 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 
           // 상대가 소유한 땅
           if (opponent.properties[dKey] !== undefined) {
-            const buildCount = opponent.properties[dKey]
-            const rent = getRent(dKey, buildCount)
+            const builtIndices = opponent.properties[dKey]
+            const rent = getRent(dKey, builtIndices.length)
             const district = DISTRICTS[dKey]
-            const buildingName = buildCount > 0
-              ? ` (${district.buildings.slice(0, buildCount).map(b => b.name).join(', ')})`
+            const buildingName = builtIndices.length > 0
+              ? ` (${builtIndices.map(idx => district.buildings[idx]?.name).filter(Boolean).join(', ')})`
               : ''
             const logs = addLog(state, active.id, `${space.name} 임대료 ${rent}억 지불${buildingName}`)
             const newActiveMoney = active.money - rent
@@ -291,9 +294,9 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 
           // 본인 소유 → 건설 제안
           if (active.properties[dKey] !== undefined) {
-            const buildCount = active.properties[dKey]
+            const builtCount = active.properties[dKey].length
             const maxBuild = getMaxBuildings(dKey)
-            if (buildCount < maxBuild) {
+            if (builtCount < maxBuild) {
               return { ...state, turnPhase: 'build-prompt' }
             }
             return { ...state, turnPhase: 'turn-end' }
@@ -331,6 +334,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
             ...state,
             ...updatePlayer(state, active.id, { position: gangnamIdx }),
             turnPhase: 'moving',
+            moveCount: state.moveCount + 1,
             logs,
           }
         }
@@ -452,7 +456,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
         return { ...state, turnPhase: 'turn-end', logs }
       }
 
-      const newProps = { ...active.properties, [dKey]: 0 }
+      const newProps = { ...active.properties, [dKey]: [] as readonly number[] }
       const logs = addLog(state, active.id, `${space.name} 매수! -${cost}억${active.nextBuyHalf ? ' (반값!)' : ''}`)
 
       return {
@@ -477,11 +481,11 @@ function gameReducer(state: GameState, action: GameAction): GameState {
         return { ...state, turnPhase: 'turn-end' }
       }
 
-      const currentCount = active.properties[dKey] ?? 0
+      const builtIndices = active.properties[dKey] ?? []
       const maxBuild = getMaxBuildings(dKey)
       const cost = district.buildCost
 
-      if (currentCount >= maxBuild) {
+      if (builtIndices.length >= maxBuild) {
         return { ...state, turnPhase: 'turn-end' }
       }
 
@@ -490,11 +494,16 @@ function gameReducer(state: GameState, action: GameAction): GameState {
         return { ...state, turnPhase: 'turn-end', logs }
       }
 
-      const buildingName = district.buildings[currentCount]?.name ?? '건물'
-      const celebName = district.buildings[currentCount]?.celeb
-      const displayName = celebName ? `${buildingName}(${celebName})` : buildingName
+      // 선택된 건물 인덱스 (없으면 아직 안 지은 첫 번째 건물)
+      const chosenIdx = action.buildingIndex ?? district.buildings.findIndex((_, i) => !builtIndices.includes(i))
+      if (chosenIdx < 0 || chosenIdx >= district.buildings.length || builtIndices.includes(chosenIdx)) {
+        return { ...state, turnPhase: 'turn-end' }
+      }
 
-      const newProps = { ...active.properties, [dKey]: currentCount + 1 }
+      const building = district.buildings[chosenIdx]
+      const displayName = building.celeb ? `${building.name}(${building.celeb})` : building.name
+
+      const newProps = { ...active.properties, [dKey]: [...builtIndices, chosenIdx] }
       const logs = addLog(state, active.id, `${displayName} 건설! -${cost}억`)
 
       return {
@@ -584,6 +593,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
             }),
             currentGoldenKey: null,
             turnPhase: newPos === 7 ? 'turn-end' : 'moving',
+            moveCount: state.moveCount + 1,
             logs,
           }
         }
@@ -778,7 +788,10 @@ function computerAI(state: GameState): GameState {
       key => DISTRICTS[key]?.grade === district.grade
     ).length
     const shouldBuild = sameGradeCount >= 2 && computer.money >= district.buildCost + 30
-    return gameReducer(state, { type: 'BUILD', build: shouldBuild })
+    // AI: 아직 안 지은 건물 중 첫 번째 선택
+    const builtIndices = computer.properties[space.districtKey] ?? []
+    const nextIdx = district.buildings.findIndex((_, i) => !builtIndices.includes(i))
+    return gameReducer(state, { type: 'BUILD', build: shouldBuild, buildingIndex: nextIdx >= 0 ? nextIdx : undefined })
   }
 
   // 황금열쇠
@@ -803,7 +816,7 @@ export function useMarbleGame() {
   const rollDice = useCallback(() => dispatch({ type: 'ROLL_DICE' }), [])
   const finishMove = useCallback(() => dispatch({ type: 'FINISH_MOVE' }), [])
   const buyProperty = useCallback((buy: boolean) => dispatch({ type: 'BUY_PROPERTY', buy }), [])
-  const build = useCallback((b: boolean) => dispatch({ type: 'BUILD', build: b }), [])
+  const build = useCallback((b: boolean, buildingIndex?: number) => dispatch({ type: 'BUILD', build: b, buildingIndex }), [])
   const dismissGoldenKey = useCallback(() => dispatch({ type: 'DISMISS_GOLDEN_KEY' }), [])
   const escapeIsland = useCallback((pay: boolean) => dispatch({ type: 'ESCAPE_ISLAND', pay }), [])
   const dismissEvent = useCallback(() => dispatch({ type: 'DISMISS_EVENT' }), [])

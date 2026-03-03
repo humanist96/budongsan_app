@@ -159,7 +159,7 @@ export function MarblePage() {
     }
   }, [state.phase, state.currentPlayer, state.turnPhase, actions])
 
-  // 이동 완료 자동 처리
+  // 이동 완료 자동 처리 (moveCount로 같은 'moving' → 'moving' 전환도 감지)
   useEffect(() => {
     if (state.turnPhase === 'moving') {
       const timer = setTimeout(() => {
@@ -167,7 +167,7 @@ export function MarblePage() {
       }, 500)
       return () => clearTimeout(timer)
     }
-  }, [state.turnPhase, actions])
+  }, [state.turnPhase, state.moveCount, actions])
 
   // 컴퓨터 결정 자동 처리
   useEffect(() => {
@@ -233,7 +233,8 @@ export function MarblePage() {
         <MarblePropertyPopup
           mode="buy"
           player={state.player}
-          onConfirm={() => actions.buyProperty(true)}
+          onBuy={() => actions.buyProperty(true)}
+          onBuild={() => {}}
           onCancel={() => actions.buyProperty(false)}
         />
       )}
@@ -242,7 +243,8 @@ export function MarblePage() {
         <MarblePropertyPopup
           mode="build"
           player={state.player}
-          onConfirm={() => actions.build(true)}
+          onBuy={() => {}}
+          onBuild={(idx) => actions.build(true, idx)}
           onCancel={() => actions.build(false)}
         />
       )}
@@ -254,7 +256,8 @@ export function MarblePage() {
         />
       )}
 
-      {state.turnPhase === 'island' && state.currentPlayer === 'player' && (
+      {state.currentPlayer === 'player' && state.player.islandTurnsLeft > 0 &&
+        (state.turnPhase === 'island' || state.turnPhase === 'roll') && (
         <IslandPrompt
           turnsLeft={state.player.islandTurnsLeft}
           money={state.player.money}

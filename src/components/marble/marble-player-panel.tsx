@@ -64,7 +64,7 @@ export function MarblePlayerPanel({ player, isActive, totalAssetsFn }: MarblePla
         <div className="space-y-1">
           <div className="text-[10px] text-muted-foreground font-medium">보유 부동산</div>
           <div className="flex flex-wrap gap-1">
-            {propertyEntries.map(([key, buildCount]) => {
+            {propertyEntries.map(([key, builtIndices]) => {
               const d = DISTRICTS[key]
               if (!d) return null
               return (
@@ -74,9 +74,9 @@ export function MarblePlayerPanel({ player, isActive, totalAssetsFn }: MarblePla
                 >
                   <span className={`font-bold ${getGradeColor(d.grade)}`}>{d.grade}</span>
                   <span>{d.name}</span>
-                  {buildCount > 0 && (
+                  {builtIndices.length > 0 && (
                     <span className="text-yellow-500">
-                      {'🏠'.repeat(buildCount)}
+                      {'🏠'.repeat(builtIndices.length)}
                     </span>
                   )}
                 </div>
