@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
-import { KakaoMapProvider } from '@/components/map/kakao-map-provider'
+import { VWorldMapProvider } from '@/components/map/vworld-map-provider'
 import type { MapCelebrityData } from '@/components/map/celebrity-map'
 import { createClient } from '@/lib/supabase/client'
 import { toMapCelebrityData } from '@/data/celebrity-seed-data'
@@ -94,8 +94,8 @@ export function HomeMap() {
   }
 
   return (
-    <KakaoMapProvider>
+    <VWorldMapProvider>
       <CelebrityMap data={data} />
-    </KakaoMapProvider>
+    </VWorldMapProvider>
   )
 }

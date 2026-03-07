@@ -1,11 +1,12 @@
 'use client'
 
 import { useMemo } from 'react'
-import { MapContainer, TileLayer, useMap, useMapEvents } from 'react-leaflet'
+import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet'
 import { useMapStore, useFilterStore } from '@/stores/map-store'
 import { CelebrityMarker, type CelebrityMarkerData } from './celebrity-marker'
 import { MarkerPopup } from './marker-popup'
 import { MapFilterPanel } from './map-filter-panel'
+import { MapSearch } from './map-search'
 import 'leaflet/dist/leaflet.css'
 
 interface MapCelebrityData {
@@ -66,10 +67,11 @@ export function CelebrityMap({ data }: CelebrityMapProps) {
         zoomControl={true}
       >
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.vworld.kr">VWorld</a>'
+          url={`https://api.vworld.kr/req/wmts/1.0.0/${process.env.NEXT_PUBLIC_VWORLD_API_KEY ?? 'BASE'}/Base/{z}/{y}/{x}.png`}
         />
         <MapController />
+        <MapSearch />
 
         {filteredData.map((item) => {
           const marker: CelebrityMarkerData = {
