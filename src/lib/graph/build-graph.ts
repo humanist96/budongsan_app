@@ -24,6 +24,7 @@ export interface GraphNode {
   politicalLeaning?: PoliticalLeaning
   party?: string
   propertyType?: string
+  profileImageUrl?: string | null
   group: number
   val: number
 }
@@ -120,6 +121,7 @@ export function buildBipartiteGraph(
     subCategory: c.subCategory,
     politicalLeaning: c.politicalLeaning,
     party: c.party,
+    profileImageUrl: c.profileImageUrl,
     group: CATEGORY_GROUP[c.category],
     val: (celebPropertyCount.get(c.id) ?? 1) * 2,
   }))
@@ -168,6 +170,7 @@ export function buildCelebNetwork(
     subCategory: c.subCategory,
     politicalLeaning: c.politicalLeaning,
     party: c.party,
+    profileImageUrl: c.profileImageUrl,
     group: CATEGORY_GROUP[c.category],
     val: connectedCelebIds.has(c.id) ? (celebPropertyCount.get(c.id) ?? 1) * 3 : 2,
   }))
@@ -309,6 +312,7 @@ export function buildNeighborhoodClusters(
       subCategory: c.subCategory,
       politicalLeaning: c.politicalLeaning,
       party: c.party,
+      profileImageUrl: c.profileImageUrl,
       group: dongGroupMap.get(primaryDong) ?? 99,
       val: activeCelebIds.has(c.id) ? (celebPropertyCount.get(c.id) ?? 1) * 3 : 2,
     }
