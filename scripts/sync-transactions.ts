@@ -35,7 +35,7 @@ function extractItems(xml: string): string[] {
 // ── API fetchers ──
 
 async function fetchMolitApi(endpoint: string, lawdCd: string, dealYmd: string): Promise<string> {
-  const url = new URL(`http://openapi.molit.go.kr/OpenAPI_ToolInstall498/service/rest/${endpoint}`)
+  const url = new URL(`http://apis.data.go.kr/1613000/${endpoint}`)
   url.searchParams.set('serviceKey', molitApiKey)
   url.searchParams.set('LAWD_CD', lawdCd)
   url.searchParams.set('DEAL_YMD', dealYmd)
@@ -44,7 +44,7 @@ async function fetchMolitApi(endpoint: string, lawdCd: string, dealYmd: string):
 
   const response = await fetch(url.toString())
   if (!response.ok) {
-    throw new Error(`API error: ${response.status}`)
+    throw new Error(`API error: ${response.status} for ${endpoint}`)
   }
   return response.text()
 }
@@ -63,17 +63,17 @@ interface ParsedTransaction {
 
 function parseApartmentItems(xml: string): ParsedTransaction[] {
   return extractItems(xml).map((itemXml) => {
-    const amount = parseInt((extractTag(itemXml, '거래금액') || '0').replace(/,/g, '').trim(), 10)
-    const aptName = extractTag(itemXml, '아파트') || extractTag(itemXml, 'aptNm') || ''
+    const amount = parseInt((extractTag(itemXml, 'dealAmount') || extractTag(itemXml, '거래금액') || '0').replace(/,/g, '').trim(), 10)
+    const aptName = extractTag(itemXml, 'aptNm') || extractTag(itemXml, '아파트') || ''
     return {
       amount,
-      year: parseInt(extractTag(itemXml, '년') || '0', 10),
-      month: parseInt(extractTag(itemXml, '월') || '0', 10),
-      day: parseInt(extractTag(itemXml, '일') || '0', 10),
+      year: parseInt(extractTag(itemXml, 'dealYear') || extractTag(itemXml, '년') || '0', 10),
+      month: parseInt(extractTag(itemXml, 'dealMonth') || extractTag(itemXml, '월') || '0', 10),
+      day: parseInt(extractTag(itemXml, 'dealDay') || extractTag(itemXml, '일') || '0', 10),
       name: aptName,
-      area: parseFloat(extractTag(itemXml, '전용면적') || '0'),
-      floor: parseInt(extractTag(itemXml, '층') || '0', 10),
-      dong: extractTag(itemXml, '법정동') || '',
+      area: parseFloat(extractTag(itemXml, 'excluUseAr') || extractTag(itemXml, '전용면적') || '0'),
+      floor: parseInt(extractTag(itemXml, 'floor') || extractTag(itemXml, '층') || '0', 10),
+      dong: extractTag(itemXml, 'umdNm') || extractTag(itemXml, '법정동') || '',
       rawData: { type: 'apartment', name: aptName },
     }
   })
@@ -155,7 +155,7 @@ const PROPERTY_API_MAP: Record<string, {
   parser: (xml: string) => ParsedTransaction[]
 }> = {
   apartment: {
-    endpoint: 'RTMSDataSvcAptTradeDev/getRTMSDataSvcAptTradeDev',
+    endpoint: 'RTMSDataSvcAptTrade/getRTMSDataSvcAptTrade',
     parser: parseApartmentItems,
   },
   building: {

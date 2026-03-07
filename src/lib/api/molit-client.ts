@@ -88,7 +88,8 @@ async function fetchMolitApi(endpoint: string, params: FetchTransactionsParams):
     throw new Error('MOLIT_API_KEY is not configured')
   }
 
-  const url = new URL(`http://openapi.molit.go.kr/OpenAPI_ToolInstall498/service/rest/${endpoint}`)
+  // data.go.kr 엔드포인트 사용
+  const url = new URL(`http://apis.data.go.kr/1613000/${endpoint}`)
   url.searchParams.set('serviceKey', apiKey)
   url.searchParams.set('LAWD_CD', params.lawdCd)
   url.searchParams.set('DEAL_YMD', params.dealYmd)
@@ -97,7 +98,7 @@ async function fetchMolitApi(endpoint: string, params: FetchTransactionsParams):
 
   const response = await fetch(url.toString())
   if (!response.ok) {
-    throw new Error(`MOLIT API error: ${response.status}`)
+    throw new Error(`MOLIT API error: ${response.status} for ${endpoint}`)
   }
 
   return response.text()
@@ -106,19 +107,19 @@ async function fetchMolitApi(endpoint: string, params: FetchTransactionsParams):
 // ── Apartment transactions ──
 
 export async function fetchApartmentTransactions(params: FetchTransactionsParams): Promise<MolitTransaction[]> {
-  const xml = await fetchMolitApi('RTMSDataSvcAptTradeDev/getRTMSDataSvcAptTradeDev', params)
+  const xml = await fetchMolitApi('RTMSDataSvcAptTrade/getRTMSDataSvcAptTrade', params)
 
   return extractItems(xml).map((itemXml) => ({
-    dealAmount: extractTag(itemXml, '거래금액') || extractTag(itemXml, 'dealAmount') || '',
-    dealYear: extractTag(itemXml, '년') || extractTag(itemXml, 'dealYear') || '',
-    dealMonth: extractTag(itemXml, '월') || extractTag(itemXml, 'dealMonth') || '',
-    dealDay: extractTag(itemXml, '일') || extractTag(itemXml, 'dealDay') || '',
-    aptName: extractTag(itemXml, '아파트') || extractTag(itemXml, 'aptNm') || '',
-    excluUseAr: extractTag(itemXml, '전용면적') || extractTag(itemXml, 'excluUseAr') || '',
-    floor: extractTag(itemXml, '층') || extractTag(itemXml, 'floor') || '',
-    jibun: extractTag(itemXml, '지번') || extractTag(itemXml, 'jibun') || '',
-    dong: extractTag(itemXml, '법정동') || extractTag(itemXml, 'dong') || '',
-    buildYear: extractTag(itemXml, '건축년도') || extractTag(itemXml, 'buildYear') || '',
+    dealAmount: extractTag(itemXml, 'dealAmount') || extractTag(itemXml, '거래금액') || '',
+    dealYear: extractTag(itemXml, 'dealYear') || extractTag(itemXml, '년') || '',
+    dealMonth: extractTag(itemXml, 'dealMonth') || extractTag(itemXml, '월') || '',
+    dealDay: extractTag(itemXml, 'dealDay') || extractTag(itemXml, '일') || '',
+    aptName: extractTag(itemXml, 'aptNm') || extractTag(itemXml, '아파트') || '',
+    excluUseAr: extractTag(itemXml, 'excluUseAr') || extractTag(itemXml, '전용면적') || '',
+    floor: extractTag(itemXml, 'floor') || extractTag(itemXml, '층') || '',
+    jibun: extractTag(itemXml, 'jibun') || extractTag(itemXml, '지번') || '',
+    dong: extractTag(itemXml, 'umdNm') || extractTag(itemXml, '법정동') || '',
+    buildYear: extractTag(itemXml, 'buildYear') || extractTag(itemXml, '건축년도') || '',
   }))
 }
 
