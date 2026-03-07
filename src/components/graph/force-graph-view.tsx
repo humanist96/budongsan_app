@@ -17,6 +17,13 @@ const CATEGORY_CANVAS_COLORS: Record<CelebrityCategory, string> = {
   expert: '#a855f7',
 }
 
+const CATEGORY_ICONS: Record<CelebrityCategory, string> = {
+  entertainer: '🎬',
+  politician: '🏛️',
+  athlete: '⚽',
+  expert: '📚',
+}
+
 const POLITICAL_COLORS = {
   progressive: '#2563eb',  // 진보: 파랑
   conservative: '#ef4444', // 보수: 빨강
@@ -129,7 +136,7 @@ export function ForceGraphView({
       if (dimmed) ctx.globalAlpha = DIM_OPACITY
 
       if (n.type === 'celebrity') {
-        const radius = Math.max(4, Math.sqrt(n.val) * 2.5)
+        const radius = Math.max(8, Math.sqrt(n.val) * 4)
         const color = (n.category === 'politician' && n.politicalLeaning)
           ? POLITICAL_COLORS[n.politicalLeaning]
           : (CATEGORY_CANVAS_COLORS[n.category!] ?? '#94a3b8')
@@ -137,55 +144,95 @@ export function ForceGraphView({
         // Outer ring for selected/searched
         if (isSelected || isSearched) {
           ctx.beginPath()
-          ctx.arc(n.x, n.y, radius + 3, 0, 2 * Math.PI)
+          ctx.arc(n.x, n.y, radius + 4, 0, 2 * Math.PI)
           ctx.strokeStyle = isSearched ? '#f59e0b' : HIGHLIGHT_COLOR
-          ctx.lineWidth = 2
+          ctx.lineWidth = 2.5
           ctx.stroke()
         }
 
         // Highlight ring for path
         if (isHighlighted) {
           ctx.beginPath()
-          ctx.arc(n.x, n.y, radius + 4, 0, 2 * Math.PI)
+          ctx.arc(n.x, n.y, radius + 5, 0, 2 * Math.PI)
           ctx.strokeStyle = HIGHLIGHT_COLOR
-          ctx.lineWidth = 2.5
+          ctx.lineWidth = 3
           ctx.stroke()
         }
 
-        // Main circle
+        // Main circle with subtle shadow
         ctx.beginPath()
         ctx.arc(n.x, n.y, radius, 0, 2 * Math.PI)
         ctx.fillStyle = color
         ctx.fill()
+        ctx.strokeStyle = 'rgba(0,0,0,0.2)'
+        ctx.lineWidth = 0.5
+        ctx.stroke()
 
-        // Name label
-        const fontSize = Math.max(10 / globalScale, 2.5)
-        ctx.font = `${fontSize}px -apple-system, sans-serif`
+        // Category icon inside circle
+        const icon = CATEGORY_ICONS[n.category!] ?? '👤'
+        const iconSize = Math.max(radius * 0.9, 4)
+        ctx.font = `${iconSize}px serif`
+        ctx.textAlign = 'center'
+        ctx.textBaseline = 'middle'
+        ctx.fillText(icon, n.x, n.y)
+
+        // Name label with background for readability
+        const fontSize = Math.max(11 / globalScale, 3)
+        ctx.font = `600 ${fontSize}px -apple-system, sans-serif`
         ctx.textAlign = 'center'
         ctx.textBaseline = 'top'
-        ctx.fillStyle = dimmed ? 'rgba(100,100,100,0.4)' : '#e2e8f0'
-        ctx.fillText(n.name, n.x, n.y + radius + 2)
+        const textY = n.y + radius + 3
+        const textWidth = ctx.measureText(n.name).width
+        const pad = 2 / globalScale
+
+        // Text background
+        ctx.fillStyle = dimmed ? 'rgba(0,0,0,0.05)' : 'rgba(0,0,0,0.55)'
+        ctx.beginPath()
+        ctx.roundRect(n.x - textWidth / 2 - pad, textY - pad * 0.5, textWidth + pad * 2, fontSize + pad * 1.5, 2 / globalScale)
+        ctx.fill()
+
+        // Text
+        ctx.fillStyle = dimmed ? 'rgba(100,100,100,0.4)' : '#ffffff'
+        ctx.fillText(n.name, n.x, textY)
       } else {
-        // Property node: small square
-        const size = Math.max(3, Math.sqrt(n.val) * 2)
+        // Property node: rounded square
+        const size = Math.max(5, Math.sqrt(n.val) * 3)
 
         if (isHighlighted) {
           ctx.strokeStyle = HIGHLIGHT_COLOR
-          ctx.lineWidth = 2
-          ctx.strokeRect(n.x - size - 1.5, n.y - size - 1.5, size * 2 + 3, size * 2 + 3)
+          ctx.lineWidth = 2.5
+          ctx.strokeRect(n.x - size - 2, n.y - size - 2, size * 2 + 4, size * 2 + 4)
         }
 
         ctx.fillStyle = PROPERTY_COLOR
-        ctx.fillRect(n.x - size, n.y - size, size * 2, size * 2)
+        ctx.beginPath()
+        ctx.roundRect(n.x - size, n.y - size, size * 2, size * 2, 2)
+        ctx.fill()
+
+        // House icon
+        const houseSize = Math.max(size * 0.8, 3)
+        ctx.font = `${houseSize}px serif`
+        ctx.textAlign = 'center'
+        ctx.textBaseline = 'middle'
+        ctx.fillText('🏠', n.x, n.y)
 
         // Show name on hover/highlight
         if (hoveredNode === n.id || isHighlighted || isSelected) {
-          const fontSize = Math.max(9 / globalScale, 2)
-          ctx.font = `${fontSize}px -apple-system, sans-serif`
+          const fontSize = Math.max(10 / globalScale, 2.5)
+          ctx.font = `500 ${fontSize}px -apple-system, sans-serif`
           ctx.textAlign = 'center'
           ctx.textBaseline = 'top'
-          ctx.fillStyle = '#cbd5e1'
-          ctx.fillText(n.name, n.x, n.y + size + 2)
+          const textY = n.y + size + 2
+          const textWidth = ctx.measureText(n.name).width
+          const pad = 2 / globalScale
+
+          ctx.fillStyle = 'rgba(0,0,0,0.55)'
+          ctx.beginPath()
+          ctx.roundRect(n.x - textWidth / 2 - pad, textY - pad * 0.5, textWidth + pad * 2, fontSize + pad * 1.5, 2 / globalScale)
+          ctx.fill()
+
+          ctx.fillStyle = '#ffffff'
+          ctx.fillText(n.name, n.x, textY)
         }
       }
 
@@ -244,7 +291,7 @@ export function ForceGraphView({
     (node: unknown, color: string, ctx: CanvasRenderingContext2D) => {
       const n = node as GraphNode & { x: number; y: number }
       if (n.x === undefined) return
-      const size = n.type === 'celebrity' ? Math.max(6, Math.sqrt(n.val) * 3) : Math.max(5, Math.sqrt(n.val) * 2.5)
+      const size = n.type === 'celebrity' ? Math.max(10, Math.sqrt(n.val) * 5) : Math.max(7, Math.sqrt(n.val) * 3.5)
       ctx.fillStyle = color
       ctx.beginPath()
       ctx.arc(n.x, n.y, size, 0, 2 * Math.PI)
