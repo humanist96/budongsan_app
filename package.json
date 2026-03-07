@@ -10,7 +10,11 @@
     "seed:politicians": "npx tsx scripts/seed-politicians.ts",
     "seed:celebrities": "npx tsx scripts/seed-celebrities.ts",
     "geocode": "npx tsx scripts/geocode-addresses.ts",
-    "sync:transactions": "npx tsx scripts/sync-transactions.ts"
+    "sync:transactions": "npx tsx scripts/sync-transactions.ts",
+    "crawl:news": "npx tsx scripts/news-crawler.ts",
+    "crawl:bdmonth": "npx tsx scripts/crawl-bdmonth.ts",
+    "fetch:politicians": "npx tsx scripts/fetch-politician-assets.ts",
+    "extract:news": "npx tsx scripts/extract-from-news.ts"
   },
   "packageManager": "pnpm@10.30.0",
   "dependencies": {
