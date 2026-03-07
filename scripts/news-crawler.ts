@@ -12,6 +12,7 @@
 
 import * as fs from 'fs'
 import * as path from 'path'
+import { loadCelebrityNames } from './lib/celebrity-names'
 
 const NAVER_CLIENT_ID = process.env.NAVER_CLIENT_ID!
 const NAVER_CLIENT_SECRET = process.env.NAVER_CLIENT_SECRET!
@@ -44,55 +45,59 @@ interface CrawlResult {
 }
 
 const SEARCH_KEYWORDS = [
-  // 기존 8개
+  // ── 연예인 기본 ──
   '연예인 부동산 매입',
   '연예인 아파트 매매',
   '스타 한남더힐',
   '셀럽 청담동 아파트',
-  '프로선수 부동산',
   '아이돌 아파트 매입',
   '배우 집 공개',
   '가수 부동산 투자',
-  // 추가 12개
   '스타 빌딩 매입',
   '연예인 건물 투자',
   '셀럽 전액현금',
   '아이돌 한남더힐',
   'BTS 부동산',
-  '운동선수 빌딩',
   '배우 청담동 건물',
   'MC 빌딩 매입',
   '트로트 부동산',
   'K팝 아이돌 부동산',
+  // ── 연예인 확장 ──
+  '연예인 빌딩 매각',
+  '연예인 펜트하우스',
+  '방송인 건물',
+  '한류스타 부동산',
+  '유튜버 빌딩',
+  '개그맨 부동산',
+  // ── 운동선수 ──
+  '프로선수 부동산',
+  '운동선수 빌딩',
+  '야구선수 부동산',
+  '축구선수 아파트',
+  '골프선수 부동산',
+  'KBO 선수 건물',
+  // ── 정치인 ──
   '정치인 부동산 재산',
   '국회의원 부동산',
+  '국회의원 재산공개',
+  '공직자 부동산',
+  '장관 재산',
+  '정치인 건물',
+  // ── 특정 단지 ──
+  '한남더힐 연예인',
+  '나인원한남 입주자',
+  'PH129 청담 셀럽',
+  '래미안원베일리 연예인',
+  '아크로리버파크 스타',
+  '타워팰리스 셀럽',
+  '트라움하우스 연예인',
+  '시그니엘 입주자',
+  '갤러리아포레 셀럽',
+  '청담자이 연예인',
+  '반포자이 스타',
 ]
 
-/** Extract celebrity names from seed-celebrities.ts at build time */
-function loadCelebrityNames(): string[] {
-  try {
-    const seedPath = path.resolve(__dirname, 'seed-celebrities.ts')
-    const content = fs.readFileSync(seedPath, 'utf-8')
-    const names: string[] = []
-
-    // Match top-level name fields (celebrity names, not property names)
-    // Pattern: lines starting with `    name: '...'` (4-space indent = celebrity level)
-    const nameRegex = /^\s{2,4}name:\s*'([^']+)'/gm
-    let match
-    while ((match = nameRegex.exec(content)) !== null) {
-      const name = match[1]
-      // Skip property names (they tend to be longer or contain specific suffixes)
-      if (!name.includes('아파트') && !name.includes('빌라') && !name.includes('별장')
-        && !name.includes('리조트') && !name.includes('주택') && name.length <= 10) {
-        names.push(name)
-      }
-    }
-
-    return [...new Set(names)]
-  } catch {
-    return []
-  }
-}
+// loadCelebrityNames imported from ./lib/celebrity-names
 
 function stripHtml(html: string): string {
   return html.replace(/<[^>]*>/g, '').replace(/&[^;]+;/g, ' ').trim()
@@ -164,7 +169,7 @@ async function main() {
 
   for (const keyword of SEARCH_KEYWORDS) {
     try {
-      const items = await searchNews(keyword, 5)
+      const items = await searchNews(keyword, 10)
 
       for (const item of items) {
         // Deduplicate by URL

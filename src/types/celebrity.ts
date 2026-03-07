@@ -14,6 +14,13 @@ export interface Celebrity {
   property_count: number
   total_asset_value: number
   is_verified: boolean
+  birth_year: number | null
+  agency: string | null
+  wikipedia_url: string | null
+  namuwiki_url: string | null
+  wikidata_id: string | null
+  social_links: Record<string, string>
+  enriched_at: string | null
   created_at: string
   updated_at: string
 }

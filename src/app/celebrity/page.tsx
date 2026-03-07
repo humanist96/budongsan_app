@@ -74,6 +74,13 @@ function approvedToCelebrity(sub: ApprovedSubmission): Celebrity {
     property_count: 1,
     total_asset_value: price * 10000, // 억원 → 만원 단위
     is_verified: false,
+    birth_year: null,
+    agency: null,
+    wikipedia_url: null,
+    namuwiki_url: null,
+    wikidata_id: null,
+    social_links: {},
+    enriched_at: null,
     created_at: '',
     updated_at: '',
   }
@@ -271,6 +278,13 @@ function getDemoCelebrities(
       property_count: countMap.get(c.id) ?? 0,
       total_asset_value: totalMap.get(c.id) ?? 0,
       is_verified: c.isVerified,
+      birth_year: c.birthYear ?? null,
+      agency: c.agency ?? null,
+      wikipedia_url: c.wikipediaUrl ?? null,
+      namuwiki_url: null,
+      wikidata_id: c.wikidataId ?? null,
+      social_links: {},
+      enriched_at: null,
       created_at: '2024-01-01',
       updated_at: '2024-01-01',
     }))

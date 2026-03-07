@@ -14,6 +14,7 @@
 
 import * as fs from 'fs'
 import * as path from 'path'
+import { loadCelebrityNames } from './lib/celebrity-names'
 
 interface CrawledArticle {
   keyword: string
@@ -53,6 +54,7 @@ interface ExtractionResult {
 // ── Known property names ──
 
 const KNOWN_PROPERTIES = [
+  // ── 기존 고급 아파트 ──
   '한남더힐',
   '나인원한남',
   'PH129',
@@ -78,6 +80,35 @@ const KNOWN_PROPERTIES = [
   '삼성래미안',
   '압구정현대',
   '대치SK뷰',
+  // ── 추가 고급 아파트 ──
+  '래미안원베일리',
+  '올림픽파크포레온',
+  '디에이치아너힐즈',
+  '아크로비스타',
+  '에테르노청담',
+  '메세나폴리스',
+  '한남리버힐',
+  '더샵청담',
+  '디에이치자이개포',
+  '래미안블레스티지',
+  '반포래미안아이파크',
+  '잠실리센츠',
+  '디에이치라클라스',
+  '르엘신반포',
+  '아크로리버뷰',
+  // ── 빌딩 키워드 ──
+  '신사동 빌딩',
+  '청담동 빌딩',
+  '논현동 빌딩',
+  '한남동 빌딩',
+  '압구정 빌딩',
+  '이태원 빌딩',
+  '성수동 빌딩',
+  // ── 재건축 ──
+  '은마아파트',
+  '잠실주공',
+  '압구정현대1차',
+  '개포주공',
 ]
 
 // ── Extraction patterns ──
@@ -133,26 +164,7 @@ function findPropertyNames(text: string): string[] {
   return KNOWN_PROPERTIES.filter((name) => text.includes(name))
 }
 
-/** Load celebrity names from seed data */
-function loadCelebrityNames(): string[] {
-  try {
-    const seedPath = path.resolve(__dirname, 'seed-celebrities.ts')
-    const content = fs.readFileSync(seedPath, 'utf-8')
-    const names: string[] = []
-    const nameRegex = /^\s{2,4}name:\s*'([^']+)'/gm
-    let match
-    while ((match = nameRegex.exec(content)) !== null) {
-      const name = match[1]
-      if (!name.includes('아파트') && !name.includes('빌라') && !name.includes('별장')
-        && !name.includes('리조트') && !name.includes('주택') && name.length <= 10) {
-        names.push(name)
-      }
-    }
-    return [...new Set(names)]
-  } catch {
-    return []
-  }
-}
+// loadCelebrityNames imported from ./lib/celebrity-names
 
 /** Calculate confidence score (0-100) */
 function calculateConfidence(details: {

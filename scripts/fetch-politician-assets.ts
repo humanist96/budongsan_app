@@ -11,6 +11,7 @@
 
 import * as fs from 'fs'
 import * as path from 'path'
+import { loadAllCelebrityNames } from './lib/celebrity-names'
 
 interface PoliticianRow {
   name: string
@@ -151,37 +152,7 @@ async function downloadNewstapaData(): Promise<string | null> {
   }
 }
 
-/** Load existing celebrity names from seed data */
-function loadExistingCelebrityNames(): Set<string> {
-  const names = new Set<string>()
-
-  try {
-    const seedPath = path.resolve(__dirname, 'seed-celebrities.ts')
-    const content = fs.readFileSync(seedPath, 'utf-8')
-    const nameRegex = /^\s{2,4}name:\s*'([^']+)'/gm
-    let match
-    while ((match = nameRegex.exec(content)) !== null) {
-      names.add(match[1])
-    }
-  } catch {
-    // Seed file not found
-  }
-
-  try {
-    const politicianSeedPath = path.resolve(__dirname, 'seed-politicians.ts')
-    const content = fs.readFileSync(politicianSeedPath, 'utf-8')
-    // Extract names that get inserted
-    const nameRegex = /name:\s*['"]([^'"]+)['"]/g
-    let match
-    while ((match = nameRegex.exec(content)) !== null) {
-      names.add(match[1])
-    }
-  } catch {
-    // Politician seed not found
-  }
-
-  return names
-}
+// loadAllCelebrityNames imported from ./lib/celebrity-names
 
 async function main() {
   // 1. Try downloading fresh data
@@ -229,7 +200,7 @@ async function main() {
   }
 
   // 6. Diff against existing celebrities
-  const existingNames = loadExistingCelebrityNames()
+  const existingNames = loadAllCelebrityNames()
   console.log(`Found ${existingNames.size} existing celebrity names`)
 
   const candidates: PoliticianCandidate[] = []

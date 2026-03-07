@@ -23,6 +23,10 @@ export interface SeedCelebrity {
   description: string
   isVerified: boolean
   profileImageUrl?: string | null
+  birthYear?: number | null
+  agency?: string | null
+  wikipediaUrl?: string | null
+  wikidataId?: string | null
 }
 
 export interface SeedProperty {

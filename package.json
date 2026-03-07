@@ -14,7 +14,10 @@
     "crawl:news": "npx tsx scripts/news-crawler.ts",
     "crawl:bdmonth": "npx tsx scripts/crawl-bdmonth.ts",
     "fetch:politicians": "npx tsx scripts/fetch-politician-assets.ts",
-    "extract:news": "npx tsx scripts/extract-from-news.ts"
+    "extract:news": "npx tsx scripts/extract-from-news.ts",
+    "fetch:politicians:v2": "npx tsx scripts/fetch-politician-assets-v2.ts",
+    "enrich:profiles": "npx tsx scripts/enrich-profiles.ts",
+    "geocode:auto": "npx tsx scripts/auto-geocode-pipeline.ts"
   },
   "packageManager": "pnpm@10.30.0",
   "dependencies": {
