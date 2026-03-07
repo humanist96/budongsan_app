@@ -17,6 +17,11 @@ const CATEGORY_CANVAS_COLORS: Record<CelebrityCategory, string> = {
   expert: '#a855f7',
 }
 
+const POLITICAL_COLORS = {
+  progressive: '#2563eb',  // 진보: 파랑
+  conservative: '#ef4444', // 보수: 빨강
+} as const
+
 const PROPERTY_COLOR = '#94a3b8'
 const HIGHLIGHT_COLOR = '#ef4444'
 const DIM_OPACITY = 0.15
@@ -125,7 +130,9 @@ export function ForceGraphView({
 
       if (n.type === 'celebrity') {
         const radius = Math.max(4, Math.sqrt(n.val) * 2.5)
-        const color = CATEGORY_CANVAS_COLORS[n.category!] ?? '#94a3b8'
+        const color = (n.category === 'politician' && n.politicalLeaning)
+          ? POLITICAL_COLORS[n.politicalLeaning]
+          : (CATEGORY_CANVAS_COLORS[n.category!] ?? '#94a3b8')
 
         // Outer ring for selected/searched
         if (isSelected || isSearched) {

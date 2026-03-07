@@ -10,6 +10,7 @@ import {
   celebrities,
   celebrityProperties,
   properties,
+  type PoliticalLeaning,
 } from '@/data/celebrity-seed-data'
 
 // ─── Types ──────────────────────────────────────────────────
@@ -20,6 +21,8 @@ export interface GraphNode {
   type: 'celebrity' | 'property'
   category?: CelebrityCategory
   subCategory?: string
+  politicalLeaning?: PoliticalLeaning
+  party?: string
   propertyType?: string
   group: number
   val: number
@@ -80,14 +83,30 @@ for (const cp of celebrityProperties) {
   propResidentCount.set(cp.propertyId, (propResidentCount.get(cp.propertyId) ?? 0) + 1)
 }
 
-export function buildBipartiteGraph(categoryFilter?: CelebrityCategory[]): GraphData {
-  const celebMap = new Map(celebrities.map((c) => [c.id, c]))
-  const propMap = new Map(properties.map((p) => [p.id, p]))
-
-  const filteredCelebs = categoryFilter
+/** 카테고리 + 정치 성향 필터를 적용하여 셀럽 목록 반환 */
+function filterCelebrities(
+  categoryFilter?: CelebrityCategory[],
+  politicalFilter?: PoliticalLeaning[],
+) {
+  let filtered = categoryFilter
     ? celebrities.filter((c) => categoryFilter.includes(c.category))
     : celebrities
 
+  if (politicalFilter && politicalFilter.length > 0) {
+    filtered = filtered.filter((c) => {
+      if (c.category !== 'politician') return true
+      return c.politicalLeaning ? politicalFilter.includes(c.politicalLeaning) : true
+    })
+  }
+
+  return filtered
+}
+
+export function buildBipartiteGraph(
+  categoryFilter?: CelebrityCategory[],
+  politicalFilter?: PoliticalLeaning[],
+): GraphData {
+  const filteredCelebs = filterCelebrities(categoryFilter, politicalFilter)
   const filteredCelebIds = new Set(filteredCelebs.map((c) => c.id))
 
   const activeLinks = celebrityProperties.filter((cp) => filteredCelebIds.has(cp.celebrityId))
@@ -99,6 +118,8 @@ export function buildBipartiteGraph(categoryFilter?: CelebrityCategory[]): Graph
     type: 'celebrity' as const,
     category: c.category,
     subCategory: c.subCategory,
+    politicalLeaning: c.politicalLeaning,
+    party: c.party,
     group: CATEGORY_GROUP[c.category],
     val: (celebPropertyCount.get(c.id) ?? 1) * 2,
   }))
@@ -125,8 +146,11 @@ export function buildBipartiteGraph(categoryFilter?: CelebrityCategory[]): Graph
 
 // ─── 2) Celeb-only Network ──────────────────────────────────
 
-export function buildCelebNetwork(categoryFilter?: CelebrityCategory[]): GraphData {
-  const connections = computeCelebConnections(categoryFilter)
+export function buildCelebNetwork(
+  categoryFilter?: CelebrityCategory[],
+  politicalFilter?: PoliticalLeaning[],
+): GraphData {
+  const connections = computeCelebConnections(categoryFilter, politicalFilter)
   const connectedCelebIds = new Set<string>()
 
   for (const conn of connections) {
@@ -134,9 +158,7 @@ export function buildCelebNetwork(categoryFilter?: CelebrityCategory[]): GraphDa
     connectedCelebIds.add(conn.target)
   }
 
-  const filteredCelebs = categoryFilter
-    ? celebrities.filter((c) => categoryFilter.includes(c.category))
-    : celebrities
+  const filteredCelebs = filterCelebrities(categoryFilter, politicalFilter)
 
   const nodes: GraphNode[] = filteredCelebs.map((c) => ({
     id: c.id,
@@ -144,6 +166,8 @@ export function buildCelebNetwork(categoryFilter?: CelebrityCategory[]): GraphDa
     type: 'celebrity' as const,
     category: c.category,
     subCategory: c.subCategory,
+    politicalLeaning: c.politicalLeaning,
+    party: c.party,
     group: CATEGORY_GROUP[c.category],
     val: connectedCelebIds.has(c.id) ? (celebPropertyCount.get(c.id) ?? 1) * 3 : 2,
   }))
@@ -157,15 +181,17 @@ export function buildCelebNetwork(categoryFilter?: CelebrityCategory[]): GraphDa
   return { nodes, links }
 }
 
-function computeCelebConnections(categoryFilter?: CelebrityCategory[]): CelebConnection[] {
+function computeCelebConnections(
+  categoryFilter?: CelebrityCategory[],
+  politicalFilter?: PoliticalLeaning[],
+): CelebConnection[] {
   // property → [셀럽 IDs]
   const propToCelebs = new Map<string, string[]>()
-  const filteredCelebIds = categoryFilter
-    ? new Set(celebrities.filter((c) => categoryFilter.includes(c.category)).map((c) => c.id))
-    : null
+  const filtered = filterCelebrities(categoryFilter, politicalFilter)
+  const filteredCelebIds = new Set(filtered.map((c) => c.id))
 
   for (const cp of celebrityProperties) {
-    if (filteredCelebIds && !filteredCelebIds.has(cp.celebrityId)) continue
+    if (!filteredCelebIds.has(cp.celebrityId)) continue
     const arr = propToCelebs.get(cp.propertyId) ?? []
     if (!arr.includes(cp.celebrityId)) {
       arr.push(cp.celebrityId)
@@ -214,18 +240,19 @@ for (const prop of properties) {
   }
 }
 
-export function buildNeighborhoodClusters(categoryFilter?: CelebrityCategory[]): GraphData {
-  const celebMap = new Map(celebrities.map((c) => [c.id, c]))
+export function buildNeighborhoodClusters(
+  categoryFilter?: CelebrityCategory[],
+  politicalFilter?: PoliticalLeaning[],
+): GraphData {
   const propMap = new Map(properties.map((p) => [p.id, p]))
 
-  const filteredCelebIds = categoryFilter
-    ? new Set(celebrities.filter((c) => categoryFilter.includes(c.category)).map((c) => c.id))
-    : null
+  const filtered = filterCelebrities(categoryFilter, politicalFilter)
+  const filteredCelebIds = new Set(filtered.map((c) => c.id))
 
   // 셀럽 → 동 목록
   const celebDongs = new Map<string, Set<string>>()
   for (const cp of celebrityProperties) {
-    if (filteredCelebIds && !filteredCelebIds.has(cp.celebrityId)) continue
+    if (!filteredCelebIds.has(cp.celebrityId)) continue
     const prop = propMap.get(cp.propertyId)
     if (!prop) continue
     const dong = extractDong(prop.address)
@@ -269,9 +296,7 @@ export function buildNeighborhoodClusters(categoryFilter?: CelebrityCategory[]):
     for (const id of celebIds) activeCelebIds.add(id)
   }
 
-  const allCelebs = categoryFilter
-    ? celebrities.filter((c) => categoryFilter.includes(c.category))
-    : celebrities
+  const allCelebs = filterCelebrities(categoryFilter, politicalFilter)
 
   const nodes: GraphNode[] = allCelebs.map((c) => {
     const dongs = celebDongs.get(c.id)
@@ -282,6 +307,8 @@ export function buildNeighborhoodClusters(categoryFilter?: CelebrityCategory[]):
       type: 'celebrity' as const,
       category: c.category,
       subCategory: c.subCategory,
+      politicalLeaning: c.politicalLeaning,
+      party: c.party,
       group: dongGroupMap.get(primaryDong) ?? 99,
       val: activeCelebIds.has(c.id) ? (celebPropertyCount.get(c.id) ?? 1) * 3 : 2,
     }

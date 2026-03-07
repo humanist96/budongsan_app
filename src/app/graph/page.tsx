@@ -3,6 +3,7 @@
 import { useCallback, useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import type { CelebrityCategory } from '@/types'
+import type { PoliticalLeaning } from '@/data/celebrity-seed-data'
 import type { GraphNode, PathResult } from '@/lib/graph/build-graph'
 import {
   buildBipartiteGraph,
@@ -21,6 +22,7 @@ export default function GraphPage() {
   const router = useRouter()
   const [viewMode, setViewMode] = useState<ViewMode>('celeb-network')
   const [categoryFilter, setCategoryFilter] = useState<CelebrityCategory[]>(ALL_CATEGORIES)
+  const [politicalFilter, setPoliticalFilter] = useState<PoliticalLeaning[]>([])
   const [selectedNode, setSelectedNode] = useState<GraphNode | null>(null)
   const [searchNodeId, setSearchNodeId] = useState<string | null>(null)
   const [highlightPath, setHighlightPath] = useState<PathResult | null>(null)
@@ -28,16 +30,17 @@ export default function GraphPage() {
   const [sidePanel, setSidePanel] = useState<'stats' | 'path' | 'detail'>('stats')
 
   const graphData = useMemo(() => {
-    const filter = categoryFilter.length === ALL_CATEGORIES.length ? undefined : categoryFilter
+    const catFilter = categoryFilter.length === ALL_CATEGORIES.length ? undefined : categoryFilter
+    const polFilter = politicalFilter.length > 0 ? politicalFilter : undefined
     switch (viewMode) {
       case 'bipartite':
-        return buildBipartiteGraph(filter)
+        return buildBipartiteGraph(catFilter, polFilter)
       case 'celeb-network':
-        return buildCelebNetwork(filter)
+        return buildCelebNetwork(catFilter, polFilter)
       case 'neighborhood':
-        return buildNeighborhoodClusters(filter)
+        return buildNeighborhoodClusters(catFilter, polFilter)
     }
-  }, [viewMode, categoryFilter])
+  }, [viewMode, categoryFilter, politicalFilter])
 
   const handleNodeClick = useCallback((node: GraphNode) => {
     setSelectedNode(node)
@@ -81,6 +84,8 @@ export default function GraphPage() {
             onViewModeChange={setViewMode}
             categoryFilter={categoryFilter}
             onCategoryFilterChange={setCategoryFilter}
+            politicalFilter={politicalFilter}
+            onPoliticalFilterChange={setPoliticalFilter}
             onSearchSelect={handleSearchSelect}
             forceStrength={forceStrength}
             onForceStrengthChange={setForceStrength}

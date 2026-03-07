@@ -64,11 +64,20 @@ export function NodeDetailPanel({ node, onClose, onNavigate }: NodeDetailPanelPr
           <>
             {/* Celebrity Info */}
             <div className="space-y-1.5">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <span className={`w-2 h-2 rounded-full ${CATEGORY_DOT_COLORS[details.celeb.category]}`} />
                 <span className="text-xs text-muted-foreground">
                   {CATEGORY_LABELS[details.celeb.category]} · {details.celeb.subCategory}
                 </span>
+                {details.celeb.party && (
+                  <span className={`text-xs px-1.5 py-0.5 rounded ${
+                    details.celeb.politicalLeaning === 'progressive'
+                      ? 'bg-blue-600/20 text-blue-300'
+                      : 'bg-red-500/20 text-red-300'
+                  }`}>
+                    {details.celeb.party}
+                  </span>
+                )}
               </div>
               <p className="text-xs text-muted-foreground leading-relaxed">{details.celeb.description}</p>
             </div>

@@ -5,6 +5,7 @@ import { Network, Users, MapPin, Search, SlidersHorizontal } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import type { CelebrityCategory } from '@/types'
 import { CATEGORY_LABELS } from '@/types/celebrity'
+import type { PoliticalLeaning } from '@/data/celebrity-seed-data'
 import { getAllCelebrities } from '@/lib/graph/build-graph'
 
 // ─── Types ──────────────────────────────────────────────────
@@ -16,6 +17,8 @@ interface GraphControlsProps {
   onViewModeChange: (mode: ViewMode) => void
   categoryFilter: CelebrityCategory[]
   onCategoryFilterChange: (categories: CelebrityCategory[]) => void
+  politicalFilter: PoliticalLeaning[]
+  onPoliticalFilterChange: (leanings: PoliticalLeaning[]) => void
   onSearchSelect: (celebId: string) => void
   forceStrength: number
   onForceStrengthChange: (value: number) => void
@@ -45,6 +48,21 @@ const CATEGORY_ACTIVE_COLORS: Record<CelebrityCategory, string> = {
   expert: 'bg-purple-500 text-white border-purple-500',
 }
 
+const POLITICAL_LEANINGS: { value: PoliticalLeaning; label: string; color: string; activeColor: string }[] = [
+  {
+    value: 'progressive',
+    label: '진보',
+    color: 'bg-blue-600/20 text-blue-300 border-blue-600/50',
+    activeColor: 'bg-blue-600 text-white border-blue-600',
+  },
+  {
+    value: 'conservative',
+    label: '보수',
+    color: 'bg-red-500/20 text-red-300 border-red-500/50',
+    activeColor: 'bg-red-500 text-white border-red-500',
+  },
+]
+
 // ─── Component ──────────────────────────────────────────────
 
 export function GraphControls({
@@ -52,6 +70,8 @@ export function GraphControls({
   onViewModeChange,
   categoryFilter,
   onCategoryFilterChange,
+  politicalFilter,
+  onPoliticalFilterChange,
   onSearchSelect,
   forceStrength,
   onForceStrengthChange,
@@ -74,7 +94,17 @@ export function GraphControls({
     }
   }
 
+  const togglePolitical = (leaning: PoliticalLeaning) => {
+    if (politicalFilter.includes(leaning)) {
+      const next = politicalFilter.filter((l) => l !== leaning)
+      onPoliticalFilterChange(next)
+    } else {
+      onPoliticalFilterChange([...politicalFilter, leaning])
+    }
+  }
+
   const allSelected = categoryFilter.length === CATEGORIES.length
+  const showPoliticalFilter = categoryFilter.includes('politician')
 
   return (
     <div className="flex flex-col gap-3">
@@ -95,7 +125,7 @@ export function GraphControls({
       </div>
 
       {/* Category Filter */}
-      <div className="flex flex-wrap gap-1.5">
+      <div className="flex flex-wrap gap-1.5 items-center">
         <Button
           variant="outline"
           size="sm"
@@ -118,6 +148,27 @@ export function GraphControls({
             </button>
           )
         })}
+
+        {/* Political Leaning Filter (정치인 선택 시 표시) */}
+        {showPoliticalFilter && (
+          <>
+            <span className="text-muted-foreground text-xs mx-0.5">|</span>
+            {POLITICAL_LEANINGS.map(({ value, label, color, activeColor }) => {
+              const active = politicalFilter.includes(value)
+              return (
+                <button
+                  key={value}
+                  className={`px-2.5 py-1 text-xs rounded-md border transition-colors ${
+                    active ? activeColor : color
+                  }`}
+                  onClick={() => togglePolitical(value)}
+                >
+                  {label}
+                </button>
+              )
+            })}
+          </>
+        )}
       </div>
 
       {/* Search + Settings Row */}
@@ -165,10 +216,12 @@ export function GraphControls({
                 >
                   <span
                     className="w-2 h-2 rounded-full flex-shrink-0"
-                    style={{ backgroundColor: getCategoryColor(c.category) }}
+                    style={{ backgroundColor: getCategoryColor(c.category, c.politicalLeaning) }}
                   />
                   {c.name}
-                  <span className="text-xs text-muted-foreground ml-auto">{CATEGORY_LABELS[c.category]}</span>
+                  <span className="text-xs text-muted-foreground ml-auto">
+                    {c.party ?? CATEGORY_LABELS[c.category]}
+                  </span>
                 </button>
               ))}
             </div>
@@ -196,7 +249,10 @@ export function GraphControls({
   )
 }
 
-function getCategoryColor(category: CelebrityCategory): string {
+function getCategoryColor(category: CelebrityCategory, politicalLeaning?: PoliticalLeaning): string {
+  if (category === 'politician' && politicalLeaning) {
+    return politicalLeaning === 'progressive' ? '#2563eb' : '#ef4444'
+  }
   const colors: Record<CelebrityCategory, string> = {
     entertainer: '#ec4899',
     politician: '#3b82f6',

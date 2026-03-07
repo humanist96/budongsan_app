@@ -15,6 +15,8 @@ import type { PropertyType } from '@/types/property'
 
 // ─── Types ──────────────────────────────────────────────────
 
+export type PoliticalLeaning = 'conservative' | 'progressive'
+
 export interface SeedCelebrity {
   id: string
   name: string
@@ -27,6 +29,8 @@ export interface SeedCelebrity {
   agency?: string | null
   wikipediaUrl?: string | null
   wikidataId?: string | null
+  politicalLeaning?: PoliticalLeaning  // 정치인만
+  party?: string                        // 소속 정당 (정치인만)
 }
 
 export interface SeedProperty {
@@ -109,37 +113,37 @@ export const celebrities: SeedCelebrity[] = [
   { id: 'ent-56', name: '김종국', category: 'entertainer', subCategory: '가수', description: '런닝맨 출연, 논현동 빌라 243㎡ 62억 전액현금', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Kim_Jong_Kook_at_Malaysia_for_Running_Man_Fan_Meeting_Asian_Tour_2014.jpg/200px-Kim_Jong_Kook_at_Malaysia_for_Running_Man_Fan_Meeting_Asian_Tour_2014.jpg', isVerified: false },
 
   // ========== 정치인 (23명) + 고위공무원 (6명) = 29명 ==========
-  { id: 'pol-01', name: '정진석', category: 'politician', subCategory: '국회의원', description: '제22대 국회의원, 국민의힘', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/%EC%A0%95%EC%A7%84%EC%84%9D_%EA%B5%AD%ED%9A%8C%EB%B6%80%EC%9D%98%EC%9E%A5%2C_%EA%B5%90%EC%9C%A1%EC%A0%95%EC%83%81%ED%99%94%ED%8A%B9%EC%9C%84%C2%B7%EC%B6%A9%EC%B2%AD%EB%B0%9C%EC%A0%84%ED%8A%B9%EC%9C%84_%EB%B0%9C%EB%8C%80%EC%8B%9D_%EC%B0%B8%EC%84%9D_3_%28cropped%29.jpg/200px-%EC%A0%95%EC%A7%84%EC%84%9D_%EA%B5%AD%ED%9A%8C%EB%B6%80%EC%9D%98%EC%9E%A5%2C_%EA%B5%90%EC%9C%A1%EC%A0%95%EC%83%81%ED%99%94%ED%8A%B9%EC%9C%84%C2%B7%EC%B6%A9%EC%B2%AD%EB%B0%9C%EC%A0%84%ED%8A%B9%EC%9C%84_%EB%B0%9C%EB%8C%80%EC%8B%9D_%EC%B0%B8%EC%84%9D_3_%28cropped%29.jpg', isVerified: true },
-  { id: 'pol-02', name: '이낙연', category: 'politician', subCategory: '전 국무총리', description: '전 국무총리, 더불어민주당', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/South_Korean_Prime_Minister_Lee_-_2017_%2836235112603%29_%28cropped%29.jpg/200px-South_Korean_Prime_Minister_Lee_-_2017_%2836235112603%29_%28cropped%29.jpg', isVerified: true },
-  { id: 'pol-03', name: '나경원', category: 'politician', subCategory: '국회의원', description: '전 국회 부의장, 국민의힘', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Na_Kyung-won_2019.jpg/200px-Na_Kyung-won_2019.jpg', isVerified: true },
-  { id: 'pol-04', name: '박영선', category: 'politician', subCategory: '전 장관', description: '전 중소벤처기업부 장관', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/20211118_-_%EB%B0%95%EC%98%81%EC%84%A0.jpg/200px-20211118_-_%EB%B0%95%EC%98%81%EC%84%A0.jpg', isVerified: true },
-  { id: 'pol-05', name: '윤희숙', category: 'politician', subCategory: '전 국회의원', description: '전 국회의원, 경제학자 출신', isVerified: true },
-  { id: 'pol-06', name: '추미애', category: 'politician', subCategory: '전 장관', description: '전 법무부 장관, 더불어민주당', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Choo_Mi-ae_ministerial_portrait.png/200px-Choo_Mi-ae_ministerial_portrait.png', isVerified: true },
-  { id: 'pol-07', name: '한덕수', category: 'politician', subCategory: '전 국무총리', description: '전 국무총리, 경제관료 출신', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/President_Han_Duck-soo.jpg/200px-President_Han_Duck-soo.jpg', isVerified: true },
-  { id: 'pol-08', name: '김기현', category: 'politician', subCategory: '국회의원', description: '전 국민의힘 대표', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Kim_Gi-hyeon_2014-07-01.jpg/200px-Kim_Gi-hyeon_2014-07-01.jpg', isVerified: true },
-  { id: 'pol-09', name: '이재명', category: 'politician', subCategory: '대통령', description: '제21대 대통령, 전 경기도지사. 분당 양지마을 금호 아파트 29억 매물', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/%EC%9D%B4%EC%9E%AC%EB%AA%85_%EB%8C%80%ED%86%B5%EB%A0%B9_%ED%94%84%EB%A1%9C%ED%95%84.webp/200px-%EC%9D%B4%EC%9E%AC%EB%AA%85_%EB%8C%80%ED%86%B5%EB%A0%B9_%ED%94%84%EB%A1%9C%ED%95%84.webp.png', isVerified: true },
-  { id: 'pol-10', name: '오세훈', category: 'politician', subCategory: '서울시장', description: '서울특별시장', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/%EC%98%A4%EC%84%B8%ED%9B%88_%EC%84%9C%EC%9A%B8%EC%8B%9C%EC%9E%A5_%28cropped_3%29.jpg/200px-%EC%98%A4%EC%84%B8%ED%9B%88_%EC%84%9C%EC%9A%B8%EC%8B%9C%EC%9E%A5_%28cropped_3%29.jpg', isVerified: true },
-  { id: 'pol-11', name: '고동진', category: 'politician', subCategory: '국회의원', description: '삼성전자 사장 출신, 국민의힘. 한남더힐 72.4억 보유, 총 재산 333억', isVerified: true },
-  { id: 'pol-12', name: '김은혜', category: 'politician', subCategory: '국회의원', description: '국민의힘, 총 재산 274억. 배우자 대치동 빌딩 187.9억', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/2017_02%EC%9B%94_22%EC%9D%BC_MBN_Y_Forum_2017_%2812%29.jpg/200px-2017_02%EC%9B%94_22%EC%9D%BC_MBN_Y_Forum_2017_%2812%29.jpg', isVerified: true },
-  { id: 'pol-13', name: '한동훈', category: 'politician', subCategory: '전 당대표', description: '전 국민의힘 대표, 전 법무부 장관. 재산 39억', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Han_Dong-hoon%27s_Portrait_%282025%29.png/200px-Han_Dong-hoon%27s_Portrait_%282025%29.png', isVerified: true },
-  { id: 'pol-14', name: '조국', category: 'politician', subCategory: '국회의원', description: '조국혁신당 대표, 전 법무부 장관. 방배동 아파트 16.7억, 재산 52억', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Cho_Kuk%27s_Portrait_%282024.3%29.png/200px-Cho_Kuk%27s_Portrait_%282024.3%29.png', isVerified: true },
-  { id: 'pol-15', name: '윤석열', category: 'politician', subCategory: '전 대통령', description: '제20대 대통령. 배우자 김건희 서초 아크로비스타 15.7억', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/South_Korea_President_Yoon_Suk_Yeol_portrait.jpg/200px-South_Korea_President_Yoon_Suk_Yeol_portrait.jpg', isVerified: true },
-  { id: 'pol-16', name: '박정', category: 'politician', subCategory: '국회의원', description: '더불어민주당, 파주시. 상암동 빌딩 402억, 총 재산 360억', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/%EB%B0%95%EC%A0%95_%EC%9D%98%EC%9B%90_%ED%94%84%EB%A1%9C%ED%95%84_%EC%82%AC%EC%A7%84_low.jpg/200px-%EB%B0%95%EC%A0%95_%EC%9D%98%EC%9B%90_%ED%94%84%EB%A1%9C%ED%95%84_%EC%82%AC%EC%A7%84_low.jpg', isVerified: true },
-  { id: 'pol-17', name: '서명옥', category: 'politician', subCategory: '국회의원', description: '국민의힘, 의사 출신. 압구정 한양아파트 30.9억, 총 재산 255억', isVerified: true },
-  { id: 'pol-18', name: '홍준표', category: 'politician', subCategory: '전 대구시장', description: '전 대구시장, 국민의힘. 잠실 아시아선수촌 1997년 매입 보유, 재산 42.5억', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Hong_Joon-pyo_at_April_26_2025_Debate.png/200px-Hong_Joon-pyo_at_April_26_2025_Debate.png', isVerified: true },
-  { id: 'pol-19', name: '김동연', category: 'politician', subCategory: '경기도지사', description: '경기도지사, 전 경제부총리. 배우자 도곡동 아파트 13억, 재산 35억', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Kim_Dong-yeon_20250324.jpg/200px-Kim_Dong-yeon_20250324.jpg', isVerified: true },
-  { id: 'pol-20', name: '정점식', category: 'politician', subCategory: '국회의원', description: '국민의힘, 통영·고성. 반포동 아파트 보유, 총 재산 99억', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Jeong_Jeom-sig_20240516.jpg/200px-Jeong_Jeom-sig_20240516.jpg', isVerified: true },
-  { id: 'pol-21', name: '안철수', category: 'politician', subCategory: '국회의원', description: '국민의힘, 안랩 창업자. 재산 1,368억 (주식 1,231억). 부동산 無 전세 거주', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Ahn_Cheol-Soo%27s_Portrait_%282025%29.png/200px-Ahn_Cheol-Soo%27s_Portrait_%282025%29.png', isVerified: true },
-  { id: 'pol-22', name: '박덕흠', category: 'politician', subCategory: '국회의원', description: '국민의힘, 보은·옥천. 토지 240억+건물 70억, 총 재산 535억', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Park_Duk-hyum_Official_Portrait.png/200px-Park_Duk-hyum_Official_Portrait.png', isVerified: true },
-  { id: 'pol-23', name: '이준석', category: 'politician', subCategory: '국회의원', description: '개혁신당 대표. 노원구 상계동 아파트 7.3억, 재산 12억', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Lee_Jun-seok%27s_Portait_%282024.11%29.jpg/200px-Lee_Jun-seok%27s_Portait_%282024.11%29.jpg', isVerified: true },
+  { id: 'pol-01', name: '정진석', category: 'politician', subCategory: '국회의원', description: '제22대 국회의원, 국민의힘', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/%EC%A0%95%EC%A7%84%EC%84%9D_%EA%B5%AD%ED%9A%8C%EB%B6%80%EC%9D%98%EC%9E%A5%2C_%EA%B5%90%EC%9C%A1%EC%A0%95%EC%83%81%ED%99%94%ED%8A%B9%EC%9C%84%C2%B7%EC%B6%A9%EC%B2%AD%EB%B0%9C%EC%A0%84%ED%8A%B9%EC%9C%84_%EB%B0%9C%EB%8C%80%EC%8B%9D_%EC%B0%B8%EC%84%9D_3_%28cropped%29.jpg/200px-%EC%A0%95%EC%A7%84%EC%84%9D_%EA%B5%AD%ED%9A%8C%EB%B6%80%EC%9D%98%EC%9E%A5%2C_%EA%B5%90%EC%9C%A1%EC%A0%95%EC%83%81%ED%99%94%ED%8A%B9%EC%9C%84%C2%B7%EC%B6%A9%EC%B2%AD%EB%B0%9C%EC%A0%84%ED%8A%B9%EC%9C%84_%EB%B0%9C%EB%8C%80%EC%8B%9D_%EC%B0%B8%EC%84%9D_3_%28cropped%29.jpg', politicalLeaning: 'conservative', party: '국민의힘', isVerified: true },
+  { id: 'pol-02', name: '이낙연', category: 'politician', subCategory: '전 국무총리', description: '전 국무총리, 더불어민주당', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/South_Korean_Prime_Minister_Lee_-_2017_%2836235112603%29_%28cropped%29.jpg/200px-South_Korean_Prime_Minister_Lee_-_2017_%2836235112603%29_%28cropped%29.jpg', politicalLeaning: 'progressive', party: '더불어민주당', isVerified: true },
+  { id: 'pol-03', name: '나경원', category: 'politician', subCategory: '국회의원', description: '전 국회 부의장, 국민의힘', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Na_Kyung-won_2019.jpg/200px-Na_Kyung-won_2019.jpg', politicalLeaning: 'conservative', party: '국민의힘', isVerified: true },
+  { id: 'pol-04', name: '박영선', category: 'politician', subCategory: '전 장관', description: '전 중소벤처기업부 장관', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/20211118_-_%EB%B0%95%EC%98%81%EC%84%A0.jpg/200px-20211118_-_%EB%B0%95%EC%98%81%EC%84%A0.jpg', politicalLeaning: 'progressive', party: '더불어민주당', isVerified: true },
+  { id: 'pol-05', name: '윤희숙', category: 'politician', subCategory: '전 국회의원', description: '전 국회의원, 경제학자 출신', politicalLeaning: 'conservative', party: '국민의힘', isVerified: true },
+  { id: 'pol-06', name: '추미애', category: 'politician', subCategory: '전 장관', description: '전 법무부 장관, 더불어민주당', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Choo_Mi-ae_ministerial_portrait.png/200px-Choo_Mi-ae_ministerial_portrait.png', politicalLeaning: 'progressive', party: '더불어민주당', isVerified: true },
+  { id: 'pol-07', name: '한덕수', category: 'politician', subCategory: '전 국무총리', description: '전 국무총리, 경제관료 출신', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/President_Han_Duck-soo.jpg/200px-President_Han_Duck-soo.jpg', politicalLeaning: 'conservative', party: '윤석열 정부', isVerified: true },
+  { id: 'pol-08', name: '김기현', category: 'politician', subCategory: '국회의원', description: '전 국민의힘 대표', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Kim_Gi-hyeon_2014-07-01.jpg/200px-Kim_Gi-hyeon_2014-07-01.jpg', politicalLeaning: 'conservative', party: '국민의힘', isVerified: true },
+  { id: 'pol-09', name: '이재명', category: 'politician', subCategory: '대통령', description: '제21대 대통령, 전 경기도지사. 분당 양지마을 금호 아파트 29억 매물', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/%EC%9D%B4%EC%9E%AC%EB%AA%85_%EB%8C%80%ED%86%B5%EB%A0%B9_%ED%94%84%EB%A1%9C%ED%95%84.webp/200px-%EC%9D%B4%EC%9E%AC%EB%AA%85_%EB%8C%80%ED%86%B5%EB%A0%B9_%ED%94%84%EB%A1%9C%ED%95%84.webp.png', politicalLeaning: 'progressive', party: '더불어민주당', isVerified: true },
+  { id: 'pol-10', name: '오세훈', category: 'politician', subCategory: '서울시장', description: '서울특별시장', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/%EC%98%A4%EC%84%B8%ED%9B%88_%EC%84%9C%EC%9A%B8%EC%8B%9C%EC%9E%A5_%28cropped_3%29.jpg/200px-%EC%98%A4%EC%84%B8%ED%9B%88_%EC%84%9C%EC%9A%B8%EC%8B%9C%EC%9E%A5_%28cropped_3%29.jpg', politicalLeaning: 'conservative', party: '국민의힘', isVerified: true },
+  { id: 'pol-11', name: '고동진', category: 'politician', subCategory: '국회의원', description: '삼성전자 사장 출신, 국민의힘. 한남더힐 72.4억 보유, 총 재산 333억', politicalLeaning: 'conservative', party: '국민의힘', isVerified: true },
+  { id: 'pol-12', name: '김은혜', category: 'politician', subCategory: '국회의원', description: '국민의힘, 총 재산 274억. 배우자 대치동 빌딩 187.9억', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/2017_02%EC%9B%94_22%EC%9D%BC_MBN_Y_Forum_2017_%2812%29.jpg/200px-2017_02%EC%9B%94_22%EC%9D%BC_MBN_Y_Forum_2017_%2812%29.jpg', politicalLeaning: 'conservative', party: '국민의힘', isVerified: true },
+  { id: 'pol-13', name: '한동훈', category: 'politician', subCategory: '전 당대표', description: '전 국민의힘 대표, 전 법무부 장관. 재산 39억', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Han_Dong-hoon%27s_Portrait_%282025%29.png/200px-Han_Dong-hoon%27s_Portrait_%282025%29.png', politicalLeaning: 'conservative', party: '국민의힘', isVerified: true },
+  { id: 'pol-14', name: '조국', category: 'politician', subCategory: '국회의원', description: '조국혁신당 대표, 전 법무부 장관. 방배동 아파트 16.7억, 재산 52억', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Cho_Kuk%27s_Portrait_%282024.3%29.png/200px-Cho_Kuk%27s_Portrait_%282024.3%29.png', politicalLeaning: 'progressive', party: '조국혁신당', isVerified: true },
+  { id: 'pol-15', name: '윤석열', category: 'politician', subCategory: '전 대통령', description: '제20대 대통령. 배우자 김건희 서초 아크로비스타 15.7억', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/South_Korea_President_Yoon_Suk_Yeol_portrait.jpg/200px-South_Korea_President_Yoon_Suk_Yeol_portrait.jpg', politicalLeaning: 'conservative', party: '국민의힘', isVerified: true },
+  { id: 'pol-16', name: '박정', category: 'politician', subCategory: '국회의원', description: '더불어민주당, 파주시. 상암동 빌딩 402억, 총 재산 360억', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/%EB%B0%95%EC%A0%95_%EC%9D%98%EC%9B%90_%ED%94%84%EB%A1%9C%ED%95%84_%EC%82%AC%EC%A7%84_low.jpg/200px-%EB%B0%95%EC%A0%95_%EC%9D%98%EC%9B%90_%ED%94%84%EB%A1%9C%ED%95%84_%EC%82%AC%EC%A7%84_low.jpg', politicalLeaning: 'progressive', party: '더불어민주당', isVerified: true },
+  { id: 'pol-17', name: '서명옥', category: 'politician', subCategory: '국회의원', description: '국민의힘, 의사 출신. 압구정 한양아파트 30.9억, 총 재산 255억', politicalLeaning: 'conservative', party: '국민의힘', isVerified: true },
+  { id: 'pol-18', name: '홍준표', category: 'politician', subCategory: '전 대구시장', description: '전 대구시장, 국민의힘. 잠실 아시아선수촌 1997년 매입 보유, 재산 42.5억', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Hong_Joon-pyo_at_April_26_2025_Debate.png/200px-Hong_Joon-pyo_at_April_26_2025_Debate.png', politicalLeaning: 'conservative', party: '국민의힘', isVerified: true },
+  { id: 'pol-19', name: '김동연', category: 'politician', subCategory: '경기도지사', description: '경기도지사, 전 경제부총리. 배우자 도곡동 아파트 13억, 재산 35억', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Kim_Dong-yeon_20250324.jpg/200px-Kim_Dong-yeon_20250324.jpg', politicalLeaning: 'progressive', party: '새로운미래', isVerified: true },
+  { id: 'pol-20', name: '정점식', category: 'politician', subCategory: '국회의원', description: '국민의힘, 통영·고성. 반포동 아파트 보유, 총 재산 99억', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Jeong_Jeom-sig_20240516.jpg/200px-Jeong_Jeom-sig_20240516.jpg', politicalLeaning: 'conservative', party: '국민의힘', isVerified: true },
+  { id: 'pol-21', name: '안철수', category: 'politician', subCategory: '국회의원', description: '국민의힘, 안랩 창업자. 재산 1,368억 (주식 1,231억). 부동산 無 전세 거주', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Ahn_Cheol-Soo%27s_Portrait_%282025%29.png/200px-Ahn_Cheol-Soo%27s_Portrait_%282025%29.png', politicalLeaning: 'conservative', party: '국민의힘', isVerified: true },
+  { id: 'pol-22', name: '박덕흠', category: 'politician', subCategory: '국회의원', description: '국민의힘, 보은·옥천. 토지 240억+건물 70억, 총 재산 535억', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Park_Duk-hyum_Official_Portrait.png/200px-Park_Duk-hyum_Official_Portrait.png', politicalLeaning: 'conservative', party: '국민의힘', isVerified: true },
+  { id: 'pol-23', name: '이준석', category: 'politician', subCategory: '국회의원', description: '개혁신당 대표. 노원구 상계동 아파트 7.3억, 재산 12억', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Lee_Jun-seok%27s_Portait_%282024.11%29.jpg/200px-Lee_Jun-seok%27s_Portait_%282024.11%29.jpg', politicalLeaning: 'conservative', party: '개혁신당', isVerified: true },
 
   // ========== 고위 공무원 (6명) ==========
-  { id: 'pol-24', name: '최상목', category: 'politician', subCategory: '경제부총리', description: '경제부총리 겸 기획재정부 장관. 배우자 용산 동자동 아파트 13억, 총 재산 44.6억', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/President_Choi_Sang-mok.jpg/200px-President_Choi_Sang-mok.jpg', isVerified: true },
-  { id: 'pol-25', name: '김태효', category: 'politician', subCategory: '국가안보실 1차장', description: '대통령실 국가안보실 1차장. 서초 아크로비스타+여의도·신사동 상가 4채, 총 재산 148억', isVerified: true },
-  { id: 'pol-26', name: '조성명', category: 'politician', subCategory: '강남구청장', description: '강남구청장, 42채 최다주택 보유자. 강남 아파트+고양 오피스텔 38채+속초 오피스텔 등', isVerified: true },
-  { id: 'pol-27', name: '이상경', category: 'politician', subCategory: '전 국토부 1차관', description: '전 국토교통부 1차관. 판교 아파트 2채 56.6억 갭투자 논란으로 사의', isVerified: true },
-  { id: 'pol-28', name: '이형근', category: 'politician', subCategory: '법원행정처', description: '법원행정처 기획조정실장. 서초구 아파트 2채+근린생활시설 등 부동산 338억', isVerified: true },
-  { id: 'pol-29', name: '최지영', category: 'politician', subCategory: '기재부 차관보', description: '기획재정부 국제경제관리관(차관보급). 압구정 현대아파트, 총 재산 494억(비상장주식 445억)', isVerified: true },
+  { id: 'pol-24', name: '최상목', category: 'politician', subCategory: '경제부총리', description: '경제부총리 겸 기획재정부 장관. 배우자 용산 동자동 아파트 13억, 총 재산 44.6억', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/President_Choi_Sang-mok.jpg/200px-President_Choi_Sang-mok.jpg', politicalLeaning: 'conservative', party: '윤석열 정부', isVerified: true },
+  { id: 'pol-25', name: '김태효', category: 'politician', subCategory: '국가안보실 1차장', description: '대통령실 국가안보실 1차장. 서초 아크로비스타+여의도·신사동 상가 4채, 총 재산 148억', politicalLeaning: 'conservative', party: '윤석열 정부', isVerified: true },
+  { id: 'pol-26', name: '조성명', category: 'politician', subCategory: '강남구청장', description: '강남구청장, 42채 최다주택 보유자. 강남 아파트+고양 오피스텔 38채+속초 오피스텔 등', politicalLeaning: 'conservative', party: '국민의힘', isVerified: true },
+  { id: 'pol-27', name: '이상경', category: 'politician', subCategory: '전 국토부 1차관', description: '전 국토교통부 1차관. 판교 아파트 2채 56.6억 갭투자 논란으로 사의', politicalLeaning: 'conservative', party: '윤석열 정부', isVerified: true },
+  { id: 'pol-28', name: '이형근', category: 'politician', subCategory: '법원행정처', description: '법원행정처 기획조정실장. 서초구 아파트 2채+근린생활시설 등 부동산 338억', politicalLeaning: 'conservative', party: '윤석열 정부', isVerified: true },
+  { id: 'pol-29', name: '최지영', category: 'politician', subCategory: '기재부 차관보', description: '기획재정부 국제경제관리관(차관보급). 압구정 현대아파트, 총 재산 494억(비상장주식 445억)', politicalLeaning: 'conservative', party: '윤석열 정부', isVerified: true },
 
   // ========== 운동선수 (13명) ==========
   { id: 'ath-01', name: '손흥민', category: 'athlete', subCategory: '축구', description: 'EPL 토트넘, 에테르노 압구정 PH 400억 분양', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/BFA_2023_-2_Heung-Min_Son_%28cropped%29.jpg/200px-BFA_2023_-2_Heung-Min_Son_%28cropped%29.jpg', isVerified: false },
@@ -189,39 +193,39 @@ export const celebrities: SeedCelebrity[] = [
   { id: 'ent-90', name: '김종민', category: 'entertainer', subCategory: '가수/MC', description: '1박2일 출연, 서교동 건물 28억→65억', isVerified: false },
 
   // ========== 추가 정치인 2차 확장 (16명) ==========
-  { id: 'pol-30', name: '이해찬', category: 'politician', subCategory: '전 당대표', description: '전 더불어민주당 대표, 전 국무총리. 방배동 아파트+강남 토지, 재산 68억', isVerified: true },
-  { id: 'pol-31', name: '김종인', category: 'politician', subCategory: '전 비대위원장', description: '정치 원로, 강남구 삼성동 아파트 보유. 재산 약 40억', isVerified: true },
-  { id: 'pol-32', name: '원희룡', category: 'politician', subCategory: '전 장관', description: '전 국토교통부 장관, 전 제주도지사. 서초동 아파트, 재산 약 37억', isVerified: true },
-  { id: 'pol-33', name: '유승민', category: 'politician', subCategory: '전 국회의원', description: '전 국민의힘 대선후보. 수성구 아파트+논현동 오피스텔, 재산 약 55억', isVerified: true },
-  { id: 'pol-34', name: '심상정', category: 'politician', subCategory: '전 국회의원', description: '전 정의당 대표. 고양시 일산 아파트, 재산 약 15억', isVerified: true },
-  { id: 'pol-35', name: '이인영', category: 'politician', subCategory: '전 장관', description: '전 통일부 장관. 목동 아파트+관악구 다세대, 재산 약 30억', isVerified: true },
-  { id: 'pol-36', name: '김부겸', category: 'politician', subCategory: '전 국무총리', description: '전 국무총리. 대구 수성구 아파트, 재산 약 25억', isVerified: true },
-  { id: 'pol-37', name: '노영민', category: 'politician', subCategory: '전 비서실장', description: '전 대통령비서실장. 반포 아파트 2채 보유 논란, 재산 약 45억', isVerified: true },
-  { id: 'pol-38', name: '권성동', category: 'politician', subCategory: '국회의원', description: '국민의힘, 강릉. 강남구 빌딩+아파트 보유, 재산 약 120억', isVerified: true },
-  { id: 'pol-39', name: '박홍근', category: 'politician', subCategory: '국회의원', description: '더불어민주당 원내대표. 성북구 아파트, 재산 약 22억', isVerified: true },
-  { id: 'pol-40', name: '정성호', category: 'politician', subCategory: '국회의원', description: '더불어민주당, 양주시. 의정부 아파트+양주 토지, 재산 약 35억', isVerified: true },
-  { id: 'pol-41', name: '이원석', category: 'politician', subCategory: '검찰총장', description: '검찰총장. 서초구 아크로비스타, 재산 약 40억', isVerified: true },
-  { id: 'pol-42', name: '윤관석', category: 'politician', subCategory: '전 국회의원', description: '전 더불어민주당, 군산. 군산+서울 부동산 다수, 재산 약 85억', isVerified: true },
-  { id: 'pol-43', name: '태영호', category: 'politician', subCategory: '전 국회의원', description: '전 북한 공사 출신 국회의원. 강남구 아파트, 재산 약 30억', isVerified: true },
-  { id: 'pol-44', name: '최재형', category: 'politician', subCategory: '전 감사원장', description: '전 감사원장. 서초구 서초동 아파트, 재산 약 48억', isVerified: true },
-  { id: 'pol-45', name: '김동연', category: 'politician', subCategory: '전 국회의원', description: '전 국회의원, 국민의힘. 강남 아파트+오피스텔 다수, 재산 약 92억', isVerified: true },
+  { id: 'pol-30', name: '이해찬', category: 'politician', subCategory: '전 당대표', description: '전 더불어민주당 대표, 전 국무총리. 방배동 아파트+강남 토지, 재산 68억', politicalLeaning: 'progressive', party: '더불어민주당', isVerified: true },
+  { id: 'pol-31', name: '김종인', category: 'politician', subCategory: '전 비대위원장', description: '정치 원로, 강남구 삼성동 아파트 보유. 재산 약 40억', politicalLeaning: 'conservative', party: '국민의힘', isVerified: true },
+  { id: 'pol-32', name: '원희룡', category: 'politician', subCategory: '전 장관', description: '전 국토교통부 장관, 전 제주도지사. 서초동 아파트, 재산 약 37억', politicalLeaning: 'conservative', party: '국민의힘', isVerified: true },
+  { id: 'pol-33', name: '유승민', category: 'politician', subCategory: '전 국회의원', description: '전 국민의힘 대선후보. 수성구 아파트+논현동 오피스텔, 재산 약 55억', politicalLeaning: 'conservative', party: '국민의힘', isVerified: true },
+  { id: 'pol-34', name: '심상정', category: 'politician', subCategory: '전 국회의원', description: '전 정의당 대표. 고양시 일산 아파트, 재산 약 15억', politicalLeaning: 'progressive', party: '정의당', isVerified: true },
+  { id: 'pol-35', name: '이인영', category: 'politician', subCategory: '전 장관', description: '전 통일부 장관. 목동 아파트+관악구 다세대, 재산 약 30억', politicalLeaning: 'progressive', party: '더불어민주당', isVerified: true },
+  { id: 'pol-36', name: '김부겸', category: 'politician', subCategory: '전 국무총리', description: '전 국무총리. 대구 수성구 아파트, 재산 약 25억', politicalLeaning: 'progressive', party: '더불어민주당', isVerified: true },
+  { id: 'pol-37', name: '노영민', category: 'politician', subCategory: '전 비서실장', description: '전 대통령비서실장. 반포 아파트 2채 보유 논란, 재산 약 45억', politicalLeaning: 'progressive', party: '문재인 정부', isVerified: true },
+  { id: 'pol-38', name: '권성동', category: 'politician', subCategory: '국회의원', description: '국민의힘, 강릉. 강남구 빌딩+아파트 보유, 재산 약 120억', politicalLeaning: 'conservative', party: '국민의힘', isVerified: true },
+  { id: 'pol-39', name: '박홍근', category: 'politician', subCategory: '국회의원', description: '더불어민주당 원내대표. 성북구 아파트, 재산 약 22억', politicalLeaning: 'progressive', party: '더불어민주당', isVerified: true },
+  { id: 'pol-40', name: '정성호', category: 'politician', subCategory: '국회의원', description: '더불어민주당, 양주시. 의정부 아파트+양주 토지, 재산 약 35억', politicalLeaning: 'progressive', party: '더불어민주당', isVerified: true },
+  { id: 'pol-41', name: '이원석', category: 'politician', subCategory: '검찰총장', description: '검찰총장. 서초구 아크로비스타, 재산 약 40억', politicalLeaning: 'conservative', party: '윤석열 정부', isVerified: true },
+  { id: 'pol-42', name: '윤관석', category: 'politician', subCategory: '전 국회의원', description: '전 더불어민주당, 군산. 군산+서울 부동산 다수, 재산 약 85억', politicalLeaning: 'progressive', party: '더불어민주당', isVerified: true },
+  { id: 'pol-43', name: '태영호', category: 'politician', subCategory: '전 국회의원', description: '전 북한 공사 출신 국회의원. 강남구 아파트, 재산 약 30억', politicalLeaning: 'conservative', party: '국민의힘', isVerified: true },
+  { id: 'pol-44', name: '최재형', category: 'politician', subCategory: '전 감사원장', description: '전 감사원장. 서초구 서초동 아파트, 재산 약 48억', politicalLeaning: 'conservative', party: '국민의힘', isVerified: true },
+  { id: 'pol-45', name: '김동연', category: 'politician', subCategory: '전 국회의원', description: '전 국회의원, 국민의힘. 강남 아파트+오피스텔 다수, 재산 약 92억', politicalLeaning: 'conservative', party: '국민의힘', isVerified: true },
 
   // ========== 추가 고위공무원 2차 확장 (15명) ==========
-  { id: 'pol-46', name: '방문규', category: 'politician', subCategory: '산업부 장관', description: '산업통상자원부 장관. 서초구 반포 아파트, 재산 약 35억', isVerified: true },
-  { id: 'pol-47', name: '이주호', category: 'politician', subCategory: '교육부 장관', description: '교육부 장관 겸 부총리. 서초구 아파트, 재산 약 28억', isVerified: true },
-  { id: 'pol-48', name: '박순애', category: 'politician', subCategory: '전 교육부 장관', description: '전 교육부 장관. 서초구 아파트+오피스텔, 재산 약 52억', isVerified: true },
-  { id: 'pol-49', name: '한창섭', category: 'politician', subCategory: '행안부 차관', description: '행정안전부 차관. 세종시 아파트+강남 오피스텔, 재산 약 25억', isVerified: true },
-  { id: 'pol-50', name: '이관섭', category: 'politician', subCategory: '전 비서실장', description: '전 대통령비서실장. 한국수력원자력 출신. 대전 아파트+서울 건물, 재산 약 65억', isVerified: true },
-  { id: 'pol-51', name: '김소영', category: 'politician', subCategory: '금융위 부위원장', description: '금융위원회 부위원장. 강남구 아파트, 재산 약 40억', isVerified: true },
-  { id: 'pol-52', name: '오영주', category: 'politician', subCategory: '중기부 장관', description: '중소벤처기업부 장관. 서초구 아파트, 재산 약 38억', isVerified: true },
-  { id: 'pol-53', name: '정황근', category: 'politician', subCategory: '전 농림부 장관', description: '전 농림축산식품부 장관. 세종시+대전 아파트 2채, 재산 약 22억', isVerified: true },
-  { id: 'pol-54', name: '이종호', category: 'politician', subCategory: '전 과기부 장관', description: '전 과학기술정보통신부 장관. 서초구 아파트+상가, 재산 약 58억', isVerified: true },
-  { id: 'pol-55', name: '원경환', category: 'politician', subCategory: '관세청장', description: '관세청장. 서초구 아파트+세종시 아파트, 재산 약 30억', isVerified: true },
-  { id: 'pol-56', name: '김창룡', category: 'politician', subCategory: '전 경찰청장', description: '전 경찰청장. 서초구 반포 아파트, 재산 약 42억', isVerified: true },
-  { id: 'pol-57', name: '윤홍근', category: 'politician', subCategory: '전 해병대사령관', description: '전 해병대사령관. 용산구 아파트+경기 토지, 재산 약 35억', isVerified: true },
-  { id: 'pol-58', name: '김진표', category: 'politician', subCategory: '전 국회의장', description: '전 국회의장. 분당 아파트+과천 토지, 재산 약 95억', isVerified: true },
-  { id: 'pol-59', name: '정의용', category: 'politician', subCategory: '전 외교부 장관', description: '전 외교부 장관. 강남구 아파트, 재산 약 50억', isVerified: true },
-  { id: 'pol-60', name: '노형욱', category: 'politician', subCategory: '전 국토부 장관', description: '전 국토교통부 장관. 서초구 아파트+상가, 재산 약 45억', isVerified: true },
+  { id: 'pol-46', name: '방문규', category: 'politician', subCategory: '산업부 장관', description: '산업통상자원부 장관. 서초구 반포 아파트, 재산 약 35억', politicalLeaning: 'conservative', party: '윤석열 정부', isVerified: true },
+  { id: 'pol-47', name: '이주호', category: 'politician', subCategory: '교육부 장관', description: '교육부 장관 겸 부총리. 서초구 아파트, 재산 약 28억', politicalLeaning: 'conservative', party: '윤석열 정부', isVerified: true },
+  { id: 'pol-48', name: '박순애', category: 'politician', subCategory: '전 교육부 장관', description: '전 교육부 장관. 서초구 아파트+오피스텔, 재산 약 52억', politicalLeaning: 'conservative', party: '윤석열 정부', isVerified: true },
+  { id: 'pol-49', name: '한창섭', category: 'politician', subCategory: '행안부 차관', description: '행정안전부 차관. 세종시 아파트+강남 오피스텔, 재산 약 25억', politicalLeaning: 'conservative', party: '윤석열 정부', isVerified: true },
+  { id: 'pol-50', name: '이관섭', category: 'politician', subCategory: '전 비서실장', description: '전 대통령비서실장. 한국수력원자력 출신. 대전 아파트+서울 건물, 재산 약 65억', politicalLeaning: 'conservative', party: '윤석열 정부', isVerified: true },
+  { id: 'pol-51', name: '김소영', category: 'politician', subCategory: '금융위 부위원장', description: '금융위원회 부위원장. 강남구 아파트, 재산 약 40억', politicalLeaning: 'conservative', party: '윤석열 정부', isVerified: true },
+  { id: 'pol-52', name: '오영주', category: 'politician', subCategory: '중기부 장관', description: '중소벤처기업부 장관. 서초구 아파트, 재산 약 38억', politicalLeaning: 'conservative', party: '윤석열 정부', isVerified: true },
+  { id: 'pol-53', name: '정황근', category: 'politician', subCategory: '전 농림부 장관', description: '전 농림축산식품부 장관. 세종시+대전 아파트 2채, 재산 약 22억', politicalLeaning: 'conservative', party: '윤석열 정부', isVerified: true },
+  { id: 'pol-54', name: '이종호', category: 'politician', subCategory: '전 과기부 장관', description: '전 과학기술정보통신부 장관. 서초구 아파트+상가, 재산 약 58억', politicalLeaning: 'conservative', party: '윤석열 정부', isVerified: true },
+  { id: 'pol-55', name: '원경환', category: 'politician', subCategory: '관세청장', description: '관세청장. 서초구 아파트+세종시 아파트, 재산 약 30억', politicalLeaning: 'conservative', party: '윤석열 정부', isVerified: true },
+  { id: 'pol-56', name: '김창룡', category: 'politician', subCategory: '전 경찰청장', description: '전 경찰청장. 서초구 반포 아파트, 재산 약 42억', politicalLeaning: 'progressive', party: '문재인 정부', isVerified: true },
+  { id: 'pol-57', name: '윤홍근', category: 'politician', subCategory: '전 해병대사령관', description: '전 해병대사령관. 용산구 아파트+경기 토지, 재산 약 35억', politicalLeaning: 'progressive', party: '문재인 정부', isVerified: true },
+  { id: 'pol-58', name: '김진표', category: 'politician', subCategory: '전 국회의장', description: '전 국회의장. 분당 아파트+과천 토지, 재산 약 95억', politicalLeaning: 'progressive', party: '더불어민주당', isVerified: true },
+  { id: 'pol-59', name: '정의용', category: 'politician', subCategory: '전 외교부 장관', description: '전 외교부 장관. 강남구 아파트, 재산 약 50억', politicalLeaning: 'progressive', party: '문재인 정부', isVerified: true },
+  { id: 'pol-60', name: '노형욱', category: 'politician', subCategory: '전 국토부 장관', description: '전 국토교통부 장관. 서초구 아파트+상가, 재산 약 45억', politicalLeaning: 'progressive', party: '문재인 정부', isVerified: true },
 
   // ========== 추가 운동선수 2차 확장 (17명) ==========
   { id: 'ath-14', name: '추신수', category: 'athlete', subCategory: '야구', description: 'MLB 레전드, 서초동 빌딩 72억 매입. SSG 은퇴', isVerified: false },
