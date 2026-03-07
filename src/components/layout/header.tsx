@@ -35,11 +35,11 @@ const navEntries: NavEntry[] = [
   { href: '/rankings', label: '랭킹', icon: Trophy },
   { href: '/graph', label: '관계망', icon: Network },
   { href: '/politics', label: '정치', icon: Scale },
-  { href: '/mbti', label: 'MBTI', icon: Brain },
   {
     label: '놀이터',
     icon: Gamepad2,
     children: [
+      { href: '/mbti', label: 'MBTI', icon: Brain },
       { href: '/debate', label: '토론', icon: Swords },
       { href: '/battle', label: '배틀', icon: Zap },
       { href: '/marble', label: '브루마블', icon: Dice5 },
