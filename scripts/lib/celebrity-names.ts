@@ -13,34 +13,48 @@ import * as path from 'path'
  * 아파트/빌라 등 매물명은 제외하고 인물 이름만 반환.
  */
 export function loadCelebrityNames(): string[] {
-  try {
-    const seedPath = path.resolve(__dirname, '..', 'seed-celebrities.ts')
-    const content = fs.readFileSync(seedPath, 'utf-8')
-    const names: string[] = []
+  const names: string[] = []
 
-    // Match top-level name fields (celebrity names, not property names)
-    // Pattern: lines starting with `    name: '...'` (2-4 space indent = celebrity level)
-    const nameRegex = /^\s{2,4}name:\s*'([^']+)'/gm
-    let match
-    while ((match = nameRegex.exec(content)) !== null) {
-      const name = match[1]
-      // Skip property names (they tend to be longer or contain specific suffixes)
-      if (
-        !name.includes('아파트') &&
-        !name.includes('빌라') &&
-        !name.includes('별장') &&
-        !name.includes('리조트') &&
-        !name.includes('주택') &&
-        name.length <= 10
-      ) {
-        names.push(name)
+  // 소스 파일들 (여러 경로에서 탐색)
+  const seedPaths = [
+    path.resolve(__dirname, '..', '..', 'src', 'data', 'celebrity-seed-data.ts'),
+    path.resolve(__dirname, '..', 'seed-celebrities.ts'),
+  ]
+
+  for (const seedPath of seedPaths) {
+    try {
+      const content = fs.readFileSync(seedPath, 'utf-8')
+
+      // name: '...' 패턴 (인라인 객체와 멀티라인 모두 매칭)
+      const nameRegex = /name:\s*'([^']+)'/g
+      let match
+      while ((match = nameRegex.exec(content)) !== null) {
+        const name = match[1]
+        // Skip property names
+        if (
+          !name.includes('아파트') &&
+          !name.includes('빌라') &&
+          !name.includes('별장') &&
+          !name.includes('리조트') &&
+          !name.includes('주택') &&
+          !name.includes('빌딩') &&
+          !name.includes('단독') &&
+          !name.includes('펜트하우스') &&
+          !name.includes('오피스텔') &&
+          !name.includes('타워') &&
+          !name.includes('힐') &&
+          !name.includes('파크') &&
+          name.length <= 15
+        ) {
+          names.push(name)
+        }
       }
+    } catch {
+      // File not found, skip
     }
-
-    return [...new Set(names)]
-  } catch {
-    return []
   }
+
+  return [...new Set(names)]
 }
 
 /**

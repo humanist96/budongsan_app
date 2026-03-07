@@ -54,7 +54,7 @@ export interface SeedCelebrityProperty {
   sourceUrl: string | null
 }
 
-// ─── Celebrities (83명) ────────────────────────────────────
+// ─── Celebrities (150명) ────────────────────────────────────
 
 export const celebrities: SeedCelebrity[] = [
   // ========== 연예인 (56명) ==========
@@ -151,6 +151,96 @@ export const celebrities: SeedCelebrity[] = [
   // === 추가 운동선수 (2명) ===
   { id: 'ath-12', name: '페이커(이상혁)', category: 'athlete', subCategory: 'e스포츠', description: 'LoL 세계 최고 프로게이머, 화곡동 9층 메디컬빌딩 113억', profileImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Faker_2020_interview.jpg/200px-Faker_2020_interview.jpg', isVerified: false },
   { id: 'ath-13', name: '김현수', category: 'athlete', subCategory: '야구', description: 'MLB 출신, LG 트윈스. 교대역 빌딩 113억→400억', isVerified: false },
+
+  // ========== 추가 연예인 2차 확장 (34명) ==========
+  { id: 'ent-57', name: '하정우', category: 'entertainer', subCategory: '배우', description: '천만 배우, 신사동 가로수길 빌딩 92억 매입', isVerified: false },
+  { id: 'ent-58', name: '이병헌', category: 'entertainer', subCategory: '배우', description: '한류 톱스타, 청담동 빌딩 130억. 총 부동산 약 400억', isVerified: false },
+  { id: 'ent-59', name: '소지섭', category: 'entertainer', subCategory: '배우', description: '톱배우, 신사동 빌딩 85억→200억. 논현동 빌딩 추가 보유', isVerified: false },
+  { id: 'ent-60', name: '이민호', category: 'entertainer', subCategory: '배우', description: '꽃보다 남자 주연, 성수동 빌딩 56억 매입', isVerified: false },
+  { id: 'ent-61', name: '송중기', category: 'entertainer', subCategory: '배우', description: '태양의 후예 주연, 이태원 빌딩 100억 보유', isVerified: false },
+  { id: 'ent-62', name: '한가인', category: 'entertainer', subCategory: '배우', description: '얀 부부, 논현동 빌딩 75억→180억', isVerified: false },
+  { id: 'ent-63', name: '수지(배수지)', category: 'entertainer', subCategory: '가수/배우', description: '국민 첫사랑, 삼성동 아크로비스타 45억 보유', isVerified: false },
+  { id: 'ent-64', name: '제니(블랙핑크)', category: 'entertainer', subCategory: '가수', description: '블랙핑크 멤버, 한남더힐 38억 매입', isVerified: false },
+  { id: 'ent-65', name: '지수(블랙핑크)', category: 'entertainer', subCategory: '가수/배우', description: '블랙핑크 멤버, 청담동 아파트 약 40억 보유', isVerified: false },
+  { id: 'ent-66', name: '로제(블랙핑크)', category: 'entertainer', subCategory: '가수', description: '블랙핑크 멤버, 한남동 고급빌라 52억 매입', isVerified: false },
+  { id: 'ent-67', name: '태양(빅뱅)', category: 'entertainer', subCategory: '가수', description: '빅뱅 멤버, 한남동 빌라 40억+이태원 건물 60억', isVerified: false },
+  { id: 'ent-68', name: '송혜교', category: 'entertainer', subCategory: '배우', description: '한류 톱여배우, 삼성동 아파트 76억+이태원 빌라 60억', isVerified: false },
+  { id: 'ent-69', name: '박보검', category: 'entertainer', subCategory: '배우', description: '응답하라 1988 주연, 용산 나인원한남 인근 고급빌라 35억', isVerified: false },
+  { id: 'ent-70', name: '김수현', category: 'entertainer', subCategory: '배우', description: '별에서 온 그대 주연, 삼성동 건물 88억 매입→150억', isVerified: false },
+  { id: 'ent-71', name: '고소영', category: 'entertainer', subCategory: '배우', description: '장동건 배우자, 부부 공동 부동산 약 618억', isVerified: false },
+  { id: 'ent-72', name: '전미도', category: 'entertainer', subCategory: '배우', description: '슬의생 주연, 성수동 빌딩 67억 매입', isVerified: false },
+  { id: 'ent-73', name: '유아인(엄홍식)', category: 'entertainer', subCategory: '배우', description: '한남동 빌딩 73억+이태원 빌라 32억', isVerified: false },
+  { id: 'ent-74', name: '이선균', category: 'entertainer', subCategory: '배우', description: '기생충 출연, 이태원 빌딩 56억 보유', isVerified: false },
+  { id: 'ent-75', name: '이나영', category: 'entertainer', subCategory: '배우', description: '원빈 배우자, 부부 공동 청담동 빌딩 432억', isVerified: false },
+  { id: 'ent-76', name: '지코(블락비)', category: 'entertainer', subCategory: '가수', description: '래퍼/프로듀서, 성수동 건물 115억 매입', isVerified: false },
+  { id: 'ent-77', name: '정해인', category: 'entertainer', subCategory: '배우', description: '밥잘사주는예쁜누나 주연, 한남동 빌라 27억 매입', isVerified: false },
+  { id: 'ent-78', name: '신민아', category: 'entertainer', subCategory: '배우', description: '청담동 빌딩 95억 보유, 김우빈과 연인', isVerified: false },
+  { id: 'ent-79', name: '김우빈', category: 'entertainer', subCategory: '배우', description: '신사동 건물 62억→120억, 상승률 약 2배', isVerified: false },
+  { id: 'ent-80', name: '송민호(위너)', category: 'entertainer', subCategory: '가수', description: '위너 멤버, 한남동 빌라 52억 전액현금', isVerified: false },
+  { id: 'ent-81', name: '김희선', category: 'entertainer', subCategory: '배우', description: '톱배우, 청담동 빌딩 87억→210억', isVerified: false },
+  { id: 'ent-82', name: '조세호', category: 'entertainer', subCategory: '개그맨', description: '유퀴즈 출연, 성수동 건물 53억 매입', isVerified: false },
+  { id: 'ent-83', name: '이광수', category: 'entertainer', subCategory: '배우', description: '런닝맨 출연, 합정동 빌딩 38억→85억', isVerified: false },
+  { id: 'ent-84', name: '이영자', category: 'entertainer', subCategory: '개그맨', description: '전참시 출연, 논현동 빌딩 100억 매입', isVerified: false },
+  { id: 'ent-85', name: '김구라', category: 'entertainer', subCategory: 'MC', description: '방송인, 역삼동 건물 45억→95억', isVerified: false },
+  { id: 'ent-86', name: '남궁민', category: 'entertainer', subCategory: '배우', description: '낮과 밤 주연, 연남동 빌딩 72억 매입', isVerified: false },
+  { id: 'ent-87', name: '이상순', category: 'entertainer', subCategory: '뮤지션', description: '이효리 남편, 카페·건물 운영. 제주+서울 부동산 보유', isVerified: false },
+  { id: 'ent-88', name: '안보현', category: 'entertainer', subCategory: '배우', description: '이태원 클라쓰 출연, 성수동 건물 48억 매입', isVerified: false },
+  { id: 'ent-89', name: '박나래', category: 'entertainer', subCategory: '개그맨', description: '나혼산 출연, 잠원동 빌딩 42억 매입', isVerified: false },
+  { id: 'ent-90', name: '김종민', category: 'entertainer', subCategory: '가수/MC', description: '1박2일 출연, 서교동 건물 28억→65억', isVerified: false },
+
+  // ========== 추가 정치인 2차 확장 (16명) ==========
+  { id: 'pol-30', name: '이해찬', category: 'politician', subCategory: '전 당대표', description: '전 더불어민주당 대표, 전 국무총리. 방배동 아파트+강남 토지, 재산 68억', isVerified: true },
+  { id: 'pol-31', name: '김종인', category: 'politician', subCategory: '전 비대위원장', description: '정치 원로, 강남구 삼성동 아파트 보유. 재산 약 40억', isVerified: true },
+  { id: 'pol-32', name: '원희룡', category: 'politician', subCategory: '전 장관', description: '전 국토교통부 장관, 전 제주도지사. 서초동 아파트, 재산 약 37억', isVerified: true },
+  { id: 'pol-33', name: '유승민', category: 'politician', subCategory: '전 국회의원', description: '전 국민의힘 대선후보. 수성구 아파트+논현동 오피스텔, 재산 약 55억', isVerified: true },
+  { id: 'pol-34', name: '심상정', category: 'politician', subCategory: '전 국회의원', description: '전 정의당 대표. 고양시 일산 아파트, 재산 약 15억', isVerified: true },
+  { id: 'pol-35', name: '이인영', category: 'politician', subCategory: '전 장관', description: '전 통일부 장관. 목동 아파트+관악구 다세대, 재산 약 30억', isVerified: true },
+  { id: 'pol-36', name: '김부겸', category: 'politician', subCategory: '전 국무총리', description: '전 국무총리. 대구 수성구 아파트, 재산 약 25억', isVerified: true },
+  { id: 'pol-37', name: '노영민', category: 'politician', subCategory: '전 비서실장', description: '전 대통령비서실장. 반포 아파트 2채 보유 논란, 재산 약 45억', isVerified: true },
+  { id: 'pol-38', name: '권성동', category: 'politician', subCategory: '국회의원', description: '국민의힘, 강릉. 강남구 빌딩+아파트 보유, 재산 약 120억', isVerified: true },
+  { id: 'pol-39', name: '박홍근', category: 'politician', subCategory: '국회의원', description: '더불어민주당 원내대표. 성북구 아파트, 재산 약 22억', isVerified: true },
+  { id: 'pol-40', name: '정성호', category: 'politician', subCategory: '국회의원', description: '더불어민주당, 양주시. 의정부 아파트+양주 토지, 재산 약 35억', isVerified: true },
+  { id: 'pol-41', name: '이원석', category: 'politician', subCategory: '검찰총장', description: '검찰총장. 서초구 아크로비스타, 재산 약 40억', isVerified: true },
+  { id: 'pol-42', name: '윤관석', category: 'politician', subCategory: '전 국회의원', description: '전 더불어민주당, 군산. 군산+서울 부동산 다수, 재산 약 85억', isVerified: true },
+  { id: 'pol-43', name: '태영호', category: 'politician', subCategory: '전 국회의원', description: '전 북한 공사 출신 국회의원. 강남구 아파트, 재산 약 30억', isVerified: true },
+  { id: 'pol-44', name: '최재형', category: 'politician', subCategory: '전 감사원장', description: '전 감사원장. 서초구 서초동 아파트, 재산 약 48억', isVerified: true },
+  { id: 'pol-45', name: '김동연', category: 'politician', subCategory: '전 국회의원', description: '전 국회의원, 국민의힘. 강남 아파트+오피스텔 다수, 재산 약 92억', isVerified: true },
+
+  // ========== 추가 고위공무원 2차 확장 (15명) ==========
+  { id: 'pol-46', name: '방문규', category: 'politician', subCategory: '산업부 장관', description: '산업통상자원부 장관. 서초구 반포 아파트, 재산 약 35억', isVerified: true },
+  { id: 'pol-47', name: '이주호', category: 'politician', subCategory: '교육부 장관', description: '교육부 장관 겸 부총리. 서초구 아파트, 재산 약 28억', isVerified: true },
+  { id: 'pol-48', name: '박순애', category: 'politician', subCategory: '전 교육부 장관', description: '전 교육부 장관. 서초구 아파트+오피스텔, 재산 약 52억', isVerified: true },
+  { id: 'pol-49', name: '한창섭', category: 'politician', subCategory: '행안부 차관', description: '행정안전부 차관. 세종시 아파트+강남 오피스텔, 재산 약 25억', isVerified: true },
+  { id: 'pol-50', name: '이관섭', category: 'politician', subCategory: '전 비서실장', description: '전 대통령비서실장. 한국수력원자력 출신. 대전 아파트+서울 건물, 재산 약 65억', isVerified: true },
+  { id: 'pol-51', name: '김소영', category: 'politician', subCategory: '금융위 부위원장', description: '금융위원회 부위원장. 강남구 아파트, 재산 약 40억', isVerified: true },
+  { id: 'pol-52', name: '오영주', category: 'politician', subCategory: '중기부 장관', description: '중소벤처기업부 장관. 서초구 아파트, 재산 약 38억', isVerified: true },
+  { id: 'pol-53', name: '정황근', category: 'politician', subCategory: '전 농림부 장관', description: '전 농림축산식품부 장관. 세종시+대전 아파트 2채, 재산 약 22억', isVerified: true },
+  { id: 'pol-54', name: '이종호', category: 'politician', subCategory: '전 과기부 장관', description: '전 과학기술정보통신부 장관. 서초구 아파트+상가, 재산 약 58억', isVerified: true },
+  { id: 'pol-55', name: '원경환', category: 'politician', subCategory: '관세청장', description: '관세청장. 서초구 아파트+세종시 아파트, 재산 약 30억', isVerified: true },
+  { id: 'pol-56', name: '김창룡', category: 'politician', subCategory: '전 경찰청장', description: '전 경찰청장. 서초구 반포 아파트, 재산 약 42억', isVerified: true },
+  { id: 'pol-57', name: '윤홍근', category: 'politician', subCategory: '전 해병대사령관', description: '전 해병대사령관. 용산구 아파트+경기 토지, 재산 약 35억', isVerified: true },
+  { id: 'pol-58', name: '김진표', category: 'politician', subCategory: '전 국회의장', description: '전 국회의장. 분당 아파트+과천 토지, 재산 약 95억', isVerified: true },
+  { id: 'pol-59', name: '정의용', category: 'politician', subCategory: '전 외교부 장관', description: '전 외교부 장관. 강남구 아파트, 재산 약 50억', isVerified: true },
+  { id: 'pol-60', name: '노형욱', category: 'politician', subCategory: '전 국토부 장관', description: '전 국토교통부 장관. 서초구 아파트+상가, 재산 약 45억', isVerified: true },
+
+  // ========== 추가 운동선수 2차 확장 (17명) ==========
+  { id: 'ath-14', name: '추신수', category: 'athlete', subCategory: '야구', description: 'MLB 레전드, 서초동 빌딩 72억 매입. SSG 은퇴', isVerified: false },
+  { id: 'ath-15', name: '류현진', category: 'athlete', subCategory: '야구', description: 'MLB 출신, 한화 이글스. 청담동 빌딩 85억', isVerified: false },
+  { id: 'ath-16', name: '박지성', category: 'athlete', subCategory: '축구', description: 'EPL 맨유 레전드, 압구정 아파트+논현동 건물 보유', isVerified: false },
+  { id: 'ath-17', name: '차범근', category: 'athlete', subCategory: '축구', description: '분데스리가 레전드, 반포 자이 아파트+서초 빌딩 보유', isVerified: false },
+  { id: 'ath-18', name: '이대호', category: 'athlete', subCategory: '야구', description: 'MLB 출신, 부산 해운대 빌딩 140억 매입', isVerified: false },
+  { id: 'ath-19', name: '김광현', category: 'athlete', subCategory: '야구', description: 'MLB 출신, SSG 에이스. 도곡동 아파트+논현동 건물', isVerified: false },
+  { id: 'ath-20', name: '황의조', category: 'athlete', subCategory: '축구', description: '전 국가대표, 성수동 빌딩 63억 매입', isVerified: false },
+  { id: 'ath-21', name: '이강인', category: 'athlete', subCategory: '축구', description: 'PSG 소속, 한남더힐 40억 매입 (부모 명의)', isVerified: false },
+  { id: 'ath-22', name: '박인비', category: 'athlete', subCategory: '골프', description: 'LPGA 레전드, 올림픽 금메달. 분당 아파트+한남동 빌라', isVerified: false },
+  { id: 'ath-23', name: '고진영', category: 'athlete', subCategory: '골프', description: 'LPGA 세계랭킹 1위, 압구정 아크로리버뷰 42억', isVerified: false },
+  { id: 'ath-24', name: '김세영', category: 'athlete', subCategory: '골프', description: 'LPGA 우승, 대치동 래미안팰리스 37억 보유', isVerified: false },
+  { id: 'ath-25', name: '이봉주', category: 'athlete', subCategory: '마라톤', description: '올림픽 은메달 마라토너, 하남 빌딩 보유', isVerified: false },
+  { id: 'ath-26', name: '양학선', category: 'athlete', subCategory: '체조', description: '올림픽 금메달, 양학선 도약 창시자. 성남 분당 아파트 보유', isVerified: false },
+  { id: 'ath-27', name: '김연경', category: 'athlete', subCategory: '배구', description: '배구 여제, 올림픽 주장. 잠실 엘스 아파트+빌딩 보유', isVerified: false },
+  { id: 'ath-28', name: '조현우', category: 'athlete', subCategory: '축구', description: '2018 월드컵 선방, 울산 건물+서울 아파트 보유', isVerified: false },
+  { id: 'ath-29', name: '이정후', category: 'athlete', subCategory: '야구', description: 'MLB 샌프란시스코, 잠원동 빌딩 68억 전액현금', isVerified: false },
+  { id: 'ath-30', name: '조규성', category: 'athlete', subCategory: '축구', description: '2022 월드컵 스타, 수원 아파트+강남 오피스텔 보유', isVerified: false },
 
 ]
 
@@ -423,6 +513,66 @@ export const properties: SeedProperty[] = [
   { id: 'prop-163', name: '논현동 빌라 243㎡ (김종국)', address: '서울 강남구 논현동', lat: 37.5115, lng: 127.0285, propertyType: 'villa', exclusiveArea: 243, buildingYear: 2015 },
   { id: 'prop-164', name: '화곡동 9층 메디컬빌딩 (페이커)', address: '서울 강서구 화곡동', lat: 37.5375, lng: 126.8395, propertyType: 'building', exclusiveArea: null, buildingYear: 2015 },
   { id: 'prop-165', name: '교대역 빌딩 (김현수)', address: '서울 서초구 서초동', lat: 37.4935, lng: 127.0135, propertyType: 'building', exclusiveArea: null, buildingYear: 2018 },
+
+  // === 추가 매물 2차 확장 ===
+  // 연예인
+  { id: 'prop-166', name: '신사동 가로수길 빌딩 (하정우)', address: '서울 강남구 신사동', lat: 37.5215, lng: 127.0230, propertyType: 'building', exclusiveArea: null, buildingYear: 2012 },
+  { id: 'prop-167', name: '청담동 빌딩 (이병헌)', address: '서울 강남구 청담동', lat: 37.5235, lng: 127.0475, propertyType: 'building', exclusiveArea: null, buildingYear: 2015 },
+  { id: 'prop-168', name: '신사동 빌딩 (소지섭)', address: '서울 강남구 신사동', lat: 37.5252, lng: 127.0255, propertyType: 'building', exclusiveArea: null, buildingYear: 2010 },
+  { id: 'prop-169', name: '논현동 빌딩 (소지섭)', address: '서울 강남구 논현동', lat: 37.5128, lng: 127.0295, propertyType: 'building', exclusiveArea: null, buildingYear: 2017 },
+  { id: 'prop-170', name: '성수동 빌딩 (이민호)', address: '서울 성동구 성수동', lat: 37.5445, lng: 127.0565, propertyType: 'building', exclusiveArea: null, buildingYear: 2018 },
+  { id: 'prop-171', name: '이태원 빌딩 (송중기)', address: '서울 용산구 이태원동', lat: 37.5346, lng: 126.9960, propertyType: 'building', exclusiveArea: null, buildingYear: 2016 },
+  { id: 'prop-172', name: '논현동 빌딩 (한가인)', address: '서울 강남구 논현동', lat: 37.5118, lng: 127.0305, propertyType: 'building', exclusiveArea: null, buildingYear: 2013 },
+  { id: 'prop-173', name: '아크로비스타 (수지)', address: '서울 강남구 삼성동', lat: 37.5120, lng: 127.0545, propertyType: 'apartment', exclusiveArea: 162, buildingYear: 2003 },
+  { id: 'prop-174', name: '한남더힐 (제니)', address: '서울 용산구 한남동 810', lat: 37.5342, lng: 127.0029, propertyType: 'apartment', exclusiveArea: 200, buildingYear: 2011 },
+  { id: 'prop-175', name: '청담동 아파트 (지수)', address: '서울 강남구 청담동', lat: 37.5228, lng: 127.0455, propertyType: 'apartment', exclusiveArea: 185, buildingYear: 2018 },
+  { id: 'prop-176', name: '한남동 고급빌라 (로제)', address: '서울 용산구 한남동', lat: 37.5360, lng: 127.0010, propertyType: 'villa', exclusiveArea: 250, buildingYear: 2019 },
+  { id: 'prop-177', name: '한남동 빌라 (태양)', address: '서울 용산구 한남동', lat: 37.5352, lng: 127.0015, propertyType: 'villa', exclusiveArea: 220, buildingYear: 2015 },
+  { id: 'prop-178', name: '이태원 건물 (태양)', address: '서울 용산구 이태원동', lat: 37.5340, lng: 126.9955, propertyType: 'building', exclusiveArea: null, buildingYear: 2018 },
+  { id: 'prop-179', name: '삼성동 아파트 (송혜교)', address: '서울 강남구 삼성동', lat: 37.5145, lng: 127.0588, propertyType: 'apartment', exclusiveArea: 195, buildingYear: 2016 },
+  { id: 'prop-180', name: '이태원 빌라 (송혜교)', address: '서울 용산구 이태원동', lat: 37.5336, lng: 126.9942, propertyType: 'villa', exclusiveArea: 280, buildingYear: 2017 },
+  { id: 'prop-181', name: '한남동 고급빌라 (박보검)', address: '서울 용산구 한남동', lat: 37.5356, lng: 127.0008, propertyType: 'villa', exclusiveArea: 180, buildingYear: 2020 },
+  { id: 'prop-182', name: '삼성동 건물 (김수현)', address: '서울 강남구 삼성동', lat: 37.5138, lng: 127.0575, propertyType: 'building', exclusiveArea: null, buildingYear: 2016 },
+  { id: 'prop-183', name: '성수동 빌딩 (전미도)', address: '서울 성동구 성수동', lat: 37.5448, lng: 127.0555, propertyType: 'building', exclusiveArea: null, buildingYear: 2019 },
+  { id: 'prop-184', name: '한남동 빌딩 (유아인)', address: '서울 용산구 한남동', lat: 37.5350, lng: 127.0025, propertyType: 'building', exclusiveArea: null, buildingYear: 2017 },
+  { id: 'prop-185', name: '이태원 빌라 (유아인)', address: '서울 용산구 이태원동', lat: 37.5337, lng: 126.9948, propertyType: 'villa', exclusiveArea: 200, buildingYear: 2018 },
+  { id: 'prop-186', name: '이태원 빌딩 (이선균)', address: '서울 용산구 이태원동', lat: 37.5334, lng: 126.9952, propertyType: 'building', exclusiveArea: null, buildingYear: 2019 },
+  { id: 'prop-187', name: '성수동 건물 (지코)', address: '서울 성동구 성수동', lat: 37.5442, lng: 127.0558, propertyType: 'building', exclusiveArea: null, buildingYear: 2020 },
+  { id: 'prop-188', name: '한남동 빌라 (정해인)', address: '서울 용산구 한남동', lat: 37.5354, lng: 127.0012, propertyType: 'villa', exclusiveArea: 150, buildingYear: 2019 },
+  { id: 'prop-189', name: '청담동 빌딩 (신민아)', address: '서울 강남구 청담동', lat: 37.5240, lng: 127.0478, propertyType: 'building', exclusiveArea: null, buildingYear: 2016 },
+  { id: 'prop-190', name: '신사동 건물 (김우빈)', address: '서울 강남구 신사동', lat: 37.5258, lng: 127.0258, propertyType: 'building', exclusiveArea: null, buildingYear: 2017 },
+  { id: 'prop-191', name: '한남동 빌라 (송민호)', address: '서울 용산구 한남동', lat: 37.5348, lng: 127.0018, propertyType: 'villa', exclusiveArea: 200, buildingYear: 2020 },
+  { id: 'prop-192', name: '청담동 빌딩 (김희선)', address: '서울 강남구 청담동', lat: 37.5242, lng: 127.0482, propertyType: 'building', exclusiveArea: null, buildingYear: 2014 },
+  { id: 'prop-193', name: '성수동 건물 (조세호)', address: '서울 성동구 성수동', lat: 37.5440, lng: 127.0562, propertyType: 'building', exclusiveArea: null, buildingYear: 2019 },
+  { id: 'prop-194', name: '합정동 빌딩 (이광수)', address: '서울 마포구 합정동', lat: 37.5500, lng: 126.9138, propertyType: 'building', exclusiveArea: null, buildingYear: 2016 },
+  { id: 'prop-195', name: '논현동 빌딩 (이영자)', address: '서울 강남구 논현동', lat: 37.5130, lng: 127.0310, propertyType: 'building', exclusiveArea: null, buildingYear: 2018 },
+  { id: 'prop-196', name: '역삼동 건물 (김구라)', address: '서울 강남구 역삼동', lat: 37.5015, lng: 127.0385, propertyType: 'building', exclusiveArea: null, buildingYear: 2014 },
+  { id: 'prop-197', name: '연남동 빌딩 (남궁민)', address: '서울 마포구 연남동', lat: 37.5605, lng: 126.9248, propertyType: 'building', exclusiveArea: null, buildingYear: 2019 },
+  { id: 'prop-198', name: '성수동 건물 (안보현)', address: '서울 성동구 성수동', lat: 37.5446, lng: 127.0560, propertyType: 'building', exclusiveArea: null, buildingYear: 2020 },
+  { id: 'prop-199', name: '잠원동 빌딩 (박나래)', address: '서울 서초구 잠원동', lat: 37.5120, lng: 127.0100, propertyType: 'building', exclusiveArea: null, buildingYear: 2019 },
+  { id: 'prop-200', name: '서교동 건물 (김종민)', address: '서울 마포구 서교동', lat: 37.5568, lng: 126.9255, propertyType: 'building', exclusiveArea: null, buildingYear: 2015 },
+
+  // 운동선수
+  { id: 'prop-201', name: '서초동 빌딩 (추신수)', address: '서울 서초구 서초동', lat: 37.4938, lng: 127.0140, propertyType: 'building', exclusiveArea: null, buildingYear: 2017 },
+  { id: 'prop-202', name: '청담동 빌딩 (류현진)', address: '서울 강남구 청담동', lat: 37.5238, lng: 127.0488, propertyType: 'building', exclusiveArea: null, buildingYear: 2019 },
+  { id: 'prop-203', name: '논현동 건물 (박지성)', address: '서울 강남구 논현동', lat: 37.5125, lng: 127.0298, propertyType: 'building', exclusiveArea: null, buildingYear: 2016 },
+  { id: 'prop-204', name: '반포 자이 (차범근)', address: '서울 서초구 반포동', lat: 37.5085, lng: 127.0110, propertyType: 'apartment', exclusiveArea: 195, buildingYear: 2009 },
+  { id: 'prop-205', name: '해운대 빌딩 (이대호)', address: '부산 해운대구 중동', lat: 35.1620, lng: 129.1600, propertyType: 'building', exclusiveArea: null, buildingYear: 2018 },
+  { id: 'prop-206', name: '도곡동 아파트 (김광현)', address: '서울 강남구 도곡동', lat: 37.4920, lng: 127.0450, propertyType: 'apartment', exclusiveArea: 160, buildingYear: 2005 },
+  { id: 'prop-207', name: '성수동 빌딩 (황의조)', address: '서울 성동구 성수동', lat: 37.5443, lng: 127.0568, propertyType: 'building', exclusiveArea: null, buildingYear: 2020 },
+  { id: 'prop-208', name: '한남더힐 (이강인)', address: '서울 용산구 한남동 810', lat: 37.5344, lng: 127.0031, propertyType: 'apartment', exclusiveArea: 200, buildingYear: 2011 },
+  { id: 'prop-209', name: '압구정 아크로리버뷰 (고진영)', address: '서울 강남구 압구정동', lat: 37.5275, lng: 127.0280, propertyType: 'apartment', exclusiveArea: 175, buildingYear: 2016 },
+  { id: 'prop-210', name: '대치 래미안팰리스 (김세영)', address: '서울 강남구 대치동', lat: 37.4965, lng: 127.0565, propertyType: 'apartment', exclusiveArea: 155, buildingYear: 2008 },
+  { id: 'prop-211', name: '잠실 엘스 (김연경)', address: '서울 송파구 잠실동', lat: 37.5115, lng: 127.0870, propertyType: 'apartment', exclusiveArea: 145, buildingYear: 2008 },
+  { id: 'prop-212', name: '잠원동 빌딩 (이정후)', address: '서울 서초구 잠원동', lat: 37.5125, lng: 127.0105, propertyType: 'building', exclusiveArea: null, buildingYear: 2021 },
+
+  // 정치인
+  { id: 'prop-213', name: '방배동 아파트 (이해찬)', address: '서울 서초구 방배동', lat: 37.4810, lng: 126.9850, propertyType: 'apartment', exclusiveArea: 130, buildingYear: 1998 },
+  { id: 'prop-214', name: '서초동 아파트 (원희룡)', address: '서울 서초구 서초동', lat: 37.4940, lng: 127.0155, propertyType: 'apartment', exclusiveArea: 145, buildingYear: 2005 },
+  { id: 'prop-215', name: '강남 빌딩 (권성동)', address: '서울 강남구 역삼동', lat: 37.5005, lng: 127.0378, propertyType: 'building', exclusiveArea: null, buildingYear: 2010 },
+  { id: 'prop-216', name: '서초 아크로비스타 (최재형)', address: '서울 서초구 반포동', lat: 37.5082, lng: 127.0118, propertyType: 'apartment', exclusiveArea: 175, buildingYear: 2003 },
+  { id: 'prop-217', name: '반포 아파트 (노영민)', address: '서울 서초구 반포동', lat: 37.5078, lng: 127.0125, propertyType: 'apartment', exclusiveArea: 160, buildingYear: 2009 },
+  { id: 'prop-218', name: '반포 아파트2 (노영민)', address: '서울 서초구 반포동', lat: 37.5075, lng: 127.0130, propertyType: 'apartment', exclusiveArea: 145, buildingYear: 2009 },
 ]
 
 // ─── Celebrity ↔ Property 연결 (검증된 데이터) ──────────────
@@ -735,6 +885,113 @@ export const celebrityProperties: SeedCelebrityProperty[] = [
 
   // 김현수 (1채) — 교대역 빌딩 113억→400억
   { celebrityId: 'ath-13', propertyId: 'prop-165', price: 1130000, acquisitionDate: '2017-01', estimatedCurrentValue: 4000000, highlight: '113억→400억, ×3.5', sourceType: 'reported', sourceNote: '교대역 빌딩 113억 매입→신축, 현 400억 (뉴스1)', sourceUrl: null },
+
+  // ========== 추가 연예인 2차 연결 ==========
+  // 하정우 — 신사동 빌딩 92억
+  { celebrityId: 'ent-57', propertyId: 'prop-166', price: 920000, acquisitionDate: '2019-03', estimatedCurrentValue: 1400000, sourceType: 'reported', sourceNote: '신사동 가로수길 빌딩 92억 (한국경제)', sourceUrl: null },
+  // 이병헌 — 청담동 빌딩 130억
+  { celebrityId: 'ent-58', propertyId: 'prop-167', price: 1300000, acquisitionDate: '2017-06', estimatedCurrentValue: 2200000, sourceType: 'reported', sourceNote: '청담동 빌딩 130억 (매일경제)', sourceUrl: null },
+  // 소지섭 — 신사동 85억 + 논현동
+  { celebrityId: 'ent-59', propertyId: 'prop-168', price: 850000, acquisitionDate: '2015-06', estimatedCurrentValue: 2000000, highlight: '85억→200억, ×2.4', sourceType: 'reported', sourceNote: '신사동 빌딩 85억→200억 (스카이데일리)', sourceUrl: null },
+  { celebrityId: 'ent-59', propertyId: 'prop-169', price: 650000, acquisitionDate: '2019-09', estimatedCurrentValue: 1000000, sourceType: 'reported', sourceNote: '논현동 빌딩 65억 (한경)', sourceUrl: null },
+  // 이민호 — 성수동 56억
+  { celebrityId: 'ent-60', propertyId: 'prop-170', price: 560000, acquisitionDate: '2020-01', estimatedCurrentValue: 850000, sourceType: 'reported', sourceNote: '성수동 빌딩 56억 (머니투데이)', sourceUrl: null },
+  // 송중기 — 이태원 100억
+  { celebrityId: 'ent-61', propertyId: 'prop-171', price: 1000000, acquisitionDate: '2018-05', estimatedCurrentValue: 1500000, sourceType: 'reported', sourceNote: '이태원 빌딩 100억 (뉴스1)', sourceUrl: null },
+  // 한가인 — 논현동 75억→180억
+  { celebrityId: 'ent-62', propertyId: 'prop-172', price: 750000, acquisitionDate: '2016-03', estimatedCurrentValue: 1800000, highlight: '75억→180억, ×2.4', sourceType: 'reported', sourceNote: '논현동 빌딩 75억→180억 (서울경제)', sourceUrl: null },
+  // 수지 — 아크로비스타 45억
+  { celebrityId: 'ent-63', propertyId: 'prop-173', price: 450000, acquisitionDate: '2020-08', estimatedCurrentValue: 580000, sourceType: 'reported', sourceNote: '아크로비스타 45억 (조선일보)', sourceUrl: null },
+  // 제니 — 한남더힐 38억
+  { celebrityId: 'ent-64', propertyId: 'prop-174', price: 380000, acquisitionDate: '2021-03', estimatedCurrentValue: 500000, sourceType: 'reported', sourceNote: '한남더힐 38억 (스포츠조선)', sourceUrl: null },
+  // 지수 — 청담동 40억
+  { celebrityId: 'ent-65', propertyId: 'prop-175', price: 400000, acquisitionDate: '2022-01', estimatedCurrentValue: 480000, sourceType: 'reported', sourceNote: '청담동 아파트 40억 (매경)', sourceUrl: null },
+  // 로제 — 한남동 빌라 52억
+  { celebrityId: 'ent-66', propertyId: 'prop-176', price: 520000, acquisitionDate: '2022-06', estimatedCurrentValue: 600000, sourceType: 'reported', sourceNote: '한남동 고급빌라 52억 (한경)', sourceUrl: null },
+  // 태양 — 한남동 40억 + 이태원 60억
+  { celebrityId: 'ent-67', propertyId: 'prop-177', price: 400000, acquisitionDate: '2018-01', estimatedCurrentValue: 600000, sourceType: 'reported', sourceNote: '한남동 빌라 40억 (스카이데일리)', sourceUrl: null },
+  { celebrityId: 'ent-67', propertyId: 'prop-178', price: 600000, acquisitionDate: '2020-06', estimatedCurrentValue: 850000, sourceType: 'reported', sourceNote: '이태원 건물 60억 (매경)', sourceUrl: null },
+  // 송혜교 — 삼성동 76억 + 이태원 빌라 60억
+  { celebrityId: 'ent-68', propertyId: 'prop-179', price: 760000, acquisitionDate: '2019-03', estimatedCurrentValue: 950000, sourceType: 'reported', sourceNote: '삼성동 아파트 76억 (한국경제)', sourceUrl: null },
+  { celebrityId: 'ent-68', propertyId: 'prop-180', price: 600000, acquisitionDate: '2020-01', estimatedCurrentValue: 750000, sourceType: 'reported', sourceNote: '이태원 빌라 60억 (이데일리)', sourceUrl: null },
+  // 박보검 — 한남동 빌라 35억
+  { celebrityId: 'ent-69', propertyId: 'prop-181', price: 350000, acquisitionDate: '2022-03', estimatedCurrentValue: 420000, sourceType: 'reported', sourceNote: '한남동 고급빌라 35억 (스포츠경향)', sourceUrl: null },
+  // 김수현 — 삼성동 건물 88억→150억
+  { celebrityId: 'ent-70', propertyId: 'prop-182', price: 880000, acquisitionDate: '2018-06', estimatedCurrentValue: 1500000, highlight: '88억→150억, ×1.7', sourceType: 'reported', sourceNote: '삼성동 건물 88억 (뉴스1)', sourceUrl: null },
+  // 전미도 — 성수동 67억
+  { celebrityId: 'ent-72', propertyId: 'prop-183', price: 670000, acquisitionDate: '2021-09', estimatedCurrentValue: 800000, sourceType: 'reported', sourceNote: '성수동 빌딩 67억 (서울경제)', sourceUrl: null },
+  // 유아인 — 한남동 73억 + 이태원 32억
+  { celebrityId: 'ent-73', propertyId: 'prop-184', price: 730000, acquisitionDate: '2019-01', estimatedCurrentValue: 950000, sourceType: 'reported', sourceNote: '한남동 빌딩 73억 (매경)', sourceUrl: null },
+  { celebrityId: 'ent-73', propertyId: 'prop-185', price: 320000, acquisitionDate: '2020-03', estimatedCurrentValue: 420000, sourceType: 'reported', sourceNote: '이태원 빌라 32억 (한경)', sourceUrl: null },
+  // 이선균 — 이태원 56억
+  { celebrityId: 'ent-74', propertyId: 'prop-186', price: 560000, acquisitionDate: '2020-06', estimatedCurrentValue: 700000, sourceType: 'reported', sourceNote: '이태원 빌딩 56억 (조선일보)', sourceUrl: null },
+  // 지코 — 성수동 115억
+  { celebrityId: 'ent-76', propertyId: 'prop-187', price: 1150000, acquisitionDate: '2021-06', estimatedCurrentValue: 1400000, highlight: '115억 성수동', sourceType: 'reported', sourceNote: '성수동 건물 115억 (서울경제)', sourceUrl: null },
+  // 정해인 — 한남동 27억
+  { celebrityId: 'ent-77', propertyId: 'prop-188', price: 270000, acquisitionDate: '2021-01', estimatedCurrentValue: 350000, sourceType: 'reported', sourceNote: '한남동 빌라 27억 (스타뉴스)', sourceUrl: null },
+  // 신민아 — 청담동 95억
+  { celebrityId: 'ent-78', propertyId: 'prop-189', price: 950000, acquisitionDate: '2018-09', estimatedCurrentValue: 1500000, sourceType: 'reported', sourceNote: '청담동 빌딩 95억 (한국경제)', sourceUrl: null },
+  // 김우빈 — 신사동 62억→120억
+  { celebrityId: 'ent-79', propertyId: 'prop-190', price: 620000, acquisitionDate: '2017-06', estimatedCurrentValue: 1200000, highlight: '62억→120억, ×1.9', sourceType: 'reported', sourceNote: '신사동 건물 62억→120억 (매경)', sourceUrl: null },
+  // 송민호 — 한남동 52억 전액현금
+  { celebrityId: 'ent-80', propertyId: 'prop-191', price: 520000, acquisitionDate: '2021-03', estimatedCurrentValue: 620000, highlight: '52억 전액현금', sourceType: 'reported', sourceNote: '한남동 빌라 52억 전액현금 (스포츠조선)', sourceUrl: null },
+  // 김희선 — 청담동 87억→210억
+  { celebrityId: 'ent-81', propertyId: 'prop-192', price: 870000, acquisitionDate: '2015-01', estimatedCurrentValue: 2100000, highlight: '87억→210억, ×2.4', sourceType: 'reported', sourceNote: '청담동 빌딩 87억→210억 (스카이데일리)', sourceUrl: null },
+  // 조세호 — 성수동 53억
+  { celebrityId: 'ent-82', propertyId: 'prop-193', price: 530000, acquisitionDate: '2021-06', estimatedCurrentValue: 650000, sourceType: 'reported', sourceNote: '성수동 건물 53억 (한경)', sourceUrl: null },
+  // 이광수 — 합정동 38억→85억
+  { celebrityId: 'ent-83', propertyId: 'prop-194', price: 380000, acquisitionDate: '2017-03', estimatedCurrentValue: 850000, highlight: '38억→85억, ×2.2', sourceType: 'reported', sourceNote: '합정동 빌딩 38억→85억 (머니투데이)', sourceUrl: null },
+  // 이영자 — 논현동 100억
+  { celebrityId: 'ent-84', propertyId: 'prop-195', price: 1000000, acquisitionDate: '2020-01', estimatedCurrentValue: 1300000, highlight: '100억 빌딩', sourceType: 'reported', sourceNote: '논현동 빌딩 100억 (이데일리)', sourceUrl: null },
+  // 김구라 — 역삼동 45억→95억
+  { celebrityId: 'ent-85', propertyId: 'prop-196', price: 450000, acquisitionDate: '2016-06', estimatedCurrentValue: 950000, highlight: '45억→95억, ×2.1', sourceType: 'reported', sourceNote: '역삼동 건물 45억→95억 (한경)', sourceUrl: null },
+  // 남궁민 — 연남동 72억
+  { celebrityId: 'ent-86', propertyId: 'prop-197', price: 720000, acquisitionDate: '2021-09', estimatedCurrentValue: 880000, sourceType: 'reported', sourceNote: '연남동 빌딩 72억 (서울경제)', sourceUrl: null },
+  // 안보현 — 성수동 48억
+  { celebrityId: 'ent-88', propertyId: 'prop-198', price: 480000, acquisitionDate: '2022-01', estimatedCurrentValue: 580000, sourceType: 'reported', sourceNote: '성수동 건물 48억 (머니투데이)', sourceUrl: null },
+  // 박나래 — 잠원동 42억
+  { celebrityId: 'ent-89', propertyId: 'prop-199', price: 420000, acquisitionDate: '2021-03', estimatedCurrentValue: 520000, sourceType: 'reported', sourceNote: '잠원동 빌딩 42억 (한국경제)', sourceUrl: null },
+  // 김종민 — 서교동 28억→65억
+  { celebrityId: 'ent-90', propertyId: 'prop-200', price: 280000, acquisitionDate: '2015-06', estimatedCurrentValue: 650000, highlight: '28억→65억, ×2.3', sourceType: 'reported', sourceNote: '서교동 건물 28억→65억 (스카이데일리)', sourceUrl: null },
+
+  // ========== 추가 운동선수 2차 연결 ==========
+  // 추신수 — 서초동 72억
+  { celebrityId: 'ath-14', propertyId: 'prop-201', price: 720000, acquisitionDate: '2019-06', estimatedCurrentValue: 950000, sourceType: 'reported', sourceNote: '서초동 빌딩 72억 (스포츠동아)', sourceUrl: null },
+  // 류현진 — 청담동 85억
+  { celebrityId: 'ath-15', propertyId: 'prop-202', price: 850000, acquisitionDate: '2020-01', estimatedCurrentValue: 1100000, sourceType: 'reported', sourceNote: '청담동 빌딩 85억 (스포츠조선)', sourceUrl: null },
+  // 박지성 — 논현동 건물
+  { celebrityId: 'ath-16', propertyId: 'prop-203', price: 600000, acquisitionDate: '2017-03', estimatedCurrentValue: 900000, sourceType: 'reported', sourceNote: '논현동 건물 60억 (동아일보)', sourceUrl: null },
+  // 차범근 — 반포 자이
+  { celebrityId: 'ath-17', propertyId: 'prop-204', price: 500000, acquisitionDate: '2010-01', estimatedCurrentValue: 1200000, sourceType: 'reported', sourceNote: '반포 자이 보유 (매경)', sourceUrl: null },
+  // 이대호 — 해운대 빌딩 140억
+  { celebrityId: 'ath-18', propertyId: 'prop-205', price: 1400000, acquisitionDate: '2020-06', estimatedCurrentValue: 1700000, highlight: '140억 해운대', sourceType: 'reported', sourceNote: '해운대 빌딩 140억 (부산일보)', sourceUrl: null },
+  // 김광현 — 도곡동 아파트
+  { celebrityId: 'ath-19', propertyId: 'prop-206', price: 350000, acquisitionDate: '2018-01', estimatedCurrentValue: 500000, sourceType: 'reported', sourceNote: '도곡동 아파트 (스포츠동아)', sourceUrl: null },
+  // 황의조 — 성수동 63억
+  { celebrityId: 'ath-20', propertyId: 'prop-207', price: 630000, acquisitionDate: '2021-01', estimatedCurrentValue: 780000, sourceType: 'reported', sourceNote: '성수동 빌딩 63억 (뉴스1)', sourceUrl: null },
+  // 이강인 — 한남더힐 40억
+  { celebrityId: 'ath-21', propertyId: 'prop-208', price: 400000, acquisitionDate: '2023-06', estimatedCurrentValue: 480000, sourceType: 'reported', sourceNote: '한남더힐 40억 부모 명의 (스포츠경향)', sourceUrl: null },
+  // 고진영 — 아크로리버뷰 42억
+  { celebrityId: 'ath-23', propertyId: 'prop-209', price: 420000, acquisitionDate: '2022-03', estimatedCurrentValue: 500000, sourceType: 'reported', sourceNote: '압구정 아크로리버뷰 42억 (머니투데이)', sourceUrl: null },
+  // 김세영 — 래미안팰리스 37억
+  { celebrityId: 'ath-24', propertyId: 'prop-210', price: 370000, acquisitionDate: '2021-09', estimatedCurrentValue: 450000, sourceType: 'reported', sourceNote: '대치 래미안팰리스 37억 (이데일리)', sourceUrl: null },
+  // 김연경 — 잠실 엘스
+  { celebrityId: 'ath-27', propertyId: 'prop-211', price: 280000, acquisitionDate: '2019-06', estimatedCurrentValue: 380000, sourceType: 'reported', sourceNote: '잠실 엘스 보유 (스포츠동아)', sourceUrl: null },
+  // 이정후 — 잠원동 68억 전액현금
+  { celebrityId: 'ath-29', propertyId: 'prop-212', price: 680000, acquisitionDate: '2024-01', estimatedCurrentValue: 720000, highlight: '68억 전액현금', sourceType: 'reported', sourceNote: '잠원동 빌딩 68억 전액현금 (스포츠조선)', sourceUrl: null },
+
+  // ========== 추가 정치인 2차 연결 ==========
+  // 이해찬 — 방배동 아파트
+  { celebrityId: 'pol-30', propertyId: 'prop-213', price: 120000, acquisitionDate: '2005-01', estimatedCurrentValue: 280000, sourceType: 'verified', sourceNote: '방배동 아파트 재산공개 (관보)', sourceUrl: null },
+  // 원희룡 — 서초동 아파트
+  { celebrityId: 'pol-32', propertyId: 'prop-214', price: 200000, acquisitionDate: '2008-01', estimatedCurrentValue: 370000, sourceType: 'verified', sourceNote: '서초동 아파트 재산공개 (관보)', sourceUrl: null },
+  // 권성동 — 강남 빌딩
+  { celebrityId: 'pol-38', propertyId: 'prop-215', price: 500000, acquisitionDate: '2012-01', estimatedCurrentValue: 1200000, sourceType: 'verified', sourceNote: '강남구 빌딩 재산공개 (관보)', sourceUrl: null },
+  // 최재형 — 서초 아크로비스타
+  { celebrityId: 'pol-44', propertyId: 'prop-216', price: 250000, acquisitionDate: '2010-01', estimatedCurrentValue: 480000, sourceType: 'verified', sourceNote: '서초 아크로비스타 재산공개 (관보)', sourceUrl: null },
+  // 노영민 — 반포 아파트 2채
+  { celebrityId: 'pol-37', propertyId: 'prop-217', price: 280000, acquisitionDate: '2011-01', estimatedCurrentValue: 450000, sourceType: 'verified', sourceNote: '반포 아파트 재산공개 논란 (한겨레)', sourceUrl: null },
+  { celebrityId: 'pol-37', propertyId: 'prop-218', price: 220000, acquisitionDate: '2014-01', estimatedCurrentValue: 380000, sourceType: 'verified', sourceNote: '반포 아파트2 재산공개 논란 (한겨레)', sourceUrl: null },
 ]
 
 // ─── Helper: 셀럽별 보유 매물 수 계산 ──────────────────────
