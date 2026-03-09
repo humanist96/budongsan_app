@@ -4,7 +4,7 @@ import Link from 'next/link'
 import {
   MapPin, Users, Trophy, Menu, X, Sun, Moon, Send, Search,
   Swords, Brain, Zap, Dice5, Clock, Network, Scale,
-  Gamepad2, ChevronDown,
+  Gamepad2, ChevronDown, Crown,
 } from 'lucide-react'
 import { useState, useRef, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
@@ -44,6 +44,7 @@ const navEntries: NavEntry[] = [
       { href: '/battle', label: '배틀', icon: Zap },
       { href: '/marble', label: '브루마블', icon: Dice5 },
       { href: '/timeline', label: '연대기', icon: Clock },
+      { href: '/worldcup', label: '월드컵', icon: Crown },
     ],
   },
   { href: '/submit', label: '제보', icon: Send },
