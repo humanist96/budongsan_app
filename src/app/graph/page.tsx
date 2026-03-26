@@ -9,6 +9,7 @@ import {
   buildBipartiteGraph,
   buildCelebNetwork,
   buildNeighborhoodClusters,
+  buildNeighborProximityGraph,
 } from '@/lib/graph/build-graph'
 import { ForceGraphView } from '@/components/graph/force-graph-view'
 import { GraphControls, type ViewMode } from '@/components/graph/graph-controls'
@@ -39,6 +40,8 @@ export default function GraphPage() {
         return buildCelebNetwork(catFilter, polFilter)
       case 'neighborhood':
         return buildNeighborhoodClusters(catFilter, polFilter)
+      case 'neighbor-proximity':
+        return buildNeighborProximityGraph(catFilter, polFilter)
     }
   }, [viewMode, categoryFilter, politicalFilter])
 

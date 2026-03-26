@@ -4,7 +4,7 @@ import Link from 'next/link'
 import {
   MapPin, Users, Trophy, Menu, X, Sun, Moon, Send, Search,
   Swords, Brain, Zap, Dice5, Clock, Network, Scale,
-  Gamepad2, ChevronDown, Crown,
+  Gamepad2, ChevronDown, Crown, Flame, Compass, Bot,
 } from 'lucide-react'
 import { useState, useRef, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
@@ -35,6 +35,15 @@ const navEntries: NavEntry[] = [
   { href: '/rankings', label: '랭킹', icon: Trophy },
   { href: '/graph', label: '관계망', icon: Network },
   { href: '/politics', label: '정치', icon: Scale },
+  {
+    label: 'GIS 분석',
+    icon: Flame,
+    children: [
+      { href: '/heatmap', label: '히트맵', icon: Flame },
+      { href: '/catchment', label: '생활권', icon: Compass },
+      { href: '/ai-analyst', label: 'AI 분석가', icon: Bot },
+    ],
+  },
   {
     label: '놀이터',
     icon: Gamepad2,

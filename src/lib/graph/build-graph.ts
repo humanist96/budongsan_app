@@ -12,6 +12,7 @@ import {
   properties,
   type PoliticalLeaning,
 } from '@/data/celebrity-seed-data'
+import { haversineDistance } from '@/lib/geo/haversine'
 
 // ─── Types ──────────────────────────────────────────────────
 
@@ -317,6 +318,77 @@ export function buildNeighborhoodClusters(
       val: activeCelebIds.has(c.id) ? (celebPropertyCount.get(c.id) ?? 1) * 3 : 2,
     }
   })
+
+  return { nodes, links }
+}
+
+// ─── 3.5) Neighbor Proximity Network (500m buffer) ──────────
+
+export function buildNeighborProximityGraph(
+  categoryFilter?: CelebrityCategory[],
+  politicalFilter?: PoliticalLeaning[],
+  radiusMeters: number = 500,
+): GraphData {
+  const propMap = new Map(properties.map((p) => [p.id, p]))
+  const filtered = filterCelebrities(categoryFilter, politicalFilter)
+  const filteredCelebIds = new Set(filtered.map((c) => c.id))
+
+  // 셀럽별 매물 좌표 수집
+  const celebProps = new Map<string, { propertyId: string; lat: number; lng: number; name: string }[]>()
+  for (const cp of celebrityProperties) {
+    if (!filteredCelebIds.has(cp.celebrityId)) continue
+    const prop = propMap.get(cp.propertyId)
+    if (!prop) continue
+    const list = celebProps.get(cp.celebrityId) ?? []
+    if (!list.some((p) => p.propertyId === cp.propertyId)) {
+      list.push({ propertyId: cp.propertyId, lat: prop.lat, lng: prop.lng, name: prop.name })
+    }
+    celebProps.set(cp.celebrityId, list)
+  }
+
+  // 근접 셀럽 쌍 찾기
+  const links: GraphLink[] = []
+  const connectedIds = new Set<string>()
+  const celebIds = Array.from(celebProps.keys())
+
+  for (let i = 0; i < celebIds.length; i++) {
+    const propsA = celebProps.get(celebIds[i])!
+    for (let j = i + 1; j < celebIds.length; j++) {
+      const propsB = celebProps.get(celebIds[j])!
+      let minDist = Infinity
+
+      for (const pA of propsA) {
+        for (const pB of propsB) {
+          if (pA.propertyId === pB.propertyId) continue
+          const dist = haversineDistance(pA.lat, pA.lng, pB.lat, pB.lng)
+          if (dist < minDist) minDist = dist
+        }
+      }
+
+      if (minDist <= radiusMeters && minDist > 0) {
+        links.push({
+          source: celebIds[i],
+          target: celebIds[j],
+          label: `${Math.round(minDist)}m`,
+        })
+        connectedIds.add(celebIds[i])
+        connectedIds.add(celebIds[j])
+      }
+    }
+  }
+
+  const nodes: GraphNode[] = filtered.map((c) => ({
+    id: c.id,
+    name: c.name,
+    type: 'celebrity' as const,
+    category: c.category,
+    subCategory: c.subCategory,
+    politicalLeaning: c.politicalLeaning,
+    party: c.party,
+    profileImageUrl: c.profileImageUrl,
+    group: CATEGORY_GROUP[c.category],
+    val: connectedIds.has(c.id) ? (celebPropertyCount.get(c.id) ?? 1) * 3 : 2,
+  }))
 
   return { nodes, links }
 }

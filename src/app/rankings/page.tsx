@@ -3,11 +3,12 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Trophy, Building2, MapPin, TrendingUp } from 'lucide-react'
+import { Trophy, Building2, MapPin, TrendingUp, Map as MapIcon } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { MultiOwnerBadge } from '@/components/celebrity/multi-owner-badge'
+import dynamic from 'next/dynamic'
 import { createClient } from '@/lib/supabase/client'
 import { formatPrice } from '@/lib/utils'
 import { CATEGORY_LABELS, type CelebrityCategory } from '@/types'
@@ -17,7 +18,12 @@ import {
   properties as seedProperties,
 } from '@/data/celebrity-seed-data'
 
-type RankingTab = 'multi-owner' | 'top-price' | 'dense-neighborhood'
+const ChoroplethMap = dynamic(
+  () => import('@/components/rankings/choropleth-map').then((m) => m.ChoroplethMap),
+  { ssr: false, loading: () => <div className="h-[500px] bg-muted rounded-xl animate-pulse" /> },
+)
+
+type RankingTab = 'multi-owner' | 'top-price' | 'dense-neighborhood' | 'map'
 
 interface RankingCelebrity {
   id: string
@@ -39,6 +45,7 @@ const tabs: { value: RankingTab; label: string; icon: typeof Trophy }[] = [
   { value: 'multi-owner', label: '다주택자', icon: Building2 },
   { value: 'top-price', label: '최고 자산', icon: TrendingUp },
   { value: 'dense-neighborhood', label: '셀럽 밀집', icon: MapPin },
+  { value: 'map', label: '구별 지도', icon: MapIcon },
 ]
 
 export default function RankingsPage() {
@@ -49,6 +56,10 @@ export default function RankingsPage() {
 
   useEffect(() => {
     async function fetchRankings() {
+      if (activeTab === 'map') {
+        setLoading(false)
+        return
+      }
       setLoading(true)
       try {
         const supabase = createClient()
@@ -108,7 +119,9 @@ export default function RankingsPage() {
         ))}
       </div>
 
-      {loading ? (
+      {activeTab === 'map' ? (
+        <ChoroplethMap />
+      ) : loading ? (
         <div className="space-y-3">
           {Array.from({ length: 10 }).map((_, i) => (
             <div key={i} className="h-16 bg-muted rounded-xl animate-pulse" />

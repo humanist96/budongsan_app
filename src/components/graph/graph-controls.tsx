@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Network, Users, MapPin, Search, SlidersHorizontal } from 'lucide-react'
+import { Network, Users, MapPin, Search, SlidersHorizontal, Radar } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import type { CelebrityCategory } from '@/types'
 import { CATEGORY_LABELS } from '@/types/celebrity'
@@ -10,7 +10,7 @@ import { getAllCelebrities } from '@/lib/graph/build-graph'
 
 // ─── Types ──────────────────────────────────────────────────
 
-export type ViewMode = 'bipartite' | 'celeb-network' | 'neighborhood'
+export type ViewMode = 'bipartite' | 'celeb-network' | 'neighborhood' | 'neighbor-proximity'
 
 interface GraphControlsProps {
   viewMode: ViewMode
@@ -30,6 +30,7 @@ const VIEW_MODES: { mode: ViewMode; label: string; icon: typeof Network; desc: s
   { mode: 'bipartite', label: '전체 관계망', icon: Network, desc: '셀럽 + 매물' },
   { mode: 'celeb-network', label: '셀럽 네트워크', icon: Users, desc: '공유 매물 기반' },
   { mode: 'neighborhood', label: '동네 클러스터', icon: MapPin, desc: '동 단위 그룹' },
+  { mode: 'neighbor-proximity', label: '이웃 셀럽', icon: Radar, desc: '500m 근접 관계' },
 ]
 
 const CATEGORIES: CelebrityCategory[] = ['entertainer', 'politician', 'athlete', 'expert']
