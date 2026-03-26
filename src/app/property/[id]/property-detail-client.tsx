@@ -28,6 +28,7 @@ import {
 } from '@/data/celebrity-seed-data'
 import { transactions as seedTransactions } from '@/data/transaction-seed-data'
 import { PriceLinks } from '@/components/property/price-links'
+import { NaverListings } from '@/components/property/naver-listings'
 import { getPropertyAcquisitionEvents } from '@/data/timeline-helpers'
 
 interface PropertyDetail extends Property {
@@ -238,6 +239,19 @@ export function PropertyDetailClient({ id }: PropertyDetailClientProps) {
         </Card>
       )}
 
+      {/* 네이버 부동산 실시간 시세 */}
+      <Card className="mb-6">
+        <CardContent className="p-4">
+          <NaverListings
+            propertyName={property.name}
+            district={extractDistrict(property.address)}
+            acquisitionPrice={property.celebrity_properties[0]?.acquisition_price ?? null}
+            acquisitionDate={property.latest_transaction_date}
+            exclusiveArea={property.exclusive_area}
+          />
+        </CardContent>
+      </Card>
+
       <div className="space-y-6">
         <PriceLinks propertyName={property.name} address={property.address} />
         <PriceChart
@@ -322,4 +336,9 @@ function getDemoProperty(id: string): PropertyDetail {
     celebrity_properties: [],
     transactions: [],
   }
+}
+
+function extractDistrict(address: string): string {
+  const match = address.match(/([가-힣]+구)/)
+  return match?.[1] ?? '강남구'
 }
